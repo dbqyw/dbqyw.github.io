@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>论文分享 | qinyiwen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="《BEYOND PHISH: Toward Detecting Fraudulent e-Commerce Websites at Scale》论文分享https:&#x2F;&#x2F;www.computer.org&#x2F;csdl&#x2F;proceedings-article&#x2F;sp&#x2F;2023&#x2F;933600c566&#x2F;1NrbZYi2YjC BEYOND PHISH：大规模检测欺诈性电子商务网站 PEYOND PHISH是一个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文分享">
+<meta property="og:url" content="http://example.com/2023/07/13/%E3%80%8ABeyond%20Phish%20Toward%20Detecting%20Fraudulent%20e-Commerce%20Websites%20at%20Scale%E3%80%8B/index.html">
+<meta property="og:site_name" content="qinyiwen">
+<meta property="og:description" content="《BEYOND PHISH: Toward Detecting Fraudulent e-Commerce Websites at Scale》论文分享https:&#x2F;&#x2F;www.computer.org&#x2F;csdl&#x2F;proceedings-article&#x2F;sp&#x2F;2023&#x2F;933600c566&#x2F;1NrbZYi2YjC BEYOND PHISH：大规模检测欺诈性电子商务网站 PEYOND PHISH是一个">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723172709727.png">
+<meta property="og:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723173128562.png">
+<meta property="og:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723173249718.png">
+<meta property="og:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723173329016.png">
+<meta property="og:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723173412838.png">
+<meta property="og:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723173500716.png">
+<meta property="article:published_time" content="2023-07-13T10:22:12.000Z">
+<meta property="article:modified_time" content="2023-07-23T11:27:58.346Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="论文细读">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723172709727.png">
+  
+    <link rel="alternate" href="/atom.xml" title="qinyiwen" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">qinyiwen</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-《Beyond Phish Toward Detecting Fraudulent e-Commerce Websites at Scale》" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/07/13/%E3%80%8ABeyond%20Phish%20Toward%20Detecting%20Fraudulent%20e-Commerce%20Websites%20at%20Scale%E3%80%8B/" class="article-date">
+  <time class="dt-published" datetime="2023-07-13T10:22:12.000Z" itemprop="datePublished">2023-07-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      论文分享
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="《BEYOND-PHISH-Toward-Detecting-Fraudulent-e-Commerce-Websites-at-Scale》论文分享"><a href="#《BEYOND-PHISH-Toward-Detecting-Fraudulent-e-Commerce-Websites-at-Scale》论文分享" class="headerlink" title="《BEYOND PHISH: Toward Detecting Fraudulent e-Commerce Websites at Scale》论文分享"></a>《BEYOND PHISH: Toward Detecting Fraudulent e-Commerce Websites at Scale》论文分享</h1><p><a target="_blank" rel="noopener" href="https://www.computer.org/csdl/proceedings-article/sp/2023/933600c566/1NrbZYi2YjC">https://www.computer.org/csdl/proceedings-article/sp/2023/933600c566/1NrbZYi2YjC</a></p>
+<p>BEYOND PHISH：大规模检测欺诈性电子商务网站</p>
+<p>PEYOND PHISH是一个用来大规模检测欺诈性电子商务网站的模型</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>首先看它的背景，尽管最近在恶意网站检测和网络钓鱼方面取得了进展，但是安全生态系统很少关注欺诈性电子商务网站(FCWs)，例如欺诈性购物网站，虚假慈善机构网站。这张图是在线虚假购物网站造成的每季度的货币损失总额（单位：百万），仅在2021年的第一个季度，货币损失就超过了一亿美元。</p>
+<p> <img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723172709727.png" alt="image-20230723172709727"></p>
+<h2 id="欺诈性电子商务网站和网络钓鱼攻击的区别"><a href="#欺诈性电子商务网站和网络钓鱼攻击的区别" class="headerlink" title="欺诈性电子商务网站和网络钓鱼攻击的区别"></a>欺诈性电子商务网站和网络钓鱼攻击的区别</h2><p>欺诈性电子商务网站和网络钓鱼攻击的区别在于攻击者的目标</p>
+<p>网络钓鱼的攻击目标是窃取用户的密码和社会保险号等信息</p>
+<p>欺诈性电子商务网站的攻击目标是引诱用户为不可能收到的商品或服务花钱</p>
+<h2 id="主流的网络钓鱼防御并不适用于Fcws"><a href="#主流的网络钓鱼防御并不适用于Fcws" class="headerlink" title="主流的网络钓鱼防御并不适用于Fcws"></a>主流的网络钓鱼防御并不适用于Fcws</h2><p>主流的网络浏览器已经结合了客户端启发式反网络钓鱼和服务器端黑名单来检测钓鱼网站，但是现有的网络钓鱼防御并不适用于Fcws。比如说反网络钓鱼的Google安全浏览在我们收集的Fcws数据集上检测率仅为0.46%</p>
+<h2 id="目前没有可用的Fcws公开数据集"><a href="#目前没有可用的Fcws公开数据集" class="headerlink" title="目前没有可用的Fcws公开数据集"></a>目前没有可用的Fcws公开数据集</h2><h2 id="收集Fcws数据集面临的挑战"><a href="#收集Fcws数据集面临的挑战" class="headerlink" title="收集Fcws数据集面临的挑战"></a>收集Fcws数据集面临的挑战</h2><ul>
+<li>这些网站很快就会消失</li>
+<li>Fcws并不局限于电子邮件等单一传播渠道</li>
+<li>并且它的内容在检测中起着重要作用，采用盲目网络爬行等方法可能会导致Fcws的内容不适用于检测研究</li>
+<li>数据必须包含实际的Fcws，需要手动验证每个Fcws</li>
+<li>Fcws在不断发展，如以前的Fcws使用极低的价格来吸引顾客，现在的Fcws给出合理的价格，这个操作可能是让顾客更难分辨欺诈电子商务网站与合法网站之间的区别</li>
+</ul>
+<p>左图是合法的crypto网站，右图是欺诈性的crypto网站，光看外表根本看不出哪个是非法的</p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723173128562.png" alt="image-20230723173128562"></p>
+<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>这是该项目需要解决的三个问题</p>
+<ul>
+<li>如何让收集和标记一个全面的数据集来研究Fcws的特征</li>
+<li>当前防御系统在保护用户免受Fcws攻击方面的有效性怎么样</li>
+<li>我们如何利用Fcws的特征来进行大规模检测</li>
+</ul>
+<h2 id="收集和标注"><a href="#收集和标注" class="headerlink" title="收集和标注"></a>收集和标注</h2><p>这张图是Fcsw数据集收集和标注的过程图</p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723173249718.png" alt="image-20230723173249718"></p>
+<p>首先是Fcws数据集收集部分</p>
+<p>reddit论坛是一个专门讨论诈骗网站的论坛，上面的每个帖子和评论都由reddit版主严格监控，可认为内容是可信的。我们在该论坛收集可能的Fcws，在该论坛中，收集了33514个关于诈骗网站的数据，其中有9114个包含实时url。</p>
+<p>数据标注：</p>
+<p>从9114个url中标记实际的诈骗网站url是非常关键的，我们通过分析用户对每个url的评价进行自动化标记。再手动检查诈骗帖子后，我们发现可以通过用户评论来了解可疑url的合法性，如果url属于诈骗网站，用户会评论不要购买或常见骗局，我们使用自然语言处理模型BERT进行训练，BERT是一种语言模型，用于执行各种自然语言处理的任务，比如说文本生成、情感分析和问题回答，该模型将评论分类为积极或消极。我们在BERT模型上使用了一个神经网络分类器，首先将每个评论转换为上下文向量，其中包含关于评论的重要信息，然后使用神经网络分类器将上下文向量标记为积极或消极。在训练模型时，使用Stanford Sentiment Treebank二元分类数据集（这个数据集包含215154个短语以及正负标签），为了对每个URL进行分类和分配标签，我们首先对提交的每个评论进行分类，如果负面评论多于正面评论，我们将提交的URL标记为诈骗网站。</p>
+<p>这是一个标注的例子，常见的骗局，忽略并继续前进，不要这样做这种就标为负面评论，质量很好这种就标为正面评论，这个URL的负面评论多余正面评论，因此标记为诈骗网站。</p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723173329016.png" alt="image-20230723173329016"></p>
+<h2 id="分类模型验证"><a href="#分类模型验证" class="headerlink" title="分类模型验证"></a>分类模型验证</h2><p>为了验证我们分类模型的有效性，我们设计了两个实验进行验证</p>
+<p>1是与Palo Alot Network合作，针对现实世界的数据集测试我们的模型，误检率为2.46%，检测率为94.88%</p>
+<p>2是在数据集中随机选择了2000个网站，并聘请了三位安全专家，通过与网站互动、阅读reddit帖子和使用搜索引擎检测网站的合法性，使用投票制来标注URL，最终误检率为1.98%，漏检率为1.63%</p>
+<p>在标注过程中，专家不允许讨论他们的评估，并且每个专家都独立调查每个网站的特征，评估相关的Reddit帖子，并进行网络搜索，以保证评估的准确性。如果专家无法做出判断，就标记为未知，最终将未知标签多的样本从数据集中删除。</p>
+<h2 id="Fcws的特征"><a href="#Fcws的特征" class="headerlink" title="Fcws的特征"></a>Fcws的特征</h2><p>有了数据集以后，手动检查他们，来寻找能将Fcws与合法网站区分开来的特征</p>
+<p>1、基于内容的特征：</p>
+<p>是指基于网站源代码的，不法分子会模仿合法网站，加入社交媒体的标识或链接，比如twitter，但是这些链接大多无效，我们认为Fcws不包含有效的社交媒体链接的原因是避免他们的身份被受害者暴露并在社交媒体上分享</p>
+<p>2.、基于dns的特征：</p>
+<p>不法分子被列入黑名单或者被举报之后，通常会选择用新的域名，因此，Fcws的注册日期通常很新，平均年龄为2年，而合法网站为13年，且域名的注册时间越长，成本越高，因此大多数Fcws只注册了一年</p>
+<p>3、基于url的特征：</p>
+<p>28.21%的Fcws为了节约成本，采用廉价等级域名，如xyz，store，我们根据域名注册的平均价格，采用50个最便宜的顶级域名构建一个二元特征，表明url是否使用廉价顶级域名</p>
+<p>4、基于社交媒体的特征：</p>
+<p>Fcws试图模仿合法网站，在网站中加入了社交媒体链接，因此检查相应的社交媒体账户可信度非常重要，我们通过抓取facebook和twitter账户的创建日期来计算它们的年龄。账户可信度的另一个判断依据是账户关注者的数量。</p>
+<h2 id="BEYOND-PHISH模型建立"><a href="#BEYOND-PHISH模型建立" class="headerlink" title="BEYOND PHISH模型建立"></a>BEYOND PHISH模型建立</h2><p>在了解了Fcws的共同特性后，我们基于识别出的共同特征，建立模型BEYOND PHISH，用于检测Fcws</p>
+<p>我们根据对收集到的数据集的分析手动定义特征，通过利用网站内容，DNS记录，URL及其社交媒体的功能，创建BEYOND PHISH模型</p>
+<p>这个图是模型训练的过程</p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723173412838.png" alt="image-20230723173412838"></p>
+<p>数据集（dataset）通过特征提取模块传递，该模块利用基于内容的特性、基于DNS的特性、基于URL的特性和基于社交媒体的特性进行链接，为每个URL输出一个特征向量，进行学习得到一个可以将Fcws和合法网站分开的分类器，经过分类器将url分为合法和非法的</p>
+<h2 id="BEYOND-PHISH模型评估"><a href="#BEYOND-PHISH模型评估" class="headerlink" title="BEYOND PHISH模型评估"></a>BEYOND PHISH模型评估</h2><p>采用了4个其他的模型与BEYOND PHISH模型进行对比</p>
+<p><strong>CheckPhish</strong>是一种使用计算机视觉和自然语言处理技术检测网络钓鱼和欺诈性网站的方法，该方法使用卷积神经网络对网站的外观进行分析，并从网页源代码中提取不同的特征与其视觉特征进行拼接</p>
+<p><strong>HAN</strong>是基于内容检测欺诈性电子商务网站。但是我们没有访问HAN原始实现的权限，我们构建了一个类似的模型，基于网页源代码检测Fcws</p>
+<p>**Cantina+**是基于内容的机器学习分类器，可以基于页面，url和域名的特征检测钓鱼网站，因为它仅仅是针对钓鱼网站的检测，有局限性，为保证公平，我们用收集的训练集训练了Cantina+</p>
+<p><strong>RealTime</strong>是利用网站内容进行分类，检测虚假购物网站</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>如图是比较的结果，横坐标是误检率，纵坐标是检测率。</p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723173500716.png" alt="image-20230723173500716"></p>
+<p>AUC是曲线下方的面积</p>
+<p>最终结果中，BEYOND PHISH的检测率为94.88%，误检率为2.46%，与其他相比具有较大优势。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/07/13/%E3%80%8ABeyond%20Phish%20Toward%20Detecting%20Fraudulent%20e-Commerce%20Websites%20at%20Scale%E3%80%8B/" data-id="clkfcv2as00000svf3o1r1tdm" data-title="论文分享" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/07/14/%E3%80%8ASoK%20Practical%20Foundations%20for%20Software%20Spectre%20Defenses%E3%80%8B/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          《SoK Practical Foundations for Software Spectre Defenses》
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/07/09/Fuzzing-exercise2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Fuzzing exercise2</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Fuzzing/" style="font-size: 15px;">Fuzzing</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 20px;">论文细读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/07/23/%E3%80%8AHow%20to%20give%20a%20good%20research%20talk%E3%80%8B/">《How to give a good research talk》</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/14/%E3%80%8ASoK%20Practical%20Foundations%20for%20Software%20Spectre%20Defenses%E3%80%8B/">《SoK Practical Foundations for Software Spectre Defenses》</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/13/%E3%80%8ABeyond%20Phish%20Toward%20Detecting%20Fraudulent%20e-Commerce%20Websites%20at%20Scale%E3%80%8B/">论文分享</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/09/Fuzzing-exercise2/">Fuzzing exercise2</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/08/Fuzzing-exercise1/">Fuzzing exercise1</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
