@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>《SoK Practical Foundations for Software Spectre Defenses》 | qinyiwen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="《SoK Practical Foundations for Software Spectre Defenses》论文分享https:&#x2F;&#x2F;www.computer.org&#x2F;csdl&#x2F;proceedings-article&#x2F;sp&#x2F;2022&#x2F;131600b517&#x2F;1FlQz5KjQZ2 Sok: 软件幽灵防御的实践基础 这篇文章主要是以语义的形式研究幽灵分析的现有基础，讨论语义的不同选择，并描述每种选">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《SoK Practical Foundations for Software Spectre Defenses》">
+<meta property="og:url" content="http://example.com/2023/07/14/%E3%80%8ASoK%20Practical%20Foundations%20for%20Software%20Spectre%20Defenses%E3%80%8B/index.html">
+<meta property="og:site_name" content="qinyiwen">
+<meta property="og:description" content="《SoK Practical Foundations for Software Spectre Defenses》论文分享https:&#x2F;&#x2F;www.computer.org&#x2F;csdl&#x2F;proceedings-article&#x2F;sp&#x2F;2022&#x2F;131600b517&#x2F;1FlQz5KjQZ2 Sok: 软件幽灵防御的实践基础 这篇文章主要是以语义的形式研究幽灵分析的现有基础，讨论语义的不同选择，并描述每种选">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723173959657.png">
+<meta property="og:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723174018733.png">
+<meta property="og:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723174109210.png">
+<meta property="article:published_time" content="2023-07-14T11:12:41.000Z">
+<meta property="article:modified_time" content="2023-07-23T09:47:07.421Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="论文细读">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723173959657.png">
+  
+    <link rel="alternate" href="/atom.xml" title="qinyiwen" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">qinyiwen</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-《SoK Practical Foundations for Software Spectre Defenses》" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/07/14/%E3%80%8ASoK%20Practical%20Foundations%20for%20Software%20Spectre%20Defenses%E3%80%8B/" class="article-date">
+  <time class="dt-published" datetime="2023-07-14T11:12:41.000Z" itemprop="datePublished">2023-07-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      《SoK Practical Foundations for Software Spectre Defenses》
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="《SoK-Practical-Foundations-for-Software-Spectre-Defenses》论文分享"><a href="#《SoK-Practical-Foundations-for-Software-Spectre-Defenses》论文分享" class="headerlink" title="《SoK Practical Foundations for Software Spectre Defenses》论文分享"></a>《SoK Practical Foundations for Software Spectre Defenses》论文分享</h1><p><a target="_blank" rel="noopener" href="https://www.computer.org/csdl/proceedings-article/sp/2022/131600b517/1FlQz5KjQZ2">https://www.computer.org/csdl/proceedings-article/sp/2022/131600b517/1FlQz5KjQZ2</a></p>
+<p>Sok: 软件幽灵防御的实践基础</p>
+<p>这篇文章主要是以语义的形式研究幽灵分析的现有基础，讨论语义的不同选择，并描述每种选择的权衡</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>幽灵漏洞</p>
+<p>幽灵是最近发现的一系列漏洞，源于现代处理器上的推测执行，幽灵允许攻击者通过导致处理器错误预测控制流，比如说条件跳转或间接调用，或数据流的目标来学习敏感信息。</p>
+<p>攻击者可用跨越安全边界窃取机密，比如说由进程抽象提供的硬件边界，由内存安全语言和基于软件的故障隔离技术提供的软件边界。</p>
+<p>当处理器意识到自己预测错误时，它会回滚执行，抹去推测对程序员可见的影响，但是在推测执行期间，微架构状态，比如说数据缓存的状态，仍然会被修改，这些变化可能会在推测期间泄露，甚至在回滚之后仍然可以持续，因此攻击者可以从微架构状态中恢复敏感信息，即使这些敏感信息只是随机访问。</p>
+<h2 id="幽灵漏洞破解密码"><a href="#幽灵漏洞破解密码" class="headerlink" title="幽灵漏洞破解密码"></a>幽灵漏洞破解密码</h2><p>High-assurance cryptography （高保证密码学）长期依赖于constant_x0002_time programming（常量时间编程），用来创建不受定时侧信道攻击的安全软件。</p>
+<p><strong>侧信道攻击</strong>是攻击者利用计算机不经意间释放出的信息信号，比如说电磁辐射，电脑硬件运行产生的声音，来进行破译的攻击模式，例如，黑客可以通过计算机显示屏或硬盘驱动器所产生的电磁辐射，来读取你所显示的画面和磁盘内的文件信息。</p>
+<p>常量时间编程确保程序执行不依赖于密码</p>
+<p>它是通过三条规则来保证这一点的：</p>
+<ul>
+<li>控制流（如条件分支）不应该依赖密码</li>
+<li>内存访问模式（如进入数组的偏移量）不应该依赖密码</li>
+<li>密码不应该被用作可变延迟指令的操作数（如浮点指令或许多处理器上的整数除法的操作数）</li>
+</ul>
+<p>这些规则确保机密信息在攻击者强大到足以执行缓存攻击、通过分支预测器状态泄露数据或通过端口争用来窥探数据时仍然安全</p>
+<p>但是对于幽灵漏洞，常量时间编程不足以保证数据安全</p>
+<p>这是一段易受幽灵攻击的代码</p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723173959657.png" alt="image-20230723173959657"></p>
+<p>如果数组arrA只包含公共数据，并且i和arrAlen也是公共数据，那么这段代码符合常数时间编程，但是攻击者可以利用分支错误预测，通过数据缓存泄露得到秘密数据</p>
+<p>攻击者首先用适当小的i值重复运行代码，从而使分支预估调节i&lt;arrAlen为真，然后攻击者为i提供一个越界值，处理器判断条件仍为真，并推测地将越界数据加载到x中，随后它将x值作为内存读取操作地址的一部分，再将x的值编码到数据缓存状态中，根据x的值，不同的缓存行将被访问和缓存，一旦处理器发现了预测错误，就会回滚执行，但是数据缓存状态仍然存在，攻击者可以在以后释放数据缓存状态，以便推断x的值</p>
+<p>这段代码，攻击者可通过控制流泄露秘密数据</p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723174018733.png" alt="image-20230723174018733"></p>
+<p>x作为分支条件的一部分，攻击者可以随机将任意内存读取到x中，然后他们可以通过几种方式泄露x的值，比如说根据各种情况的不同执行时间，通过数据缓存，基于在各种情况下执行的不同内存访问，通过端口竞争，分支预测器状态</p>
+<h2 id="使用幽灵打破软件隔离"><a href="#使用幽灵打破软件隔离" class="headerlink" title="使用幽灵打破软件隔离"></a>使用幽灵打破软件隔离</h2><p>幽灵攻击破坏了软件隔离领域的重要保障，在软件隔离领域内，主机应用程序执行不受信任的代码时，确保不受信任的代码无法访问主机的任何数据，但是幽灵攻击可以破坏内存安全和隔离机制</p>
+<p>这张图就是一个幽灵攻击破坏软件隔离的例子</p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723174109210.png" alt="image-20230723174109210"></p>
+<p>在该代码中，攻击者使用函数guest_func()调用宿主函数get_host_val()从数组中获取值</p>
+<p>虽然get_host_val()实现了边界检查，但是攻击者仍然可以通过误操作分支预测其来随机性地访问越界数据，从而破坏隔离保证，一旦攻击者获得了他们选择的越界值，他们可以泄露该值，比如说通过数据缓存。我们需要确保，即使是随机性的，不受信任的代码也不能打破隔离</p>
+<h2 id="语义学的选择"><a href="#语义学的选择" class="headerlink" title="语义学的选择"></a>语义学的选择</h2><p>精心设计幽灵分析工具的基础是精心构造的形式化语义，因此语义学的选择是非常重要的</p>
+<p>加密代码需要不同的安全属性，因此需要不同的语义和工具</p>
+<p>实用语义应该在细节和抽象之间做出适当的权衡：</p>
+<ul>
+<li>它应该足够详细，以捕捉我们感兴趣的微架构行为</li>
+<li>它应该足够抽象，以适用于所有合理的硬件，因为我们不希望我们代码的安全性依赖于特定的缓存替换策略或分支预测器的实现</li>
+</ul>
+<h3 id="A-泄露模型"><a href="#A-泄露模型" class="headerlink" title="A 泄露模型"></a>A 泄露模型</h3><p>泄露模型指攻击者可以观察到什么信息</p>
+<p>任何意图建模侧信道攻击的语义都需要精确定义其攻击者的模型，泄露模型是一个语义攻击者模型的重要部分</p>
+<h3 id="B-保密策略"><a href="#B-保密策略" class="headerlink" title="B 保密策略"></a>B 保密策略</h3><p>确定了泄露模型，我们要确定用什么保密策略，即那些值可以泄露，哪些值不能泄露</p>
+<p>密码学和隔离等领域已经定义了顺序安全属性的策略</p>
+<p>对于密码学，包含秘密数据的内存被认为是敏感的，比如说加密密钥的内存</p>
+<p>隔离是声明程序指定的沙盒区域之外的所有内存都不应该被泄露</p>
+<p>沙盒是一种安全机制，为运行中的程序提供隔离环境，提供作为一些来源不可信，具有破坏力或无法判定程序意图的程序使用，沙盒可以提供用后即收回的磁盘及内存空间</p>
+<h3 id="C-执行模型"><a href="#C-执行模型" class="headerlink" title="C 执行模型"></a>C 执行模型</h3><p>为了推断幽灵攻击，语义必须能够推断推测执行模型中敏感数据的泄露，推测执行模型是推测语义与标准顺序分析的区别，并决定抽象处理器可以执行什么推测，对于开发人员来说，需要权衡选择一个合适的推测执行模型</p>
+<ul>
+<li>要选择他们模型允许的行为，比如说它们包含哪些微架构预测器，这决定了它们的工具可以捕获哪些幽灵变体</li>
+<li>如果可以执行的推测过多，会使它们的分析更加复杂</li>
+</ul>
+<h3 id="D-非确定性"><a href="#D-非确定性" class="headerlink" title="D 非确定性"></a>D 非确定性</h3><p>推测执行本质上是具有不确定性的，程序中的任何给定的分支都可能正确或错误地进行，而不管实际的条件值，也就是说推测性劫持攻击可以将执行发送到完全不确定的位置</p>
+<p>现有的语义都假设攻击者对微架构预测和调度有完全的控制</p>
+<p>限制非确定性：</p>
+<p>目前已有研究人员实现用编译器完全重构程序，在软件层加强它们自己的限制行为集，将敏感数据分配到单独的内存区域中，并使用页面权限位来禁止不受信任的代码访问这些区域，无论程序如何推测错误，它都读取不了敏感数据</p>
+<h3 id="E-高级别的抽象"><a href="#E-高级别的抽象" class="headerlink" title="E 高级别的抽象"></a>E 高级别的抽象</h3><p>幽灵攻击和推测执行从根本上打破了我们对程序应该如何执行的直觉假设，关于程序的高级别的保证不再适用</p>
+<p>为了重建更高级别的安全保障，我们首先需要修复我们程序如何执行的模型，从低级语义开始，一旦这些基础牢固地建立了起来，我们才能重建更高级别的抽象</p>
+<p>有了足够的基础，我们可以通过修改高级语言的编译器，产生安全的低级程序来恢复高级抽象</p>
+<h3 id="F-表现力"><a href="#F-表现力" class="headerlink" title="F 表现力"></a>F 表现力</h3><p>一个好的实用的语义需要有足够强的表达性，我们想要一个能够表达的语义对广泛的可能行为进行建模，比如说幽灵变体</p>
+<p>另外，允许太多可能行为的语义会使很多分析变得难以处理</p>
+<p>而语义的基本目的是提供硬件的合理抽象或简化，来简化分析，因此语义中包含多少表现力也需要认真权衡</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>推测分析的坚实基础需要对语义和攻击者模型进行适当的选择，开发人员需要考虑较强的泄露模型，那些只通过内存或数据缓存来捕获泄露的泄露模型会导致安全性保证更弱</p>
+<p>其次必须考虑所有的幽灵变体，这会增加分析的复杂性，但是开发人员可以将分析与结构化编译技术结合，通过构造来限制或删除幽灵攻击的整个类别</p>
+<p>最后，我们建议不要对不必要的架构细节进行建模，比如说对缓存结构或端口争用这种细节进行建模，复杂性更高，并且会降低移植性</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/07/14/%E3%80%8ASoK%20Practical%20Foundations%20for%20Software%20Spectre%20Defenses%E3%80%8B/" data-id="clkf9anc20000v4vf0k2wdu9d" data-title="《SoK Practical Foundations for Software Spectre Defenses》" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/07/23/%E3%80%8AHow%20to%20give%20a%20good%20research%20talk%E3%80%8B/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          《How to give a good research talk》
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/07/09/Fuzzing-exercise2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Fuzzing exercise2</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Fuzzing/" style="font-size: 20px;">Fuzzing</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 20px;">论文细读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/07/23/%E3%80%8AHow%20to%20give%20a%20good%20research%20talk%E3%80%8B/">《How to give a good research talk》</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/14/%E3%80%8ASoK%20Practical%20Foundations%20for%20Software%20Spectre%20Defenses%E3%80%8B/">《SoK Practical Foundations for Software Spectre Defenses》</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/09/Fuzzing-exercise2/">Fuzzing exercise2</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/08/Fuzzing-exercise1/">Fuzzing exercise1</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/07/%E8%AF%BB%E5%90%8E%E6%84%9F/">读后感</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
