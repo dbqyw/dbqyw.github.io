@@ -73,6 +73,82 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Exercise 1 - Xpdf" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/07/25/Exercise%201%20-%20Xpdf/" class="article-date">
+  <time class="dt-published" datetime="2023-07-25T15:16:57.000Z" itemprop="datePublished">2023-07-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/07/25/Exercise%201%20-%20Xpdf/">Exercise 1 - Xpdf</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Exercise-1-Xpdf"><a href="#Exercise-1-Xpdf" class="headerlink" title="Exercise 1 - Xpdf"></a>Exercise 1 - Xpdf</h3><h4 id="一、实验背景"><a href="#一、实验背景" class="headerlink" title="一、实验背景"></a>一、实验背景</h4><p>CVE-2019-13288是一个可能通过精心制作的文件导致无线递归的漏洞</p>
+<p>程序中每个被调用的函数都在堆栈上分配一个堆栈帧，如果一个函数被递归调用多次，可能会导致堆栈内存耗尽和程序崩溃，因此，远程攻击者可以利用该漏洞进行Dos攻击</p>
+<p>非受控制递归漏洞（<a target="_blank" rel="noopener" href="https://cwe.mitre.org/data/definitions/674.html%EF%BC%89">https://cwe.mitre.org/data/definitions/674.html）</a></p>
+<h4 id="二、实验目的"><a href="#二、实验目的" class="headerlink" title="二、实验目的"></a>二、实验目的</h4><p>模糊<strong>Xpfd（</strong>PDF查看器），目标是在XPDF 3.02中找到<strong>CVE-2019-13288</strong>漏洞</p>
+<h4 id="三、实验环境："><a href="#三、实验环境：" class="headerlink" title="三、实验环境："></a>三、实验环境：</h4><p>win10，VMware，Ubuntu 20.04.2 LTS（虚拟机用户名密码均为fuzz）</p>
+<h4 id="四、实验步骤"><a href="#四、实验步骤" class="headerlink" title="四、实验步骤"></a>四、实验步骤</h4><h5 id="1、下载并构建目标"><a href="#1、下载并构建目标" class="headerlink" title="1、下载并构建目标"></a>1、下载并构建目标</h5><p>得到模糊目标，为要模糊化的项目创建目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME</span><br><span class="line">mkdir fuzzing_xpdf &amp;&amp; cd fuzzing_xpdf/</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7d81d204-27c1-44ec-9b17-ace5348c00e6" alt="image"></p>
+<p>安装make和gcc，准备好环境，注意要先更新apt-get，否则会出现错误Unable to locate package build-essential</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update </span><br><span class="line">sudo apt install build-essential</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f47a0423-6e7d-4303-9ce6-e1ba26d1edcc" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/fcdbebff-a669-4cbc-9ba0-ab46c7ed8241" alt="image"></p>
+<p>下载Xpdf 3.02压缩包并解压</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://dl.xpdfreader.com/old/xpdf-3.02.tar.gz</span><br><span class="line">tar -xvzf xpdf-3.02.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/89111ae7-2c4a-4a5c-98ab-b3263a62bb68" alt="image"></p>
+<p>构建Xpdf</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd xpdf-3.02</span><br><span class="line">sudo apt update &amp;&amp; sudo apt install -y build-essential gcc</span><br><span class="line">./configure --prefix=&quot;$HOME/fuzzing_xpdf/install/&quot;</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2ec9e65a-cb06-4ca7-baf2-5901cf0c6efd" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/bab69f98-5826-4746-a060-2c41c43c82c6" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/e0fca536-8a93-4388-9c34-99914112154a" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/cd03c3cc-3282-4b32-92e9-285b9b67bd8d" alt="image"></p>
+<p>下载一些PDF示例用于后续验证</p>
+<p>下载pdf时注意在后面加参数<strong>–no-check-certificate</strong>跳过验证证书，否则会报错unable to establish ssl connection.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME/fuzzing_xpdf</span><br><span class="line">mkdir pdf_examples &amp;&amp; cd pdf_examples</span><br><span class="line">wget https://github.com/mozilla/pdf.js-sample-files/raw/master/helloworld.pdf</span><br><span class="line">wget http://www.africau.edu/images/default/sample.pdf –no-check-certificate</span><br><span class="line">wget https://www.melbpc.org.au/wp-content/uploads/2017/10/small-example-pdf-file.pdf</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/4da29f1e-5eb7-4be7-9cd1-a6a2574731bc" alt="image"> </p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f485bf1a-6186-4faf-80fb-adeccd092781" alt="image"></p>
+<p>测试pdfinfo二进制文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$HOME/fuzzing_xpdf/install/bin/pdfinfo -box -meta $HOME/fuzzing_xpdf/pdf_examples/helloworld.pdf</span><br></pre></td></tr></table></figure>
+
+<p>看到如下页面说明验证成功</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2e938476-a1bc-4a18-86d1-01103f16f5d3" alt="image"></p>
+<h5 id="2、安装AFL"><a href="#2、安装AFL" class="headerlink" title="2、安装AFL++"></a>2、安装AFL++</h5>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/07/25/Exercise%201%20-%20Xpdf/" data-id="clkifzfiq00000wvf0xdk9v6i" data-title="Exercise 1 - Xpdf" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-clash科学上网" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/07/24/clash%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" class="article-date">
@@ -162,7 +238,7 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <h1 id="《How-to-give-a-good-research-talk》（Simon-L-Peyton-Jones）论文细读"><a href="#《How-to-give-a-good-research-talk》（Simon-L-Peyton-Jones）论文细读" class="headerlink" title="《How to give a good research talk》（Simon L Peyton Jones）论文细读"></a>《How to give a good research talk》（Simon L Peyton Jones）论文细读</h1><p><a href="extension://bfdogplmndidlpjfhoijckpakkdjkkil/pdf/viewer.html?file=https%3A%2F%2Fwww.microsoft.com%2Fen-us%2Fresearch%2Fwp-content%2Fuploads%2F2016%2F08%2Fgiving-a-talk.pdf">extension:&#x2F;&#x2F;bfdogplmndidlpjfhoijckpakkdjkkil&#x2F;pdf&#x2F;viewer.html?file&#x3D;https%3A%2F%2Fwww.microsoft.com%2Fen-us%2Fresearch%2Fwp-content%2Fuploads%2F2016%2F08%2Fgiving-a-talk.pdf</a></p>
-<p>要做一个好的研究演讲，我们需要从论文中中找出我们认为有用的东西。</p>
+<p>要做一个好的研究演讲，我们需要从论文中找出我们认为有用的东西。</p>
 <p>我们演讲的对象大多是研究计算机领域的学者，他们可能不太了解我们所研究的特定领域，我们主要是将我们的经验讲出来，尽力使内容更生动。</p>
 <p>在准备演讲的过程中，我们首先要明确两个问题</p>
 <ul>
@@ -643,7 +719,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Fuzzing/" style="font-size: 15px;">Fuzzing</a> <a href="/tags/learn/" style="font-size: 10px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 20px;">论文细读</a>
+      <a href="/tags/Fuzzing/" style="font-size: 20px;">Fuzzing</a> <a href="/tags/learn/" style="font-size: 10px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 20px;">论文细读</a>
     </div>
   </div>
 
@@ -665,6 +741,10 @@
       <ul>
         
           <li>
+            <a href="/2023/07/25/Exercise%201%20-%20Xpdf/">Exercise 1 - Xpdf</a>
+          </li>
+        
+          <li>
             <a href="/2023/07/24/clash%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/">clash科学上网</a>
           </li>
         
@@ -678,10 +758,6 @@
         
           <li>
             <a href="/2023/07/13/%E3%80%8ABeyond%20Phish%20Toward%20Detecting%20Fraudulent%20e-Commerce%20Websites%20at%20Scale%E3%80%8B/">论文分享</a>
-          </li>
-        
-          <li>
-            <a href="/2023/07/09/Fuzzing-exercise2/">Fuzzing exercise2</a>
           </li>
         
       </ul>
