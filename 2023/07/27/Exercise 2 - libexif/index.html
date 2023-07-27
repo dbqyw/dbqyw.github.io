@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Exercise 2 - libexif | qinyiwen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Exercise 2 - libexif一、实验背景CVE-2009-3895是一个基于堆的缓冲区溢出，可以通过无效的EXIF图像触发。基于堆的缓冲区溢出是发生在堆数据区域的一种缓冲区溢出，它通常与显式动态内存管理(使用malloc()和free()函数进行分配&#x2F;回收)有关。因此，远程攻击者可以利用此问题在使用受影响库的应用程序上下文中执行任意代码。 基于堆的缓冲区溢出漏洞（https:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Exercise 2 - libexif">
+<meta property="og:url" content="http://example.com/2023/07/27/Exercise%202%20-%20libexif/index.html">
+<meta property="og:site_name" content="qinyiwen">
+<meta property="og:description" content="Exercise 2 - libexif一、实验背景CVE-2009-3895是一个基于堆的缓冲区溢出，可以通过无效的EXIF图像触发。基于堆的缓冲区溢出是发生在堆数据区域的一种缓冲区溢出，它通常与显式动态内存管理(使用malloc()和free()函数进行分配&#x2F;回收)有关。因此，远程攻击者可以利用此问题在使用受影响库的应用程序上下文中执行任意代码。 基于堆的缓冲区溢出漏洞（https:">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/6543f29e-5e52-4ed6-999c-597161314a56">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/5e1c7727-dce4-41eb-95dc-bff5012fb3ff">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/83e655dd-f4d6-47ea-94df-31c9d62dba34">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/974d2755-eeb5-4ae1-b5b1-3cc5fc523a92">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/7c84d35d-8784-486c-b206-e7e8a9e53568">
+<meta property="og:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230727232107643.png">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/473d3e7e-3ab3-4ae1-9c98-5640bddcaa2c">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/10a19b33-857d-4b49-8d17-efb4e7254066">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/2971a8cb-5f5a-40d6-9af5-5b99c740b55a">
+<meta property="og:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230727232415273.png">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/b3fd1cbf-249c-4a2d-b601-f4193f815c12">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/f0807bd9-9ea0-49b5-9481-683f38202257">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/3f53db47-04ea-461c-8c9e-859ffd12f4da">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/7453ee21-bca8-4d98-9f25-350141d0e7f3">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/3a12071e-4332-4383-9d85-1612dbc00b38">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/110ef19c-eaf2-45bd-a3db-de5b980cc57a">
+<meta property="og:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230727233607562.png">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/6e6e8f30-0b1e-4603-94d4-65139cd9fede">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/c58fa0c8-927b-4c29-bd92-ec842081e184">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/412bb374-a138-4d29-b912-96ebfc9bae38">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/fbdc3cb0-7f3f-4f5a-b68e-44ce3cea911e">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/d79bf6e4-f593-49d0-95fb-efd4fc1a2c39">
+<meta property="og:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230727233940330.png">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/78f8b744-54ce-4d0c-b39d-819491dfad7d">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/b67623b8-6a50-4130-9ecc-3605eb0c0f83">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/6920c7f3-ef27-450d-bc94-8a719b8cfd51">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/9615bc59-6331-4782-9e3e-978bf3170239">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/2e6a9d0d-4a1c-45d0-ad8b-1d2fd8236f38">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/b71abd7e-80d5-4908-b4b9-06d0273d1b51">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/96c5f039-dc94-41e5-93c9-f2ef5d802ff2">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/bb07280f-84e4-40a3-86da-81b1ae37c7ac">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/2cd7f21f-dcfa-4b47-9ddc-4a87efbb794a">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/8c87e2c4-8d92-4f0a-ab71-e744d772344e">
+<meta property="og:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230728003925454.png">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/d21d484c-3feb-4091-8cb7-a33113e8449c">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/c527947c-bf6e-409e-9fcb-4dbd094d6396">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/084afe63-c7a2-486b-9e8e-d5509d4efe19">
+<meta property="article:published_time" content="2023-07-27T15:32:15.000Z">
+<meta property="article:modified_time" content="2023-07-27T17:02:23.881Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Fuzzing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/6543f29e-5e52-4ed6-999c-597161314a56">
+  
+    <link rel="alternate" href="/atom.xml" title="qinyiwen" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">qinyiwen</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Exercise 2 - libexif" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/07/27/Exercise%202%20-%20libexif/" class="article-date">
+  <time class="dt-published" datetime="2023-07-27T15:32:15.000Z" itemprop="datePublished">2023-07-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Exercise 2 - libexif
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Exercise-2-libexif"><a href="#Exercise-2-libexif" class="headerlink" title="Exercise 2 - libexif"></a>Exercise 2 - libexif</h3><h4 id="一、实验背景"><a href="#一、实验背景" class="headerlink" title="一、实验背景"></a>一、实验背景</h4><p><strong>CVE-2009-3895</strong>是一个基于堆的缓冲区溢出，可以通过无效的EXIF图像触发。基于堆的缓冲区溢出是发生在堆数据区域的一种缓冲区溢出，它通常与显式动态内存管理(使用malloc()和free()函数进行分配&#x2F;回收)有关。因此，远程攻击者可以利用此问题在使用受影响库的应用程序上下文中执行任意代码。</p>
+<p>基于堆的缓冲区溢出漏洞（<a target="_blank" rel="noopener" href="https://cwe.mitre.org/data/definitions/122.html%EF%BC%89">https://cwe.mitre.org/data/definitions/122.html）</a></p>
+<p><strong>CVE-2012-2836</strong>是一个越界读取漏洞，可以通过带有精心制作的EXIF标签的图像触发。越界读取是当程序读取数据超过预期缓冲区的末尾或开始之前时发生的漏洞。因此，它允许远程攻击者导致拒绝服务或可能从进程内存中获取潜在的敏感信息。</p>
+<p>越界读取漏洞（<a target="_blank" rel="noopener" href="https://cwe.mitre.org/data/definitions/125.html%EF%BC%89">https://cwe.mitre.org/data/definitions/125.html）</a></p>
+<h4 id="二、实验目的"><a href="#二、实验目的" class="headerlink" title="二、实验目的"></a>二、实验目的</h4><p>这次我们将模糊<strong>libexif</strong> EXIF解析库。目标是在libxif 0.6.14中找到<a target="_blank" rel="noopener" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3895"><strong>CVE-2009-3895</strong></a>和<a target="_blank" rel="noopener" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-2836"><strong>CVE-2012-2836</strong></a>的崩溃&#x2F;PoC。</p>
+<h4 id="三、实验环境："><a href="#三、实验环境：" class="headerlink" title="三、实验环境："></a>三、实验环境：</h4><p>win10，VMware，Ubuntu 20.04.2 LTS（虚拟机用户名密码均为fuzz）</p>
+<h4 id="四、实验步骤"><a href="#四、实验步骤" class="headerlink" title="四、实验步骤"></a>四、实验步骤</h4><h5 id="1、下载并构建目标"><a href="#1、下载并构建目标" class="headerlink" title="1、下载并构建目标"></a>1、下载并构建目标</h5><p>为模糊的项目创建一个新目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME</span><br><span class="line">mkdir fuzzing_libexif &amp;&amp; cd fuzzing_libexif/</span><br></pre></td></tr></table></figure>
+
+<p>下载并解压libexif-0.6.14</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/libexif/libexif/archive/refs/tags/libexif-0_6_14-release.tar.gz</span><br><span class="line">tar -xzvf libexif-0_6_14-release.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6543f29e-5e52-4ed6-999c-597161314a56" alt="image"></p>
+<p>构建并安装libexif</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd libexif-libexif-0_6_14-release/</span><br><span class="line">sudo apt-get install autopoint libtool gettext libpopt-dev</span><br><span class="line">autoreconf -fvi</span><br><span class="line">./configure --enable-shared=no --prefix=&quot;$HOME/fuzzing_libexif/install/&quot;</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/5e1c7727-dce4-41eb-95dc-bff5012fb3ff" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/83e655dd-f4d6-47ea-94df-31c9d62dba34" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/974d2755-eeb5-4ae1-b5b1-3cc5fc523a92" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7c84d35d-8784-486c-b206-e7e8a9e53568" alt="image"></p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230727232107643.png" alt="image-20230727232107643"></p>
+<h5 id="2、选择一个接口应用程序"><a href="#2、选择一个接口应用程序" class="headerlink" title="2、选择一个接口应用程序"></a>2、选择一个接口应用程序</h5><p>libexif是一个库，我们需要另一个应用程序来使用这个库，这个应用程序将被模糊化。对于这个任务，我们将使用<strong>exif command-line</strong>，下载并解压exif command-line 0.6.15:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME/fuzzing_libexif</span><br><span class="line">wget https://github.com/libexif/exif/archive/refs/tags/exif-0_6_15-release.tar.gz</span><br><span class="line">tar -xzvf exif-0_6_15-release.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/473d3e7e-3ab3-4ae1-9c98-5640bddcaa2c" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/10a19b33-857d-4b49-8d17-efb4e7254066" alt="image"></p>
+<p>构建并安装exif command-line实用程序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd exif-exif-0_6_15-release/</span><br><span class="line">autoreconf -fvi</span><br><span class="line">./configure --enable-shared=no --prefix=&quot;$HOME/fuzzing_libexif/install/&quot; PKG_CONFIG_PATH=$HOME/fuzzing_libexif/install/lib/pkgconfig</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2971a8cb-5f5a-40d6-9af5-5b99c740b55a" alt="image"></p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230727232415273.png" alt="image-20230727232415273"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b3fd1cbf-249c-4a2d-b601-f4193f815c12" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f0807bd9-9ea0-49b5-9481-683f38202257" alt="image"></p>
+<p>测试是否正常工作</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$HOME/fuzzing_libexif/install/bin/exif</span><br></pre></td></tr></table></figure>
+
+<p>看到如下页面说明工作正常</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/3f53db47-04ea-461c-8c9e-859ffd12f4da" alt="image"></p>
+<h5 id="3、创建种子语料库"><a href="#3、创建种子语料库" class="headerlink" title="3、创建种子语料库"></a>3、创建种子语料库</h5><p>现在我们需要一些出口样本。我们将使用以下repo中的样例图像:<a target="_blank" rel="noopener" href="https://github.com/ianare/exif-samples%E3%80%82%E9%80%9A%E8%BF%87%E4%BB%A5%E4%B8%8B%E6%8C%87%E4%BB%A4%E4%B8%8B%E8%BD%BD">https://github.com/ianare/exif-samples。通过以下指令下载</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME/fuzzing_libexif</span><br><span class="line">wget https://github.com/ianare/exif-samples/archive/refs/heads/master.zip</span><br><span class="line">unzip master.zip</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7453ee21-bca8-4d98-9f25-350141d0e7f3" alt="image"></p>
+<p>举例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$HOME/fuzzing_libexif/install/bin/exif $HOME/fuzzing_libexif/exif-samples-master/jpg/Canon_40D_photoshop_import.jpg</span><br></pre></td></tr></table></figure>
+
+<p>可以看到如下输出</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/3a12071e-4332-4383-9d85-1612dbc00b38" alt="image"></p>
+<h5 id="4、Afl-clang-lto"><a href="#4、Afl-clang-lto" class="headerlink" title="4、Afl-clang-lto"></a>4、Afl-clang-lto</h5><p>使用<strong>afl-clang-lto</strong>作为编译器来构建libexif。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">rm -r $HOME/fuzzing_libexif/install</span><br><span class="line">cd $HOME/fuzzing_libexif/libexif-libexif-0_6_14-release/</span><br><span class="line">make clean</span><br><span class="line">export LLVM_CONFIG=&quot;llvm-config-11&quot;</span><br><span class="line">CC=afl-clang-lto ./configure --enable-shared=no --prefix=&quot;$HOME/fuzzing_libexif/install/&quot;</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME/fuzzing_libexif/exif-exif-0_6_15-release</span><br><span class="line">make clean</span><br><span class="line">export LLVM_CONFIG=&quot;llvm-config-11&quot;</span><br><span class="line">CC=afl-clang-lto ./configure --enable-shared=no --prefix=&quot;$HOME/fuzzing_libexif/install/&quot; PKG_CONFIG_PATH=$HOME/fuzzing_libexif/install/lib/pkgconfig</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/110ef19c-eaf2-45bd-a3db-de5b980cc57a" alt="image"></p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230727233607562.png" alt="image-20230727233607562"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6e6e8f30-0b1e-4603-94d4-65139cd9fede" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/c58fa0c8-927b-4c29-bd92-ec842081e184" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/412bb374-a138-4d29-b912-96ebfc9bae38" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/fbdc3cb0-7f3f-4f5a-b68e-44ce3cea911e" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d79bf6e4-f593-49d0-95fb-efd4fc1a2c39" alt="image"></p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230727233940330.png" alt="image-20230727233940330"></p>
+<p>使用了<strong>afl-clang-lto</strong>而不是<strong>afl-clang-fast</strong>。一般来说，<strong>afl-clang-lto</strong>是最好的选择，因为它是一个无冲突的工具，而且它比<strong>afl-clang-fast</strong>快。</p>
+<p>如果不确定何时使用<strong>afl-clang-lto</strong>或<strong>afl-clang-fast</strong>，可以检查从[AFLplusplus:检测目标]提取的下图(<a target="_blank" rel="noopener" href="https://github.com/AFLplusplus/AFLplusplus#1-instrumenting-that-target">https://github.com/AFLplusplus/AFLplusplus#1-instrumenting-that-target</a>)</p>
+<p>](<a target="_blank" rel="noopener" href="https://github.com/AFLplusplus/AFLplusplus#1-instrumenting-that-target">https://github.com/AFLplusplus/AFLplusplus#1-instrumenting-that-target</a>)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">+--------------------------------+</span><br><span class="line">| clang/clang++ 11+ is available | --&gt; use LTO mode (afl-clang-lto/afl-clang-lto++)</span><br><span class="line">+--------------------------------+     see [instrumentation/README.lto.md](instrumentation/README.lto.md)</span><br><span class="line">    |</span><br><span class="line">    | if not, or if the target fails with LTO afl-clang-lto/++</span><br><span class="line">    |</span><br><span class="line">    v</span><br><span class="line">+---------------------------------+</span><br><span class="line">| clang/clang++ 6.0+ is available | --&gt; use LLVM mode (afl-clang-fast/afl-clang-fast++)</span><br><span class="line">+---------------------------------+     see [instrumentation/README.llvm.md](instrumentation/README.llvm.md)</span><br><span class="line">    |</span><br><span class="line">    | if not, or if the target fails with LLVM afl-clang-fast/++</span><br><span class="line">    |</span><br><span class="line">    v</span><br><span class="line"> +--------------------------------+</span><br><span class="line"> | gcc 5+ is available            | -&gt; use GCC_PLUGIN mode (afl-gcc-fast/afl-g++-fast)</span><br><span class="line"> +--------------------------------+    see [instrumentation/README.gcc_plugin.md](instrumentation/README.gcc_plugin.md) and</span><br><span class="line">                                       [instrumentation/README.instrument_list.md](instrumentation/README.instrument_list.md)</span><br><span class="line">    |</span><br><span class="line">    | if not, or if you do not have a gcc with plugin support</span><br><span class="line">    |</span><br><span class="line">    v</span><br><span class="line">   use GCC mode (afl-gcc/afl-g++) (or afl-clang/afl-clang++ for clang)</span><br></pre></td></tr></table></figure>
+
+<h4 id="5、fuzzing"><a href="#5、fuzzing" class="headerlink" title="5、fuzzing"></a>5、fuzzing</h4><p>使用以下命令运行fuzzer</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">afl-fuzz -i $HOME/fuzzing_libexif/exif-samples-master/jpg/ -o $HOME/fuzzing_libexif/out/ -s 123 -- $HOME/fuzzing_libexif/install/bin/exif @@</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/78f8b744-54ce-4d0c-b39d-819491dfad7d" alt="image"></p>
+<p>几分钟后可以看见有多个崩溃</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b67623b8-6a50-4130-9ecc-3605eb0c0f83" alt="image"></p>
+<p>可以在这里找到崩溃的图像文件</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6920c7f3-ef27-450d-bc94-8a719b8cfd51" alt="image"></p>
+<h5 id="6、动态调试"><a href="#6、动态调试" class="headerlink" title="6、动态调试"></a>6、动态调试</h5><p>编译出带调试信息的可执行文件</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9615bc59-6331-4782-9e3e-978bf3170239" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2e6a9d0d-4a1c-45d0-ad8b-1d2fd8236f38" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b71abd7e-80d5-4908-b4b9-06d0273d1b51" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/96c5f039-dc94-41e5-93c9-f2ef5d802ff2" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/bb07280f-84e4-40a3-86da-81b1ae37c7ac" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2cd7f21f-dcfa-4b47-9ddc-4a87efbb794a" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8c87e2c4-8d92-4f0a-ab71-e744d772344e" alt="image"></p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230728003925454.png" alt="image-20230728003925454"></p>
+<p>放到gdb中，跑出clash</p>
+<h6 id="clash1"><a href="#clash1" class="headerlink" title="clash1"></a>clash1</h6><p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d21d484c-3feb-4091-8cb7-a33113e8449c" alt="image"></p>
+<p>报错信息**Program received signal SIGSEGV, Segmentation fault.**存在内存泄漏</p>
+<p>报错位置<strong>in exif_data_load_data (data&#x3D;0x4538c0, d_orig&#x3D;<optimized out>, ds_orig&#x3D;<optimized out>) at exif-utils.c:94 94 return ((buf[1] &lt;&lt; 8) | buf[0]);</strong></p>
+<p>注意这里的报错，内存地址无法访问，再看地址，猜测为堆缓冲区溢出</p>
+<h6 id="clash2"><a href="#clash2" class="headerlink" title="clash2"></a>clash2</h6><p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/c527947c-bf6e-409e-9fcb-4dbd094d6396" alt="image"></p>
+<p>报错信息**Program received signal SIGSEGV, Segmentation fault.**存在内存泄露</p>
+<p>报错位置<strong>in exif_data_load_data (data&#x3D;0x4538c0, d_orig&#x3D;<optimized out>, ds_orig&#x3D;<optimized out>) at exif-utils.c:94</strong></p>
+<h6 id="clash3"><a href="#clash3" class="headerlink" title="clash3"></a>clash3</h6><p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/084afe63-c7a2-486b-9e8e-d5509d4efe19" alt="image"></p>
+<p>报错信息**Program received signal SIGSEGV, Segmentation fault.**存在内存泄露</p>
+<p>报错位置<strong>in exif_data_load_data (data&#x3D;0x4538c0, d_orig&#x3D;<optimized out>, ds_orig&#x3D;<optimized out>) at exif-utils.c:94</strong></p>
+<h5 id="7、漏洞修复"><a href="#7、漏洞修复" class="headerlink" title="7、漏洞修复"></a>7、漏洞修复</h5><p><a target="_blank" rel="noopener" href="https://github.com/libexif/libexif/commit/8ce72b7f81e61ef69b7ad5bdfeff1516c90fa361">https://github.com/libexif/libexif/commit/8ce72b7f81e61ef69b7ad5bdfeff1516c90fa361</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/libexif/libexif/commit/00986f6fa979fe810b46e376a462c581f9746e06">https://github.com/libexif/libexif/commit/00986f6fa979fe810b46e376a462c581f9746e06</a></p>
+<h4 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h4><p>通过这个实验，我了解了<strong>CVE-2009-3895</strong>漏洞和<strong>CVE-2012-2836</strong>漏洞，学习了<strong>libexif</strong>，找到一个使用libexif库的接口应用程序，创建一个出口样本的种子语料库使，用afl-clang-lto编译libexif和选择的应用程序，模糊libexif，直到有一些独特的崩溃，分类崩溃以找到每个漏洞的PoC</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/07/27/Exercise%202%20-%20libexif/" data-id="clklekotu0000m8vf1b0j8wpb" data-title="Exercise 2 - libexif" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/07/26/%E3%80%8AThe%20structure%20of%20paper%20or%20report%20in%20Systems%E3%80%8B/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">《The structure of paper/report in Systems》</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/learn/" rel="tag">learn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Fuzzing/" style="font-size: 20px;">Fuzzing</a> <a href="/tags/learn/" style="font-size: 10px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 20px;">论文细读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/07/27/Exercise%202%20-%20libexif/">Exercise 2 - libexif</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/26/%E3%80%8AThe%20structure%20of%20paper%20or%20report%20in%20Systems%E3%80%8B/">《The structure of paper/report in Systems》</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/25/Exercise%201%20-%20Xpdf/">Exercise 1 - Xpdf</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/24/clash%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/">clash科学上网</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/23/%E3%80%8AHow%20to%20give%20a%20good%20research%20talk%E3%80%8B/">《How to give a good research talk》</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
