@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Exercise 7 - VLC Media Player | qinyiwen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Exercise 7 - VLC Media Player一、实验背景CVE-2019-14776是一个越界读取漏洞，可以通过精心制作的WMV&#x2F;ASF (Windows Media Video)文件触发。越界读取是当程序读取数据超过预期缓冲区的末尾或开始之前时发生的漏洞。因此，它允许远程攻击者导致拒绝服务或可能从进程内存中获取潜在的敏感信息。 越界读取漏洞（https:&#x2F;&#x2F;cwe.mit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Exercise 7 - VLC Media Player">
+<meta property="og:url" content="http://example.com/2023/08/01/Exercise%207%20-%20VLC%20Media%20Player/index.html">
+<meta property="og:site_name" content="qinyiwen">
+<meta property="og:description" content="Exercise 7 - VLC Media Player一、实验背景CVE-2019-14776是一个越界读取漏洞，可以通过精心制作的WMV&#x2F;ASF (Windows Media Video)文件触发。越界读取是当程序读取数据超过预期缓冲区的末尾或开始之前时发生的漏洞。因此，它允许远程攻击者导致拒绝服务或可能从进程内存中获取潜在的敏感信息。 越界读取漏洞（https:&#x2F;&#x2F;cwe.mit">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/3202c8c2-020e-43e7-acdd-6b1fc2e1b5d3">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/cd3e5bab-c56e-461b-bf35-3a206fe5ca17">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/8b5ea12b-8a45-4fc8-98c8-055762f3074e">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/0abd4ced-6a37-410c-abbd-67d841f13c68">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/0982fa2d-3152-4151-8ada-79eb2f254b18">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/34af0e30-08f8-44bc-9349-8f8e6ce30010">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/96b4bcc3-158c-4b6e-ba44-2ababb31bfad">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/9f19e66f-ad36-4128-9c95-612efba4dd7e">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/73c23d48-c702-439c-97f2-8662bad8ad61">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/e218173c-f154-40cb-aca9-f3963f021a79">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/d737430f-45fd-4c50-bde3-90fc21f656b8">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/b0692ec5-08db-4708-8dd7-de887b5a130e">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/440e516b-b84e-46c4-811b-a04766c51586">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/fd9c3400-3ea2-4430-baa4-e1e3748ca356">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/2f1b8946-18bc-46d3-a7ef-e80a8c48401c">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/723e0f2a-62c7-4376-b9e2-c3e281cf0240">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/8c630391-698e-495d-ae8b-520a844d8999">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/75b90691-fdd0-4623-959a-509166ccf415">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/8805c9e9-c6df-49bc-95e8-4100fa926990">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/7375cb28-c429-4fcb-8f73-86377f36c6c9">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/378225ea-06c2-4351-a815-85f48b7a257c">
+<meta property="og:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230802153658669.png">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/63ee9621-c317-45f4-b390-4628ce9960a5">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/21e1a6e2-dd80-41fb-8660-8646c6502027">
+<meta property="article:published_time" content="2023-08-01T15:21:53.000Z">
+<meta property="article:modified_time" content="2023-08-02T07:45:55.843Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Fuzzing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/3202c8c2-020e-43e7-acdd-6b1fc2e1b5d3">
+  
+    <link rel="alternate" href="/atom.xml" title="qinyiwen" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">qinyiwen</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Exercise 7 - VLC Media Player" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/08/01/Exercise%207%20-%20VLC%20Media%20Player/" class="article-date">
+  <time class="dt-published" datetime="2023-08-01T15:21:53.000Z" itemprop="datePublished">2023-08-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Exercise 7 - VLC Media Player
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Exercise-7-VLC-Media-Player"><a href="#Exercise-7-VLC-Media-Player" class="headerlink" title="Exercise 7 - VLC Media Player"></a>Exercise 7 - VLC Media Player</h3><h4 id="一、实验背景"><a href="#一、实验背景" class="headerlink" title="一、实验背景"></a>一、实验背景</h4><p><strong>CVE-2019-14776</strong>是一个越界读取漏洞，可以通过精心制作的WMV&#x2F;ASF (Windows Media Video)文件触发。越界读取是当程序读取数据超过预期缓冲区的末尾或开始之前时发生的漏洞。因此，它允许远程攻击者导致拒绝服务或可能从进程内存中获取潜在的敏感信息。</p>
+<p>越界读取漏洞（<a target="_blank" rel="noopener" href="https://cwe.mitre.org/data/definitions/125.html%EF%BC%89">https://cwe.mitre.org/data/definitions/125.html）</a></p>
+<p><strong>部分仪器仪表</strong></p>
+<p>使用进化覆盖引导的模糊器的优点之一是，它能够自己找到新的执行路径。然而，这通常也是一个缺点。当我们面对具有高度模块化架构的软件(如VLC媒体播放器)时，每个模块执行特定的任务。</p>
+<p>那么，假设我们给监控器提供了一个有效的MKV文件。但是在对输入文件进行了几次修改之后，“magic bytes”文件发生了变化，现在我们的程序将输入文件视为AVI文件。因此，这个“变异的MKV文件”现在由AVI Demux处理。一段时间后，文件魔术字节再次改变，现在文件被视为MPEG文件。在这两种情况下，这个新修改的文件增加代码覆盖率的可能性都很低，因为这个新文件没有任何有效的语法结构。</p>
+<p>简而言之，如果我们不对代码覆盖率施加限制，模糊测试者很容易选择错误的路径，从而使模糊测试过程效率降低。</p>
+<p>为了解决这个问题，afl++包含了一个部分插装特性，它允许指定应该使用或不使用插装来编译哪些函数&#x2F;文件。这有助于模糊器专注于程序的重要部分，通过执行无趣的代码路径来避免不必要的噪声和干扰。</p>
+<p>为了使用它，我们在编译时设置环境AFL_LLVM_ALLOWLIST变量。这个环境变量必须指向一个包含所有应该检测的函数&#x2F;文件名的文件。</p>
+<p>afl++部分仪器（<a target="_blank" rel="noopener" href="https://github.com/AFLplusplus/AFLplusplus/blob/stable/instrumentation/README.instrument_list.md%EF%BC%89">https://github.com/AFLplusplus/AFLplusplus/blob/stable/instrumentation/README.instrument_list.md）</a></p>
+<h4 id="二、实验目的"><a href="#二、实验目的" class="headerlink" title="二、实验目的"></a>二、实验目的</h4><p>模糊<strong>VLC</strong>媒体播放器。目标是在VLC 3.0.7.1中找到<a target="_blank" rel="noopener" href="https://nvd.nist.gov/vuln/detail/CVE-2019-14776"><strong>CVE-2019-14776</strong></a>的崩溃&#x2F;PoC</p>
+<h4 id="三、实验环境："><a href="#三、实验环境：" class="headerlink" title="三、实验环境："></a>三、实验环境：</h4><p>win10，VMware，Ubuntu 20.04.2 LTS（虚拟机用户名密码均为fuzz）</p>
+<h4 id="四、实验步骤"><a href="#四、实验步骤" class="headerlink" title="四、实验步骤"></a>四、实验步骤</h4><h5 id="1、下载并构建目标"><a href="#1、下载并构建目标" class="headerlink" title="1、下载并构建目标"></a>1、下载并构建目标</h5><p>得到模糊目标，为要模糊化的项目创建一个新目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME</span><br><span class="line">mkdir fuzzing_vlc &amp;&amp; cd fuzzing_vlc</span><br></pre></td></tr></table></figure>
+
+<p>下载并解压vlc-3.0.7.1.tar.xz</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://download.videolan.org/pub/videolan/vlc/3.0.7.1/vlc-3.0.7.1.tar.xz</span><br><span class="line">tar -xvf vlc-3.0.7.1.tar.xz &amp;&amp; cd vlc-3.0.7.1/</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/3202c8c2-020e-43e7-acdd-6b1fc2e1b5d3" alt="image"></p>
+<p>发现下载链接连接失败，用管理员身份下载，解决问题</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/cd3e5bab-c56e-461b-bf35-3a206fe5ca17" alt="image"></p>
+<h5 id="2、构建VCL"><a href="#2、构建VCL" class="headerlink" title="2、构建VCL"></a>2、构建VCL</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=&quot;$HOME/fuzzing_vlc/vlc-3.0.7.1/install&quot; --disable-a52 --disable-lua --disable-qt</span><br><span class="line">make -j$(nproc)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8b5ea12b-8a45-4fc8-98c8-055762f3074e" alt="image"></p>
+<p>报错</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/0abd4ced-6a37-410c-abbd-67d841f13c68" alt="image"></p>
+<p>解决方案</p>
+<p>安装一些必要的依赖库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">apt-get install libxcb-composite0-dev libxcb-glx0-dev libxcb-dri2-0-dev libxcb-xf86dri0-dev libxcb-xinerama0-dev libxcb-render-util0-dev</span><br><span class="line">apt-get install libxcb-xv0-dev</span><br><span class="line">apt-get install libxcb-randr0-dev</span><br><span class="line">apt-get install libasound2-dev</span><br><span class="line">apt-get install libvlc-dev</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/0982fa2d-3152-4151-8ada-79eb2f254b18" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/34af0e30-08f8-44bc-9349-8f8e6ce30010" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/96b4bcc3-158c-4b6e-ba44-2ababb31bfad" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9f19e66f-ad36-4128-9c95-612efba4dd7e" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/73c23d48-c702-439c-97f2-8662bad8ad61" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/e218173c-f154-40cb-aca9-f3963f021a79" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d737430f-45fd-4c50-bde3-90fc21f656b8" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b0692ec5-08db-4708-8dd7-de887b5a130e" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/440e516b-b84e-46c4-811b-a04766c51586" alt="image"></p>
+<p>安装完依赖库后，重新运行.config，成功构建VCL</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/fd9c3400-3ea2-4430-baa4-e1e3748ca356" alt="image"></p>
+<p>测试工作是否正确</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/vlc-static --help</span><br></pre></td></tr></table></figure>
+
+<p>如看到以下页面，说明工作正确</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2f1b8946-18bc-46d3-a7ef-e80a8c48401c" alt="image"></p>
+<h5 id="3、种子语料库创建"><a href="#3、种子语料库创建" class="headerlink" title="3、种子语料库创建"></a>3、种子语料库创建</h5><p>可以在<a target="_blank" rel="noopener" href="https://samples.ffmpeg.org/">ffmpeg示例库</a>中找到大量视频示例。</p>
+<p>建议挑选一些样本，然后使用视频编辑器将视频文件缩小到尽可能小的大小。</p>
+<p>以下是一些开源视频编辑器的例子:</p>
+<p>——(OpenShot) (<a target="_blank" rel="noopener" href="https://www.openshot.org/">https://www.openshot.org/</a>)</p>
+<p>——(Shotcut) (<a target="_blank" rel="noopener" href="https://shotcut.org/">https://shotcut.org/</a>)</p>
+<p>或者复制<a href="./InputCorpus/short2.wmv">short2.wmv</a>和<a href="./InputCorpus/veryshort.wmv">veryshort.wmv</a>文件到AFL输入文件夹</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/723e0f2a-62c7-4376-b9e2-c3e281cf0240" alt="image"></p>
+<h5 id="4、fuzzing线束"><a href="#4、fuzzing线束" class="headerlink" title="4、fuzzing线束"></a>4、fuzzing线束</h5><p>如果尝试直接模糊“vlc-static”二进制文件，将看到AFL每秒只执行几次。这是因为VLC启动非常耗时。这就是为什么为模糊测试VLC创建一个自定义模糊测试线束。</p>
+<p>修改’ ‘ .&#x2F;test&#x2F;vlc-demux-run.c ‘ ‘文件以包含模糊测试工具。通过这种方式，只需执行以下操作即可编译该harness:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd test</span><br><span class="line">make vlc-demux-run -j$(nproc) LDFLAGS=&quot;-fsanitize=address&quot;</span><br><span class="line">cd ..</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8c630391-698e-495d-ae8b-520a844d8999" alt="image"></p>
+<p>由于该错误存在于ASF解模中，所以调用<strong>vlc_demux_process_memory</strong>函数。这个函数尝试删除先前存储在内存中的数据缓冲区。可以在这里找到代码修改(.&#x2F;fuzzing_harness.patch)</p>
+<h5 id="5、部分仪器化"><a href="#5、部分仪器化" class="headerlink" title="5、部分仪器化"></a>5、部分仪器化</h5><p>一开始，尝试只包括ASF拆模所涉及的文件名。不幸的是，这种方法不起作用。似乎文件名匹配是<a target="_blank" rel="noopener" href="https://github.com/AFLplusplus/AFLplusplus/issues/1018#issuecomment-879045408">并不总是可能的</a>，所以选择了一个混合的方法，包括函数匹配和文件名匹配</p>
+<p>可以下载部分检测文件(.&#x2F;Partial_instrumentation)</p>
+<h5 id="6、小改动"><a href="#6、小改动" class="headerlink" title="6、小改动"></a>6、小改动</h5><p>为了加快ASF模糊测试的速度，建议将这个补丁应用到<strong>modules&#x2F;demux&#x2F;libasf.c</strong> (目前没有更多的线索;)):[speeup .patch](.&#x2F; speeup .patch)</p>
+<h5 id="7、fuzzing"><a href="#7、fuzzing" class="headerlink" title="7、fuzzing"></a>7、fuzzing</h5><p>使用<strong>afl-clang-fast</strong>作为编译器并启用ASAN构建VLC的时间</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CC=&quot;afl-clang-fast&quot; CXX=&quot;afl-clang-fast++&quot; ./configure --prefix=&quot;$HOME/fuzzing_vlc/vlc-3.0.7.1/install&quot; --disable-a52 --disable-lua --disable-qt --with-sanitizer=address</span><br><span class="line">AFL_LLVM_ALLOWLIST=$HOME/fuzzing_vlc/vlc-3.0.7.1/Partial_instrumentation make -j$(nproc) LDFLAGS=&quot;-fsanitize=address&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/75b90691-fdd0-4623-959a-509166ccf415" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8805c9e9-c6df-49bc-95e8-4100fa926990" alt="image"></p>
+<p>构建模糊控制装置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd test</span><br><span class="line">make vlc-demux-run -j$(nproc) LDFLAGS=&quot;-fsanitize=address&quot;</span><br><span class="line">cd ..  </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7375cb28-c429-4fcb-8f73-86377f36c6c9" alt="image"></p>
+<p>运行fuzzer</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">afl-fuzz -t 100 -m none -i &#x27;./afl_in&#x27; -o &#x27;./afl_out&#x27; -x asf_dictionary.dict -D -M master -- ./test/vlc-demux-run @@    </span><br></pre></td></tr></table></figure>
+
+<p>注意事项：超时参数严重依赖于计算机，需要调整这个值</p>
+<p>过一段时间，可以看到多个崩溃</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/378225ea-06c2-4351-a815-85f48b7a257c" alt="image"></p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230802153658669.png" alt="image-20230802153658669"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/63ee9621-c317-45f4-b390-4628ce9960a5" alt="Image1"></p>
+<h5 id="8、Triage"><a href="#8、Triage" class="headerlink" title="8、Triage"></a>8、Triage</h5><p>ASan跟踪可能看起来像</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/21e1a6e2-dd80-41fb-8660-8646c6502027" alt="image3"></p>
+<h5 id="9、修复问题"><a href="#9、修复问题" class="headerlink" title="9、修复问题"></a>9、修复问题</h5><p>修复这两个bug后重建目标，并检查PoC不再使程序崩溃</p>
+<h4 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h4><p>通过这个实验，我了解了<strong>CVE-2019-14776</strong>漏洞，学会如何使用部分仪器只对程序的相关部分进行仪器检测，如何编写模糊测试工具来更有效地测试大型应用程序</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/08/01/Exercise%207%20-%20VLC%20Media%20Player/" data-id="clktgz1j70000p8vff6fg5aw8" data-title="Exercise 7 - VLC Media Player" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/07/31/Exercise%206%20-%20GIMP/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Exercise 6 - GIMP</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/learn/" rel="tag">learn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Fuzzing/" style="font-size: 20px;">Fuzzing</a> <a href="/tags/learn/" style="font-size: 10px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 15px;">论文细读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/08/01/Exercise%207%20-%20VLC%20Media%20Player/">Exercise 7 - VLC Media Player</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/31/Exercise%206%20-%20GIMP/">Exercise 6 - GIMP</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/29/Exercise%204%20-%20LibTIFF/">Exercise 4 - LibTIFF</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/28/Exercise%203%20-%20TCPdump/">Exercise 3 - TCPdump</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/27/Exercise%202%20-%20libexif/">Exercise 2 - libexif</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

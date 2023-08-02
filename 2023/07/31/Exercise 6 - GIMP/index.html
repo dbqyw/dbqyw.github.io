@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Exercise 6 - GIMP | qinyiwen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Exercise 6 - GIMP一、实验背景CVE-2016-4994是一个可以通过精心制作的XCF文件触发的Use-After-Free漏洞。当程序在释放指针后继续使用指针时，会发生释放错误。这可能会产生许多不良后果，从破坏有效数据到执行任意代码。 Use-After-Free漏洞（https:&#x2F;&#x2F;cwe.mitre.org&#x2F;data&#x2F;definitions&#x2F;416.html） 持久模式 AF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Exercise 6 - GIMP">
+<meta property="og:url" content="http://example.com/2023/07/31/Exercise%206%20-%20GIMP/index.html">
+<meta property="og:site_name" content="qinyiwen">
+<meta property="og:description" content="Exercise 6 - GIMP一、实验背景CVE-2016-4994是一个可以通过精心制作的XCF文件触发的Use-After-Free漏洞。当程序在释放指针后继续使用指针时，会发生释放错误。这可能会产生许多不良后果，从破坏有效数据到执行任意代码。 Use-After-Free漏洞（https:&#x2F;&#x2F;cwe.mitre.org&#x2F;data&#x2F;definitions&#x2F;416.html） 持久模式 AF">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/217f1d72-3f11-43e0-9349-19b3054e39eb">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/7710b53d-1f28-46cf-a759-2803dea33a20">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/61453004-8215-4515-8959-64901b51e1b1">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/479ad11c-4518-4158-bd26-53fec0919074">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/79ecb2c0-d77b-4d0e-8ce4-d28785d0281d">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/5b931164-daf3-4b97-99c2-3156517b3316">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/68a0cc96-6440-4ca5-9810-e46f600528a0">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/7754716a-60de-46b1-af94-c913d0b9b755">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/c8444d9b-6d99-493d-ad19-6e122e7df54d">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/e9dd7b26-9d03-4858-a63b-f8d00eb9d7c0">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/9e9138ee-cef7-47f5-8142-8052da800b8f">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/db175fdb-b8f9-471d-aaf2-528ecf976409">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/b1dfc8ce-710f-4388-8d79-4f2c7bde4348">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/668873ab-07d5-4def-8f4a-36718cb804f0">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/ed1854d4-10f8-455f-8dfc-d67ee8c55b84">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/776dba22-7ddd-4db1-a53a-324e1e44729d">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/be32a51f-edc7-4284-9563-1c4bf26ae496">
+<meta property="article:published_time" content="2023-07-31T15:09:51.000Z">
+<meta property="article:modified_time" content="2023-08-02T07:51:29.983Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Fuzzing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/217f1d72-3f11-43e0-9349-19b3054e39eb">
+  
+    <link rel="alternate" href="/atom.xml" title="qinyiwen" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">qinyiwen</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Exercise 6 - GIMP" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/07/31/Exercise%206%20-%20GIMP/" class="article-date">
+  <time class="dt-published" datetime="2023-07-31T15:09:51.000Z" itemprop="datePublished">2023-07-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Exercise 6 - GIMP
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Exercise-6-GIMP"><a href="#Exercise-6-GIMP" class="headerlink" title="Exercise 6 - GIMP"></a>Exercise 6 - GIMP</h3><h4 id="一、实验背景"><a href="#一、实验背景" class="headerlink" title="一、实验背景"></a>一、实验背景</h4><p><strong>CVE-2016-4994</strong>是一个可以通过精心制作的XCF文件触发的Use-After-Free漏洞。当程序在释放指针后继续使用指针时，会发生释放错误。这可能会产生许多不良后果，从破坏有效数据到执行任意代码。</p>
+<p>Use-After-Free漏洞（<a target="_blank" rel="noopener" href="https://cwe.mitre.org/data/definitions/416.html%EF%BC%89">https://cwe.mitre.org/data/definitions/416.html）</a></p>
+<p><strong>持久模式</strong></p>
+<p>AFL持久模式基于进程内fuzzers: fuzzers利用单个进程，将代码注入目标进程并更改内存中的输入值。full -fuzz支持一种工作模式，它结合了进程内模糊测试的优点和更传统的多进程工具的健壮性:持久模式。在持久模式下，afl++在单个分叉进程中对目标进行多次模糊处理，而不是为每次执行模糊处理都创建一个新进程。该模式可将模糊测试速度提高20倍。</p>
+<p>目标的基本结构如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Program initialization</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (__AFL_LOOP(<span class="number">10000</span>)) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Read input data. */</span></span><br><span class="line">  <span class="comment">/* Call library code to be fuzzed. */</span></span><br><span class="line">  <span class="comment">/* Reset state. */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//End of fuzzing</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>afl++持久模式（<a target="_blank" rel="noopener" href="https://github.com/AFLplusplus/AFLplusplus/blob/stable/instrumentation/README.persistent_mode.md%EF%BC%89">https://github.com/AFLplusplus/AFLplusplus/blob/stable/instrumentation/README.persistent_mode.md）</a></p>
+<h4 id="二、实验目的"><a href="#二、实验目的" class="headerlink" title="二、实验目的"></a>二、实验目的</h4><p>模糊<strong>GIMP</strong>图像编辑器。目标是在GIMP 2.8.16中找到<a target="_blank" rel="noopener" href="https://www.cvedetails.com/cve/CVE-2016-4994/"><strong>CVE-2016-4994</strong></a>的崩溃&#x2F;PoC</p>
+<h4 id="三、实验环境："><a href="#三、实验环境：" class="headerlink" title="三、实验环境："></a>三、实验环境：</h4><p>win10，VMware，Ubuntu 20.04.2 LTS（虚拟机用户名密码均为fuzz）</p>
+<h4 id="四、实验步骤"><a href="#四、实验步骤" class="headerlink" title="四、实验步骤"></a>四、实验步骤</h4><h5 id="1、下载并构建目标"><a href="#1、下载并构建目标" class="headerlink" title="1、下载并构建目标"></a>1、下载并构建目标</h5><p>得到模糊目标，为要模糊化的项目创建一个新目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME</span><br><span class="line">mkdir Fuzzing_gimp &amp;&amp; cd Fuzzing_gimp</span><br></pre></td></tr></table></figure>
+
+<p>安装依赖项</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install build-essential libatk1.0-dev libfontconfig1-dev libcairo2-dev libgudev-1.0-0 libdbus-1-dev libdbus-glib-1-dev libexif-dev libxfixes-dev libgtk2.0-dev python2.7-dev libpango1.0-dev libglib2.0-dev zlib1g-dev intltool libbabl-dev</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/217f1d72-3f11-43e0-9349-19b3054e39eb" alt="image"></p>
+<p>下载并构建GEGL 0.2(通用图形库)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://download.gimp.org/pub/gegl/0.2/gegl-0.2.0.tar.bz2</span><br><span class="line">tar xvf gegl-0.2.0.tar.bz2 &amp;&amp; cd gegl-0.2.0</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7710b53d-1f28-46cf-a759-2803dea33a20" alt="image"></p>
+<p>对源代码做两个小的修改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sed -i &#x27;s/CODEC_CAP_TRUNCATED/AV_CODEC_CAP_TRUNCATED/g&#x27; ./operations/external/ff-load.c</span><br><span class="line">sed -i &#x27;s/CODEC_FLAG_TRUNCATED/AV_CODEC_FLAG_TRUNCATED/g&#x27; ./operations/external/ff-load.c</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/61453004-8215-4515-8959-64901b51e1b1" alt="image"></p>
+<p>构建并安装Gegl-0.2</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./configure --enable-debug --disable-glibtest  --without-vala --without-cairo --without-pango --without-pangocairo --without-gdk-pixbuf --without-lensfun --without-libjpeg --without-libpng --without-librsvg --without-openexr --without-sdl --without-libopenraw --without-jasper --without-graphviz --without-lua --without-libavformat --without-libv4l --without-libspiro --without-exiv2 --without-umfpack</span><br><span class="line">make -j$(nproc)</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/479ad11c-4518-4158-bd26-53fec0919074" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/79ecb2c0-d77b-4d0e-8ce4-d28785d0281d" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/5b931164-daf3-4b97-99c2-3156517b3316" alt="image"></p>
+<p>如果在测试阶段看到一些错误消息，不要担心</p>
+<p>下载并解压GIMP 2.8.16</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ..</span><br><span class="line">wget https://mirror.klaus-uwe.me/gimp/pub/gimp/v2.8/gimp-2.8.16.tar.bz2</span><br><span class="line">tar xvf gimp-2.8.16.tar.bz2 &amp;&amp; cd gimp-2.8.16/</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/68a0cc96-6440-4ca5-9810-e46f600528a0" alt="image"></p>
+<p>使用<strong>afl-clang-lto</strong>作为编译器构建GIMP的时间(可能需要一些时间)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CC=afl-clang-lto CXX=afl-clang-lto++ PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$HOME/Fuzzing_gimp/gegl-0.2.0/ CFLAGS=&quot;-fsanitize=address&quot; CXXFLAGS=&quot;-fsanitize=address&quot; LDFLAGS=&quot;-fsanitize=address&quot; ./configure --disable-gtktest --disable-glibtest --disable-alsatest --disable-nls --without-libtiff --without-libjpeg --without-bzip2 --without-gs --without-libpng --without-libmng --without-libexif --without-aa --without-libxpm --without-webkit --without-librsvg --without-print --without-poppler --without-cairo-pdf --without-gvfs --without-libcurl --without-wmf --without-libjasper --without-alsa --without-gudev --disable-python --enable-gimp-console --without-mac-twain --without-script-fu --without-gudev --without-dbus --disable-mp --without-linux-input --without-xvfb-run --with-gif-compression=none --without-xmc --with-shm=none --enable-debug  --prefix=&quot;$HOME/Fuzzing_gimp/gimp-2.8.16/install&quot;</span><br><span class="line">make -j$(nproc)</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7754716a-60de-46b1-af94-c913d0b9b755" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/c8444d9b-6d99-493d-ad19-6e122e7df54d" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/e9dd7b26-9d03-4858-a63b-f8d00eb9d7c0" alt="image"></p>
+<h5 id="2、持久模式"><a href="#2、持久模式" class="headerlink" title="2、持久模式"></a>2、持久模式</h5><p>有两种非常简单的方法:</p>
+<p>第一个是修改’ ‘ app.c ‘ ‘文件，并将AFL_LOOP宏包含到for循环中</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9e9138ee-cef7-47f5-8142-8052da800b8f" alt="image"></p>
+<p>第二种方法是在’ ‘ xcf_load_invoker ‘ ‘函数中插入AFL_LOOP宏</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/db175fdb-b8f9-471d-aaf2-528ecf976409" alt="Image1"></p>
+<p>虽然第一个允许我们针对不同的输入格式，第二个更快，我们将有更多的机会抓住错误。</p>
+<p>下载第二个补丁<a href="./persistent.patch">在这里</a></p>
+<h5 id="2、种子语料库创建"><a href="#2、种子语料库创建" class="headerlink" title="2、种子语料库创建"></a>2、种子语料库创建</h5><p>建议创建多个GIMP项目并保存它们以获得多个.xcf示例，或者，可以将<a href="./SampleInput.xcf">SampleInput.xcf</a>文件复制到您的AFL输入文件夹中</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b1dfc8ce-710f-4388-8d79-4f2c7bde4348" alt="image"></p>
+<h5 id="3、fuzzing"><a href="#3、fuzzing" class="headerlink" title="3、fuzzing"></a>3、fuzzing</h5><p>由于该漏洞影响GIMP核心，可以通过删除不需要的插件来节省一些启动时间</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm ./install/lib/gimp/2.0/plug-ins/*</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/668873ab-07d5-4def-8f4a-36718cb804f0" alt="image"></p>
+<p>使用以下命令运行fuzzer</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ASAN_OPTIONS=detect_leaks=0,abort_on_error=1,symbolize=0 afl-fuzz -i &#x27;./afl_in&#x27; -o &#x27;./afl_out&#x27; -D -t 100 -- ./install/bin/gimp-console-2.8 --verbose -d -f @@</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ed1854d4-10f8-455f-8dfc-d67ee8c55b84" alt="image"></p>
+<p>笔记:</p>
+<ul>
+<li>gimp-console-2.8是GIMP的控制台版本</li>
+<li>我建议启用确定性突变（-D）</li>
+<li>代码中还有一个无限循环的bug，所以我们需要设置一个较低的超时限制(例如-t 100)。此超时限制取决于您的机器功能，因此您需要根据具体情况对其进行调整</li>
+</ul>
+<p>几分钟后可以看见有多个崩溃</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/776dba22-7ddd-4db1-a53a-324e1e44729d" alt="Image2"></p>
+<h5 id="4、Triage"><a href="#4、Triage" class="headerlink" title="4、Triage"></a>4、Triage</h5><p>ASan跟踪可能看起来像</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/be32a51f-edc7-4284-9563-1c4bf26ae496" alt="image3"></p>
+<h5 id="5、修复问题"><a href="#5、修复问题" class="headerlink" title="5、修复问题"></a>5、修复问题</h5><p>修复这两个bug后重建目标，并检查PoC不再使程序崩溃</p>
+<h4 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h4><p>通过这个实验，我了解了<strong>CVE-2016-4994</strong>漏洞，学会如何使用持久模式加快模糊测试，如何模糊交互&#x2F; GUI应用程序</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/07/31/Exercise%206%20-%20GIMP/" data-id="clktgz1jj0001p8vf984d33bg" data-title="Exercise 6 - GIMP" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/08/01/Exercise%207%20-%20VLC%20Media%20Player/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Exercise 7 - VLC Media Player
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/07/29/Exercise%204%20-%20LibTIFF/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Exercise 4 - LibTIFF</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/learn/" rel="tag">learn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Fuzzing/" style="font-size: 20px;">Fuzzing</a> <a href="/tags/learn/" style="font-size: 10px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 15px;">论文细读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/08/01/Exercise%207%20-%20VLC%20Media%20Player/">Exercise 7 - VLC Media Player</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/31/Exercise%206%20-%20GIMP/">Exercise 6 - GIMP</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/29/Exercise%204%20-%20LibTIFF/">Exercise 4 - LibTIFF</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/28/Exercise%203%20-%20TCPdump/">Exercise 3 - TCPdump</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/27/Exercise%202%20-%20libexif/">Exercise 2 - libexif</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
