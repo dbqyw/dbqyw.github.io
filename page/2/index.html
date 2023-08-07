@@ -73,6 +73,108 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-《SoK Practical Foundations for Software Spectre Defenses》" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/07/14/%E3%80%8ASoK%20Practical%20Foundations%20for%20Software%20Spectre%20Defenses%E3%80%8B/" class="article-date">
+  <time class="dt-published" datetime="2023-07-14T11:12:41.000Z" itemprop="datePublished">2023-07-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/07/14/%E3%80%8ASoK%20Practical%20Foundations%20for%20Software%20Spectre%20Defenses%E3%80%8B/">《SoK Practical Foundations for Software Spectre Defenses》</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="《SoK-Practical-Foundations-for-Software-Spectre-Defenses》论文分享"><a href="#《SoK-Practical-Foundations-for-Software-Spectre-Defenses》论文分享" class="headerlink" title="《SoK Practical Foundations for Software Spectre Defenses》论文分享"></a>《SoK Practical Foundations for Software Spectre Defenses》论文分享</h3><p><a target="_blank" rel="noopener" href="https://www.computer.org/csdl/proceedings-article/sp/2022/131600b517/1FlQz5KjQZ2">https://www.computer.org/csdl/proceedings-article/sp/2022/131600b517/1FlQz5KjQZ2</a></p>
+<p>Sok: 软件幽灵防御的实践基础</p>
+<p>这篇文章主要是以语义的形式研究幽灵分析的现有基础，讨论语义的不同选择，并描述每种选择的权衡</p>
+<h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>幽灵漏洞</p>
+<p>幽灵是最近发现的一系列漏洞，源于现代处理器上的推测执行，幽灵允许攻击者通过导致处理器错误预测控制流，比如说条件跳转或间接调用，或数据流的目标来学习敏感信息。</p>
+<p>攻击者可用跨越安全边界窃取机密，比如说由进程抽象提供的硬件边界，由内存安全语言和基于软件的故障隔离技术提供的软件边界。</p>
+<p>当处理器意识到自己预测错误时，它会回滚执行，抹去推测对程序员可见的影响，但是在推测执行期间，微架构状态，比如说数据缓存的状态，仍然会被修改，这些变化可能会在推测期间泄露，甚至在回滚之后仍然可以持续，因此攻击者可以从微架构状态中恢复敏感信息，即使这些敏感信息只是随机访问。</p>
+<h4 id="幽灵漏洞破解密码"><a href="#幽灵漏洞破解密码" class="headerlink" title="幽灵漏洞破解密码"></a>幽灵漏洞破解密码</h4><p>High-assurance cryptography （高保证密码学）长期依赖于constant_x0002_time programming（常量时间编程），用来创建不受定时侧信道攻击的安全软件。</p>
+<p><strong>侧信道攻击</strong>是攻击者利用计算机不经意间释放出的信息信号，比如说电磁辐射，电脑硬件运行产生的声音，来进行破译的攻击模式，例如，黑客可以通过计算机显示屏或硬盘驱动器所产生的电磁辐射，来读取你所显示的画面和磁盘内的文件信息。</p>
+<p>常量时间编程确保程序执行不依赖于密码</p>
+<p>它是通过三条规则来保证这一点的：</p>
+<ul>
+<li>控制流（如条件分支）不应该依赖密码</li>
+<li>内存访问模式（如进入数组的偏移量）不应该依赖密码</li>
+<li>密码不应该被用作可变延迟指令的操作数（如浮点指令或许多处理器上的整数除法的操作数）</li>
+</ul>
+<p>这些规则确保机密信息在攻击者强大到足以执行缓存攻击、通过分支预测器状态泄露数据或通过端口争用来窥探数据时仍然安全</p>
+<p>但是对于幽灵漏洞，常量时间编程不足以保证数据安全</p>
+<p>这是一段易受幽灵攻击的代码</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d5411d41-d51d-4f53-97e6-1a2990b5b412" alt="image"></p>
+<p>如果数组arrA只包含公共数据，并且i和arrAlen也是公共数据，那么这段代码符合常数时间编程，但是攻击者可以利用分支错误预测，通过数据缓存泄露得到秘密数据</p>
+<p>攻击者首先用适当小的i值重复运行代码，从而使分支预估调节i&lt;arrAlen为真，然后攻击者为i提供一个越界值，处理器判断条件仍为真，并推测地将越界数据加载到x中，随后它将x值作为内存读取操作地址的一部分，再将x的值编码到数据缓存状态中，根据x的值，不同的缓存行将被访问和缓存，一旦处理器发现了预测错误，就会回滚执行，但是数据缓存状态仍然存在，攻击者可以在以后释放数据缓存状态，以便推断x的值</p>
+<p>这段代码，攻击者可通过控制流泄露秘密数据</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f9f2a01e-3ae4-40be-8d25-404ccb43aa52" alt="image"></p>
+<p>x作为分支条件的一部分，攻击者可以随机将任意内存读取到x中，然后他们可以通过几种方式泄露x的值，比如说根据各种情况的不同执行时间，通过数据缓存，基于在各种情况下执行的不同内存访问，通过端口竞争，分支预测器状态</p>
+<h4 id="使用幽灵打破软件隔离"><a href="#使用幽灵打破软件隔离" class="headerlink" title="使用幽灵打破软件隔离"></a>使用幽灵打破软件隔离</h4><p>幽灵攻击破坏了软件隔离领域的重要保障，在软件隔离领域内，主机应用程序执行不受信任的代码时，确保不受信任的代码无法访问主机的任何数据，但是幽灵攻击可以破坏内存安全和隔离机制</p>
+<p>这张图就是一个幽灵攻击破坏软件隔离的例子</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/45c80e30-26ae-4cba-af07-1852ac17b746" alt="image"></p>
+<p>在该代码中，攻击者使用函数guest_func()调用宿主函数get_host_val()从数组中获取值</p>
+<p>虽然get_host_val()实现了边界检查，但是攻击者仍然可以通过误操作分支预测其来随机性地访问越界数据，从而破坏隔离保证，一旦攻击者获得了他们选择的越界值，他们可以泄露该值，比如说通过数据缓存。我们需要确保，即使是随机性的，不受信任的代码也不能打破隔离</p>
+<h4 id="语义学的选择"><a href="#语义学的选择" class="headerlink" title="语义学的选择"></a>语义学的选择</h4><p>精心设计幽灵分析工具的基础是精心构造的形式化语义，因此语义学的选择是非常重要的</p>
+<p>加密代码需要不同的安全属性，因此需要不同的语义和工具</p>
+<p>实用语义应该在细节和抽象之间做出适当的权衡：</p>
+<ul>
+<li>它应该足够详细，以捕捉我们感兴趣的微架构行为</li>
+<li>它应该足够抽象，以适用于所有合理的硬件，因为我们不希望我们代码的安全性依赖于特定的缓存替换策略或分支预测器的实现</li>
+</ul>
+<h5 id="A-泄露模型"><a href="#A-泄露模型" class="headerlink" title="A 泄露模型"></a>A 泄露模型</h5><p>泄露模型指攻击者可以观察到什么信息</p>
+<p>任何意图建模侧信道攻击的语义都需要精确定义其攻击者的模型，泄露模型是一个语义攻击者模型的重要部分</p>
+<h5 id="B-保密策略"><a href="#B-保密策略" class="headerlink" title="B 保密策略"></a>B 保密策略</h5><p>确定了泄露模型，我们要确定用什么保密策略，即那些值可以泄露，哪些值不能泄露</p>
+<p>密码学和隔离等领域已经定义了顺序安全属性的策略</p>
+<p>对于密码学，包含秘密数据的内存被认为是敏感的，比如说加密密钥的内存</p>
+<p>隔离是声明程序指定的沙盒区域之外的所有内存都不应该被泄露</p>
+<p>沙盒是一种安全机制，为运行中的程序提供隔离环境，提供作为一些来源不可信，具有破坏力或无法判定程序意图的程序使用，沙盒可以提供用后即收回的磁盘及内存空间</p>
+<h5 id="C-执行模型"><a href="#C-执行模型" class="headerlink" title="C 执行模型"></a>C 执行模型</h5><p>为了推断幽灵攻击，语义必须能够推断推测执行模型中敏感数据的泄露，推测执行模型是推测语义与标准顺序分析的区别，并决定抽象处理器可以执行什么推测，对于开发人员来说，需要权衡选择一个合适的推测执行模型</p>
+<ul>
+<li>要选择他们模型允许的行为，比如说它们包含哪些微架构预测器，这决定了它们的工具可以捕获哪些幽灵变体</li>
+<li>如果可以执行的推测过多，会使它们的分析更加复杂</li>
+</ul>
+<h5 id="D-非确定性"><a href="#D-非确定性" class="headerlink" title="D 非确定性"></a>D 非确定性</h5><p>推测执行本质上是具有不确定性的，程序中的任何给定的分支都可能正确或错误地进行，而不管实际的条件值，也就是说推测性劫持攻击可以将执行发送到完全不确定的位置</p>
+<p>现有的语义都假设攻击者对微架构预测和调度有完全的控制</p>
+<p>限制非确定性：</p>
+<p>目前已有研究人员实现用编译器完全重构程序，在软件层加强它们自己的限制行为集，将敏感数据分配到单独的内存区域中，并使用页面权限位来禁止不受信任的代码访问这些区域，无论程序如何推测错误，它都读取不了敏感数据</p>
+<h5 id="E-高级别的抽象"><a href="#E-高级别的抽象" class="headerlink" title="E 高级别的抽象"></a>E 高级别的抽象</h5><p>幽灵攻击和推测执行从根本上打破了我们对程序应该如何执行的直觉假设，关于程序的高级别的保证不再适用</p>
+<p>为了重建更高级别的安全保障，我们首先需要修复我们程序如何执行的模型，从低级语义开始，一旦这些基础牢固地建立了起来，我们才能重建更高级别的抽象</p>
+<p>有了足够的基础，我们可以通过修改高级语言的编译器，产生安全的低级程序来恢复高级抽象</p>
+<h5 id="F-表现力"><a href="#F-表现力" class="headerlink" title="F 表现力"></a>F 表现力</h5><p>一个好的实用的语义需要有足够强的表达性，我们想要一个能够表达的语义对广泛的可能行为进行建模，比如说幽灵变体</p>
+<p>另外，允许太多可能行为的语义会使很多分析变得难以处理</p>
+<p>而语义的基本目的是提供硬件的合理抽象或简化，来简化分析，因此语义中包含多少表现力也需要认真权衡</p>
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>推测分析的坚实基础需要对语义和攻击者模型进行适当的选择，开发人员需要考虑较强的泄露模型，那些只通过内存或数据缓存来捕获泄露的泄露模型会导致安全性保证更弱</p>
+<p>其次必须考虑所有的幽灵变体，这会增加分析的复杂性，但是开发人员可以将分析与结构化编译技术结合，通过构造来限制或删除幽灵攻击的整个类别</p>
+<p>最后，我们建议不要对不必要的架构细节进行建模，比如说对缓存结构或端口争用这种细节进行建模，复杂性更高，并且会降低移植性</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/07/14/%E3%80%8ASoK%20Practical%20Foundations%20for%20Software%20Spectre%20Defenses%E3%80%8B/" data-id="clkf9anc20000v4vf0k2wdu9d" data-title="《SoK Practical Foundations for Software Spectre Defenses》" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-《Beyond Phish Toward Detecting Fraudulent e-Commerce Websites at Scale》" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/07/13/%E3%80%8ABeyond%20Phish%20Toward%20Detecting%20Fraudulent%20e-Commerce%20Websites%20at%20Scale%E3%80%8B/" class="article-date">
@@ -95,16 +197,16 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="《BEYOND-PHISH-Toward-Detecting-Fraudulent-e-Commerce-Websites-at-Scale》论文分享"><a href="#《BEYOND-PHISH-Toward-Detecting-Fraudulent-e-Commerce-Websites-at-Scale》论文分享" class="headerlink" title="《BEYOND PHISH: Toward Detecting Fraudulent e-Commerce Websites at Scale》论文分享"></a>《BEYOND PHISH: Toward Detecting Fraudulent e-Commerce Websites at Scale》论文分享</h1><p><a target="_blank" rel="noopener" href="https://www.computer.org/csdl/proceedings-article/sp/2023/933600c566/1NrbZYi2YjC">https://www.computer.org/csdl/proceedings-article/sp/2023/933600c566/1NrbZYi2YjC</a></p>
+        <h3 id="《BEYOND-PHISH-Toward-Detecting-Fraudulent-e-Commerce-Websites-at-Scale》论文分享"><a href="#《BEYOND-PHISH-Toward-Detecting-Fraudulent-e-Commerce-Websites-at-Scale》论文分享" class="headerlink" title="《BEYOND PHISH: Toward Detecting Fraudulent e-Commerce Websites at Scale》论文分享"></a>《BEYOND PHISH: Toward Detecting Fraudulent e-Commerce Websites at Scale》论文分享</h3><p><a target="_blank" rel="noopener" href="https://www.computer.org/csdl/proceedings-article/sp/2023/933600c566/1NrbZYi2YjC">https://www.computer.org/csdl/proceedings-article/sp/2023/933600c566/1NrbZYi2YjC</a></p>
 <p>BEYOND PHISH：大规模检测欺诈性电子商务网站</p>
 <p>PEYOND PHISH是一个用来大规模检测欺诈性电子商务网站的模型</p>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>首先看它的背景，尽管最近在恶意网站检测和网络钓鱼方面取得了进展，但是安全生态系统很少关注欺诈性电子商务网站(FCWs)，例如欺诈性购物网站，虚假慈善机构网站。这张图是在线虚假购物网站造成的每季度的货币损失总额（单位：百万），仅在2021年的第一个季度，货币损失就超过了一亿美元。</p>
-<p> <img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723172709727.png" alt="image-20230723172709727"></p>
-<h2 id="欺诈性电子商务网站和网络钓鱼攻击的区别"><a href="#欺诈性电子商务网站和网络钓鱼攻击的区别" class="headerlink" title="欺诈性电子商务网站和网络钓鱼攻击的区别"></a>欺诈性电子商务网站和网络钓鱼攻击的区别</h2><p>欺诈性电子商务网站和网络钓鱼攻击的区别在于攻击者的目标</p>
+<h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>首先看它的背景，尽管最近在恶意网站检测和网络钓鱼方面取得了进展，但是安全生态系统很少关注欺诈性电子商务网站(FCWs)，例如欺诈性购物网站，虚假慈善机构网站。这张图是在线虚假购物网站造成的每季度的货币损失总额（单位：百万），仅在2021年的第一个季度，货币损失就超过了一亿美元。</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/e6cd2ee8-1fa3-403e-8a4f-415df9dfaca4" alt="image"></p>
+<h4 id="欺诈性电子商务网站和网络钓鱼攻击的区别"><a href="#欺诈性电子商务网站和网络钓鱼攻击的区别" class="headerlink" title="欺诈性电子商务网站和网络钓鱼攻击的区别"></a>欺诈性电子商务网站和网络钓鱼攻击的区别</h4><p>欺诈性电子商务网站和网络钓鱼攻击的区别在于攻击者的目标</p>
 <p>网络钓鱼的攻击目标是窃取用户的密码和社会保险号等信息</p>
 <p>欺诈性电子商务网站的攻击目标是引诱用户为不可能收到的商品或服务花钱</p>
-<h2 id="主流的网络钓鱼防御并不适用于Fcws"><a href="#主流的网络钓鱼防御并不适用于Fcws" class="headerlink" title="主流的网络钓鱼防御并不适用于Fcws"></a>主流的网络钓鱼防御并不适用于Fcws</h2><p>主流的网络浏览器已经结合了客户端启发式反网络钓鱼和服务器端黑名单来检测钓鱼网站，但是现有的网络钓鱼防御并不适用于Fcws。比如说反网络钓鱼的Google安全浏览在我们收集的Fcws数据集上检测率仅为0.46%</p>
-<h2 id="目前没有可用的Fcws公开数据集"><a href="#目前没有可用的Fcws公开数据集" class="headerlink" title="目前没有可用的Fcws公开数据集"></a>目前没有可用的Fcws公开数据集</h2><h2 id="收集Fcws数据集面临的挑战"><a href="#收集Fcws数据集面临的挑战" class="headerlink" title="收集Fcws数据集面临的挑战"></a>收集Fcws数据集面临的挑战</h2><ul>
+<h4 id="主流的网络钓鱼防御并不适用于Fcws"><a href="#主流的网络钓鱼防御并不适用于Fcws" class="headerlink" title="主流的网络钓鱼防御并不适用于Fcws"></a>主流的网络钓鱼防御并不适用于Fcws</h4><p>主流的网络浏览器已经结合了客户端启发式反网络钓鱼和服务器端黑名单来检测钓鱼网站，但是现有的网络钓鱼防御并不适用于Fcws。比如说反网络钓鱼的Google安全浏览在我们收集的Fcws数据集上检测率仅为0.46%</p>
+<h4 id="目前没有可用的Fcws公开数据集"><a href="#目前没有可用的Fcws公开数据集" class="headerlink" title="目前没有可用的Fcws公开数据集"></a>目前没有可用的Fcws公开数据集</h4><h5 id="收集Fcws数据集面临的挑战"><a href="#收集Fcws数据集面临的挑战" class="headerlink" title="收集Fcws数据集面临的挑战"></a>收集Fcws数据集面临的挑战</h5><ul>
 <li>这些网站很快就会消失</li>
 <li>Fcws并不局限于电子邮件等单一传播渠道</li>
 <li>并且它的内容在检测中起着重要作用，采用盲目网络爬行等方法可能会导致Fcws的内容不适用于检测研究</li>
@@ -112,26 +214,26 @@
 <li>Fcws在不断发展，如以前的Fcws使用极低的价格来吸引顾客，现在的Fcws给出合理的价格，这个操作可能是让顾客更难分辨欺诈电子商务网站与合法网站之间的区别</li>
 </ul>
 <p>左图是合法的crypto网站，右图是欺诈性的crypto网站，光看外表根本看不出哪个是非法的</p>
-<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723173128562.png" alt="image-20230723173128562"></p>
-<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>这是该项目需要解决的三个问题</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/a0616929-91e7-4b85-89e4-478e63aab7ce" alt="image"></p>
+<h5 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h5><p>这是该项目需要解决的三个问题</p>
 <ul>
 <li>如何让收集和标记一个全面的数据集来研究Fcws的特征</li>
 <li>当前防御系统在保护用户免受Fcws攻击方面的有效性怎么样</li>
 <li>我们如何利用Fcws的特征来进行大规模检测</li>
 </ul>
-<h2 id="收集和标注"><a href="#收集和标注" class="headerlink" title="收集和标注"></a>收集和标注</h2><p>这张图是Fcsw数据集收集和标注的过程图</p>
-<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723173249718.png" alt="image-20230723173249718"></p>
+<h5 id="收集和标注"><a href="#收集和标注" class="headerlink" title="收集和标注"></a>收集和标注</h5><p>这张图是Fcsw数据集收集和标注的过程图</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/cf7d7dcf-a58a-47bb-932e-7a2b2f32201d" alt="image"></p>
 <p>首先是Fcws数据集收集部分</p>
 <p>reddit论坛是一个专门讨论诈骗网站的论坛，上面的每个帖子和评论都由reddit版主严格监控，可认为内容是可信的。我们在该论坛收集可能的Fcws，在该论坛中，收集了33514个关于诈骗网站的数据，其中有9114个包含实时url。</p>
 <p>数据标注：</p>
 <p>从9114个url中标记实际的诈骗网站url是非常关键的，我们通过分析用户对每个url的评价进行自动化标记。再手动检查诈骗帖子后，我们发现可以通过用户评论来了解可疑url的合法性，如果url属于诈骗网站，用户会评论不要购买或常见骗局，我们使用自然语言处理模型BERT进行训练，BERT是一种语言模型，用于执行各种自然语言处理的任务，比如说文本生成、情感分析和问题回答，该模型将评论分类为积极或消极。我们在BERT模型上使用了一个神经网络分类器，首先将每个评论转换为上下文向量，其中包含关于评论的重要信息，然后使用神经网络分类器将上下文向量标记为积极或消极。在训练模型时，使用Stanford Sentiment Treebank二元分类数据集（这个数据集包含215154个短语以及正负标签），为了对每个URL进行分类和分配标签，我们首先对提交的每个评论进行分类，如果负面评论多于正面评论，我们将提交的URL标记为诈骗网站。</p>
 <p>这是一个标注的例子，常见的骗局，忽略并继续前进，不要这样做这种就标为负面评论，质量很好这种就标为正面评论，这个URL的负面评论多余正面评论，因此标记为诈骗网站。</p>
-<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723173329016.png" alt="image-20230723173329016"></p>
-<h2 id="分类模型验证"><a href="#分类模型验证" class="headerlink" title="分类模型验证"></a>分类模型验证</h2><p>为了验证我们分类模型的有效性，我们设计了两个实验进行验证</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ea575f9a-10bc-4bec-89b0-0ab861b8988c" alt="image"></p>
+<h4 id="分类模型验证"><a href="#分类模型验证" class="headerlink" title="分类模型验证"></a>分类模型验证</h4><p>为了验证我们分类模型的有效性，我们设计了两个实验进行验证</p>
 <p>1是与Palo Alot Network合作，针对现实世界的数据集测试我们的模型，误检率为2.46%，检测率为94.88%</p>
 <p>2是在数据集中随机选择了2000个网站，并聘请了三位安全专家，通过与网站互动、阅读reddit帖子和使用搜索引擎检测网站的合法性，使用投票制来标注URL，最终误检率为1.98%，漏检率为1.63%</p>
 <p>在标注过程中，专家不允许讨论他们的评估，并且每个专家都独立调查每个网站的特征，评估相关的Reddit帖子，并进行网络搜索，以保证评估的准确性。如果专家无法做出判断，就标记为未知，最终将未知标签多的样本从数据集中删除。</p>
-<h2 id="Fcws的特征"><a href="#Fcws的特征" class="headerlink" title="Fcws的特征"></a>Fcws的特征</h2><p>有了数据集以后，手动检查他们，来寻找能将Fcws与合法网站区分开来的特征</p>
+<h4 id="Fcws的特征"><a href="#Fcws的特征" class="headerlink" title="Fcws的特征"></a>Fcws的特征</h4><p>有了数据集以后，手动检查他们，来寻找能将Fcws与合法网站区分开来的特征</p>
 <p>1、基于内容的特征：</p>
 <p>是指基于网站源代码的，不法分子会模仿合法网站，加入社交媒体的标识或链接，比如twitter，但是这些链接大多无效，我们认为Fcws不包含有效的社交媒体链接的原因是避免他们的身份被受害者暴露并在社交媒体上分享</p>
 <p>2.、基于dns的特征：</p>
@@ -140,18 +242,18 @@
 <p>28.21%的Fcws为了节约成本，采用廉价等级域名，如xyz，store，我们根据域名注册的平均价格，采用50个最便宜的顶级域名构建一个二元特征，表明url是否使用廉价顶级域名</p>
 <p>4、基于社交媒体的特征：</p>
 <p>Fcws试图模仿合法网站，在网站中加入了社交媒体链接，因此检查相应的社交媒体账户可信度非常重要，我们通过抓取facebook和twitter账户的创建日期来计算它们的年龄。账户可信度的另一个判断依据是账户关注者的数量。</p>
-<h2 id="BEYOND-PHISH模型建立"><a href="#BEYOND-PHISH模型建立" class="headerlink" title="BEYOND PHISH模型建立"></a>BEYOND PHISH模型建立</h2><p>在了解了Fcws的共同特性后，我们基于识别出的共同特征，建立模型BEYOND PHISH，用于检测Fcws</p>
+<h4 id="BEYOND-PHISH模型建立"><a href="#BEYOND-PHISH模型建立" class="headerlink" title="BEYOND PHISH模型建立"></a>BEYOND PHISH模型建立</h4><p>在了解了Fcws的共同特性后，我们基于识别出的共同特征，建立模型BEYOND PHISH，用于检测Fcws</p>
 <p>我们根据对收集到的数据集的分析手动定义特征，通过利用网站内容，DNS记录，URL及其社交媒体的功能，创建BEYOND PHISH模型</p>
 <p>这个图是模型训练的过程</p>
-<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723173412838.png" alt="image-20230723173412838"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/a7fdfeb3-110b-43f8-b27b-a4f4d9a541b5" alt="image"></p>
 <p>数据集（dataset）通过特征提取模块传递，该模块利用基于内容的特性、基于DNS的特性、基于URL的特性和基于社交媒体的特性进行链接，为每个URL输出一个特征向量，进行学习得到一个可以将Fcws和合法网站分开的分类器，经过分类器将url分为合法和非法的</p>
-<h2 id="BEYOND-PHISH模型评估"><a href="#BEYOND-PHISH模型评估" class="headerlink" title="BEYOND PHISH模型评估"></a>BEYOND PHISH模型评估</h2><p>采用了4个其他的模型与BEYOND PHISH模型进行对比</p>
+<h4 id="BEYOND-PHISH模型评估"><a href="#BEYOND-PHISH模型评估" class="headerlink" title="BEYOND PHISH模型评估"></a>BEYOND PHISH模型评估</h4><p>采用了4个其他的模型与BEYOND PHISH模型进行对比</p>
 <p><strong>CheckPhish</strong>是一种使用计算机视觉和自然语言处理技术检测网络钓鱼和欺诈性网站的方法，该方法使用卷积神经网络对网站的外观进行分析，并从网页源代码中提取不同的特征与其视觉特征进行拼接</p>
 <p><strong>HAN</strong>是基于内容检测欺诈性电子商务网站。但是我们没有访问HAN原始实现的权限，我们构建了一个类似的模型，基于网页源代码检测Fcws</p>
 <p>**Cantina+**是基于内容的机器学习分类器，可以基于页面，url和域名的特征检测钓鱼网站，因为它仅仅是针对钓鱼网站的检测，有局限性，为保证公平，我们用收集的训练集训练了Cantina+</p>
 <p><strong>RealTime</strong>是利用网站内容进行分类，检测虚假购物网站</p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>如图是比较的结果，横坐标是误检率，纵坐标是检测率。</p>
-<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230723173500716.png" alt="image-20230723173500716"></p>
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>如图是比较的结果，横坐标是误检率，纵坐标是检测率。</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9c17517e-2eef-4f1f-9662-a5512bdd20ae" alt="image"></p>
 <p>AUC是曲线下方的面积</p>
 <p>最终结果中，BEYOND PHISH的检测率为94.88%，误检率为2.46%，与其他相比具有较大优势。</p>
 
@@ -370,7 +472,7 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="《So-you-want-to-work-in-security-and-for-some-reason-ended-up-here-rather-than-reading-other-people’s-posts-on-the-topic-》读后感"><a href="#《So-you-want-to-work-in-security-and-for-some-reason-ended-up-here-rather-than-reading-other-people’s-posts-on-the-topic-》读后感" class="headerlink" title="《So you want to work in security? (and for some reason ended up here rather than reading other people’s posts on the topic)》读后感"></a>《So you want to work in security? (and for some reason ended up here rather than reading other people’s posts on the topic)》读后感</h1><p><a target="_blank" rel="noopener" href="http://ifsec.blogspot.jp/2018/02/so-you-want-to-work-in-security-and-for.html">http://ifsec.blogspot.jp/2018/02/so-you-want-to-work-in-security-and-for.html</a></p>
+        <h3 id="《So-you-want-to-work-in-security-and-for-some-reason-ended-up-here-rather-than-reading-other-people’s-posts-on-the-topic-》读后感"><a href="#《So-you-want-to-work-in-security-and-for-some-reason-ended-up-here-rather-than-reading-other-people’s-posts-on-the-topic-》读后感" class="headerlink" title="《So you want to work in security? (and for some reason ended up here rather than reading other people’s posts on the topic)》读后感"></a>《So you want to work in security? (and for some reason ended up here rather than reading other people’s posts on the topic)》读后感</h3><p><a target="_blank" rel="noopener" href="http://ifsec.blogspot.jp/2018/02/so-you-want-to-work-in-security-and-for.html">http://ifsec.blogspot.jp/2018/02/so-you-want-to-work-in-security-and-for.html</a></p>
 <p>  当我们希望从事安全行业的工作之前，我们要意识到安全首先是一种爱好，然后才能成为一份工作。随着科学技术的发展，安全的入门难度越来越高，但是可用的学习资源也越来越多。我们需要自己学习，而不是遵循预设的课程学习，那样我们才能在安全的道路上越走越远。</p>
 <p>  当我们试图从网上获取安全的学习资源，我们不能简单地用“如何破解…”这类语句进行搜索，而应该尝试问一些微妙的问题，比如说这个软件&#x2F;硬件是如何工作的，基于什么技术，是否开源，有无源代码，是否有人已经设法破解了这个软件&#x2F;硬件，有没有发表文章等。我们必须要有非常好的技术，才能真正了解软件&#x2F;硬件的工作原理，这并不简单，因此当我们遇到不理解的事情时，要把它想作我们需要学习的部分，不要轻易放弃。</p>
 <p>  使用推特也是获取安全学习资源的好方法，很多安全社区会使用推特来分享新闻，最近的研究，漏洞等，我们可以在推特上找我们感兴趣的安全社区，看他们的推文。我们还能通过查看安全会议演示文稿和录用来进行学习。</p>
@@ -445,6 +547,10 @@
       <ul>
         
           <li>
+            <a href="/2023/08/03/%E3%80%8AHow%20(and%20How%20Not)%20to%20Write%20a%20Good%20Design%20Paper%E3%80%8B/">《How (and How Not) to Write a Good Design Paper》</a>
+          </li>
+        
+          <li>
             <a href="/2023/08/01/Exercise%207%20-%20VLC%20Media%20Player/">Exercise 7 - VLC Media Player</a>
           </li>
         
@@ -458,10 +564,6 @@
         
           <li>
             <a href="/2023/07/28/Exercise%203%20-%20TCPdump/">Exercise 3 - TCPdump</a>
-          </li>
-        
-          <li>
-            <a href="/2023/07/27/Exercise%202%20-%20libexif/">Exercise 2 - libexif</a>
           </li>
         
       </ul>
