@@ -73,6 +73,244 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Exercise 1 - Xpdf" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/07/25/Exercise%201%20-%20Xpdf/" class="article-date">
+  <time class="dt-published" datetime="2023-07-25T15:16:57.000Z" itemprop="datePublished">2023-07-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/07/25/Exercise%201%20-%20Xpdf/">Exercise 1 - Xpdf</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Exercise-1-Xpdf"><a href="#Exercise-1-Xpdf" class="headerlink" title="Exercise 1 - Xpdf"></a>Exercise 1 - Xpdf</h3><h4 id="一、实验背景"><a href="#一、实验背景" class="headerlink" title="一、实验背景"></a>一、实验背景</h4><p>CVE-2019-13288是一个可能通过精心制作的文件导致无线递归的漏洞</p>
+<p>程序中每个被调用的函数都在堆栈上分配一个堆栈帧，如果一个函数被递归调用多次，可能会导致堆栈内存耗尽和程序崩溃，因此，远程攻击者可以利用该漏洞进行Dos攻击</p>
+<p>非受控制递归漏洞（<a target="_blank" rel="noopener" href="https://cwe.mitre.org/data/definitions/674.html%EF%BC%89">https://cwe.mitre.org/data/definitions/674.html）</a></p>
+<h4 id="二、实验目的"><a href="#二、实验目的" class="headerlink" title="二、实验目的"></a>二、实验目的</h4><p>模糊<strong>Xpfd（</strong>PDF查看器），目标是在XPDF 3.02中找到<strong>CVE-2019-13288</strong>漏洞</p>
+<h4 id="三、实验环境："><a href="#三、实验环境：" class="headerlink" title="三、实验环境："></a>三、实验环境：</h4><p>win10，VMware，Ubuntu 20.04.2 LTS（虚拟机用户名密码均为fuzz）</p>
+<h4 id="四、实验步骤"><a href="#四、实验步骤" class="headerlink" title="四、实验步骤"></a>四、实验步骤</h4><h5 id="1、下载并构建目标"><a href="#1、下载并构建目标" class="headerlink" title="1、下载并构建目标"></a>1、下载并构建目标</h5><p>得到模糊目标，为要模糊化的项目创建目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME</span><br><span class="line">mkdir fuzzing_xpdf &amp;&amp; cd fuzzing_xpdf/</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7d81d204-27c1-44ec-9b17-ace5348c00e6" alt="image"></p>
+<p>安装make和gcc，准备好环境，注意要先更新apt-get，否则会出现错误Unable to locate package build-essential</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update </span><br><span class="line">sudo apt install build-essential</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f47a0423-6e7d-4303-9ce6-e1ba26d1edcc" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/fcdbebff-a669-4cbc-9ba0-ab46c7ed8241" alt="image"></p>
+<p>下载Xpdf 3.02压缩包并解压</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://dl.xpdfreader.com/old/xpdf-3.02.tar.gz</span><br><span class="line">tar -xvzf xpdf-3.02.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/89111ae7-2c4a-4a5c-98ab-b3263a62bb68" alt="image"></p>
+<p>构建Xpdf</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd xpdf-3.02</span><br><span class="line">sudo apt update &amp;&amp; sudo apt install -y build-essential gcc</span><br><span class="line">./configure --prefix=&quot;$HOME/fuzzing_xpdf/install/&quot;</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2ec9e65a-cb06-4ca7-baf2-5901cf0c6efd" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/bab69f98-5826-4746-a060-2c41c43c82c6" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/e0fca536-8a93-4388-9c34-99914112154a" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/cd03c3cc-3282-4b32-92e9-285b9b67bd8d" alt="image"></p>
+<p>下载一些PDF示例用于后续验证</p>
+<p>下载pdf时注意在后面加参数<strong>–no-check-certificate</strong>跳过验证证书，否则会报错unable to establish ssl connection.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME/fuzzing_xpdf</span><br><span class="line">mkdir pdf_examples &amp;&amp; cd pdf_examples</span><br><span class="line">wget https://github.com/mozilla/pdf.js-sample-files/raw/master/helloworld.pdf</span><br><span class="line">wget http://www.africau.edu/images/default/sample.pdf –no-check-certificate</span><br><span class="line">wget https://www.melbpc.org.au/wp-content/uploads/2017/10/small-example-pdf-file.pdf</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/4da29f1e-5eb7-4be7-9cd1-a6a2574731bc" alt="image"> </p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f485bf1a-6186-4faf-80fb-adeccd092781" alt="image"></p>
+<p>测试pdfinfo二进制文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$HOME/fuzzing_xpdf/install/bin/pdfinfo -box -meta $HOME/fuzzing_xpdf/pdf_examples/helloworld.pdf</span><br></pre></td></tr></table></figure>
+
+<p>看到如下页面说明验证成功</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2e938476-a1bc-4a18-86d1-01103f16f5d3" alt="image"></p>
+<h5 id="2、安装AFL"><a href="#2、安装AFL" class="headerlink" title="2、安装AFL++"></a>2、安装AFL++</h5><p>采用本地安装的方式，首先安装依赖项</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y build-essential python3-dev automake git flex bison libglib2.0-dev libpixman-1-dev python3-setuptools</span><br><span class="line">sudo apt-get install -y lld-11 llvm-11 llvm-11-dev clang-11 || sudo apt-get install -y lld llvm llvm-dev clang </span><br><span class="line">sudo apt-get install -y gcc-$(gcc --version|head -n1|sed &#x27;s/.* //&#x27;|sed &#x27;s/\..*//&#x27;)-plugin-dev libstdc++-$(gcc --version|head -n1|sed &#x27;s/.* //&#x27;|sed &#x27;s/\..*//&#x27;)-dev</span><br></pre></td></tr></table></figure>
+
+<p>  <img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/73bc8916-fb98-4dd0-b1e3-8480fcfd1369" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/413b7ab7-7445-4ff2-bd39-cbe52f2169dc" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/5f632878-bdaf-44bf-b23f-17d1500051c5" alt="image"></p>
+<p>构造AFL++</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME</span><br><span class="line">git clone https://github.com/AFLplusplus/AFLplusplus &amp;&amp; cd AFLplusplus</span><br><span class="line">export LLVM_CONFIG=&quot;llvm-config-11&quot;</span><br><span class="line">make distrib</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230726155938884.png" alt="image-20230726155938884"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/cbc90cfc-387c-426f-b1ee-423707515551" alt="image"></p>
+<p>Docker image</p>
+<p>安装docker，第一次安装后无法使用docker，使用snap重新下载后可以使用</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install docker</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d945678c-160e-4ce9-a689-7057cf053058" alt="image">  </p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/aa42821f-0488-4422-a4a0-9beae001f319" alt="image"></p>
+<p>Pull图像，要加上sudo以管理员身份运行，否则会报错connect: permission denied</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull aflplusplus/aflplusplus</span><br></pre></td></tr></table></figure>
+
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230726161946524.png" alt="image-20230726161946524"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/e6950c13-56f4-40cf-83b0-f63e1eb9c0b9" alt="image"></p>
+<p>启动AFLPlusPlus docker容器</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -ti -v $HOME:/home aflplusplus/aflplusplus</span><br></pre></td></tr></table></figure>
+
+<p>  再运行</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export $HOME=&quot;/home&quot;</span><br></pre></td></tr></table></figure>
+
+<p>输入afl-fuzz运行afl-fuzz，出现下图说明运行成功</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/a94e5375-1782-466b-bbd4-9578eebd7d2a" alt="image"></p>
+<h5 id="3、开始实验"><a href="#3、开始实验" class="headerlink" title="3、开始实验"></a>3、开始实验</h5><p>为了使我们的目标应用程序启用插装，我们需要使用AFL的编译器编译代码，首先，我们要清理所有之前编译过的目标文件和可执行文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rm -r $HOME/fuzzing_xpdf/install</span><br><span class="line">cd $HOME/fuzzing_xpdf/xpdf-3.02/</span><br><span class="line">make clean</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/c5ab56e8-e2f5-4539-923b-a60e81482d07" alt="image"></p>
+<p>使用<strong>afl-clang-fast</strong>编译器构建xpdf</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export LLVM_CONFIG=&quot;llvm-config-11&quot;</span><br><span class="line">CC=$HOME/AFLplusplus/afl-clang-fast CXX=$HOME/AFLplusplus/afl-clang-fast++ ./configure --prefix=&quot;$HOME/fuzzing_xpdf/install/&quot;</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/bf922cbb-a81a-4663-bb0f-d16f9fc88a3f" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/5e05cada-e79c-489c-a1c2-25a4d7ed6c3e" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/cc637caf-1fa9-49cd-a5bd-9273570ab123" alt="image"></p>
+<p>每个选项的简要说明:</p>
+<ul>
+<li><em>-i</em> 表示我们必须放置输入大小写的目录(即文件示例)</li>
+<li><em>-o</em> 表示afl++存储修改后文件的目录</li>
+<li><em>-s</em> 表示使用静态随机种子</li>
+<li><em>@@</em> 是AFL将用每个输入文件名替换的占位符目标的命令行</li>
+</ul>
+<p>fuzzer基本上会运行下面这个命令，用于每个不同的输入文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$HOME/fuzzing_xpdf/install/bin/pdftotext &lt;input-file-name&gt;</span><br><span class="line">$HOME/fuzzing_xpdf/output</span><br></pre></td></tr></table></figure>
+
+<p>使用以下命令运行fuzzer，出现错误如下图</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">afl-fuzz -i $HOME/fuzzing_xpdf/pdf_examples/ -o $HOME/fuzzing_xpdf/out/ -s 123 -- $HOME/fuzzing_xpdf/install/bin/pdftotext @@ $HOME/fuzzing_xpdf/output</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/e66e4ddf-8c34-4d1f-912b-3c8151e1ed9d" alt="image"></p>
+<p>如果收到消息“Hmm, your system is configured to send core dump notifications to an external utility…”，只要这样做</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo su</span><br><span class="line">echo core &gt;/proc/sys/kernel/core_pattern</span><br><span class="line">exit</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/aede7a51-f888-4d7c-8777-e784d6341ae5" alt="image"></p>
+<p>再运行fuzzer，几分钟后，可以看到如下页面</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/0d6f6b8b-8dc2-441f-b9c2-10c3a31d7e65" alt="image"></p>
+<p>看到<strong>saved crashes</strong>的值，是崩溃的数量</p>
+<p>可以在“$HOME&#x2F;fuzzing_xpdf&#x2F;out&#x2F;”目录中找到这些崩溃文件</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6ed7ae67-a1e6-45d4-bf00-539ed92c879b" alt="image"></p>
+<h5 id="4、调试和分类"><a href="#4、调试和分类" class="headerlink" title="4、调试和分类"></a>4、调试和分类</h5><p>通过调试和分类，来找到关于这个bug的信息</p>
+<p>1)用指定的文件重现崩溃<br>        2)调试崩溃找出问题所在<br>        3)修复问题</p>
+<p>在’ $HOME&#x2F;fuzzing_xpdf&#x2F;out&#x2F; ‘目录中找到与崩溃对应的文件。文件名类于“id:000000,sig:11,src:000526,time:534057,execs:257582,op:havoc,rep:8”</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/87332255-b9e6-4254-bfb5-1ce346fbadd0" alt="image"></p>
+<p>将此文件作为输入传递给pdftotext二进制文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$HOME/fuzzing_xpdf/install/bin/pdftotext &#x27;$HOME/fuzzing_xpdf/out/default/crashes/&lt;your_filename&gt;&#x27; $HOME/fuzzing_xpdf/output</span><br></pre></td></tr></table></figure>
+
+<p>它将导致分割错误，并导致程序崩溃</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/11e431fa-dc2d-44ca-b1ca-a7a4431714bc" alt="image"></p>
+<p>使用gdb找出使用此输入导致程序崩溃的原因</p>
+<p>GDB的简单入门（<a target="_blank" rel="noopener" href="http://people.cs.pitt.edu/~mosse/gdb-note.html%EF%BC%89">http://people.cs.pitt.edu/~mosse/gdb-note.html）</a></p>
+<p>首先，使用调试信息重新构建Xpdf，以获得符号堆栈跟踪</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">rm -r $HOME/fuzzing_xpdf/install</span><br><span class="line">cd $HOME/fuzzing_xpdf/xpdf-3.02/</span><br><span class="line">make clean</span><br><span class="line">CFLAGS=&quot;-g -O0&quot; CXXFLAGS=&quot;-g -O0&quot; ./configure --prefix=&quot;$HOME/fuzzing_xpdf/install/&quot;</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/deb41651-02b6-4aaf-8deb-78825b17ed00" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/4bd09b31-40d8-47cd-9fa0-24b13ac652c5" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/90712b71-de40-4af1-b142-0790b922d243" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6864227f-65ec-4b87-bf5e-c23afee32d6e" alt="image"></p>
+<p>运行GDB</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gdb --args $HOME/fuzzing_xpdf/install/bin/pdftotext $HOME/fuzzing_xpdf/out/default/crashes/id:000000,sig:11,src:000526,time:534057,execs:257582,op:havoc,rep:8 $HOME/fuzzing_xpdf/output</span><br><span class="line"></span><br><span class="line">&gt;&gt; run</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7b528a75-eaf5-49d4-bab6-616bf839abc4" alt="image"></p>
+<p>正常情况下可看到如下输出</p>
+<p>看到<strong>Program received signal SIGSEGV, Segmentation fault</strong>，说明存在内存泄漏</p>
+<p>报错位置是<strong>in _int_malloc (av&#x3D;av@entry&#x3D;0x7ffff7c63b80 <main_arena>, bytes&#x3D;bytes@entry&#x3D;4) at malloc.c:3545</strong>，glibc报了个错，显然是堆内存出了问题</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/cea8e247-8de8-49b4-9ee3-11ad70a00558" alt="image"></p>
+<p>再输入bt获取回溯</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/3df75385-c961-46de-b88d-34597110861e" alt="image"></p>
+<p>滚动调用堆栈，可以看到许多对“Parser::getObj”方法的调用，这些调用似乎表示无限递归。访问<a target="_blank" rel="noopener" href="https://www.cvedetails.com/cve/CVE-2019-13288/%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B0%E6%8F%8F%E8%BF%B0%E4%BB%8EGDB%E8%8E%B7%E5%BE%97%E7%9A%84%E5%9B%9E%E6%BA%AF%E5%8C%B9%E9%85%8D%E3%80%82">https://www.cvedetails.com/cve/CVE-2019-13288/可以看到描述从GDB获得的回溯匹配。</a></p>
+<p>执行流信息，分析一下可以看出调用过程是循环的，判断为无限循环漏洞</p>
+<p>根据函数调用找到漏洞位置</p>
+<p>从fuzzing_xpdf&#x2F;xpdf-3.02&#x2F;xpdf&#x2F;Parse.cc 94行的makeStream调用，一路跟着报错往下翻就会找到这个套娃</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7ab80d57-b19b-4311-a2ed-cf7e0fa19acc" alt="image"></p>
+<h5 id="5、修复问题"><a href="#5、修复问题" class="headerlink" title="5、修复问题"></a>5、修复问题</h5><p>方法</p>
+<ol>
+<li>修复后重建目标，并检查用例是否不再导致分段错误</li>
+<li>安装错误已经修复的Xpdf 4.02，并检查分段错误是否消失</li>
+</ol>
+<p>我选择的是安装已修复的Xpdf 4.02，对比源代码，发现再Xpdf 4.02的文件Parse.cc中，加了个变量，记录循环次数，超过一定次数就结束进程</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://dl.xpdfreader.com/old/xpdf-4.02.tar.gz</span><br><span class="line">tar -xvzf xpdf-4.02.tar.gz </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/e0b54856-a620-4a81-8bc4-999d8ea8710f" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/54743110-a653-4192-90b2-c8b9b4975dfd" alt="image"></p>
+<h4 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h4><p>通过这个实验，我了解了<strong>CVE-2019-13288</strong>漏洞，学习了**AFL++**，如何使用带有插装的afl编译器编译目标，如何启动afl++，如何检测目标崩溃。</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/0d6f6b8b-8dc2-441f-b9c2-10c3a31d7e65" alt="image"></p>
+<p>界面信息介绍</p>
+<p>process timing：执行时间信息</p>
+<p>run time：运行总时间</p>
+<p>last new find：距离最近一次发现新路径的时间</p>
+<p>last saved crash：距离最近一次保存程序崩溃的时间</p>
+<p>last saved hang：距离最近一次保存挂起的时间</p>
+<p>overall results：</p>
+<p>cycles done：运行的总周期数</p>
+<p>corpus count：语料库计数</p>
+<p>saved crashes：保存的程序崩溃个数</p>
+<p>saved hang：保存的挂起个数</p>
+<p>cycle progress：</p>
+<p>now processing：当前的测试用例ID（所在输入队列的位置）</p>
+<p>runs timed out：超时数量</p>
+<p><strong>map coverage：</strong>覆盖率</p>
+<p>map density：目前已经命中多少分支元组，与位图可以容纳多少的比例</p>
+<p>count coverage：位图中每个被命中的字节平均改变的位数</p>
+<p>stage progress：</p>
+<p>now trying: 指明当前所用的变异输入的方法</p>
+<p>stage execs: 当前阶段的进度指示</p>
+<p>total execs: 全局的进度指示</p>
+<p>exec speed: 执行速度</p>
+<p><strong>findings in depth：</strong>种子变异产生的信息</p>
+<p>favored items: 基于最小化算法产生新的更好的路径</p>
+<p>new edges on: 基于更好路径产生的新边</p>
+<p>total crashes: 基于更好路径产生的崩溃</p>
+<p>total tmouts: 基于更好路径产生的超时 包括所有超时的超时</p>
+<p>fuzzing strategy yields： 进一步展示了AFL所做的工作，在更有效路径上得到的结果比例，对应上面的now trying</p>
+<p>bit flips: 比特位翻转，例如：</p>
+<p>bitflip 1&#x2F;1，每次翻转1个bit，按照每1个bit的步长从头开始</p>
+<p>bitflip 2&#x2F;1，每次翻转相邻的2个bit，按照每1个bit的步长从头开始</p>
+<p>byte flips: 字节翻转</p>
+<p>arithmetics: 算术运算，例如：</p>
+<p>arith 16&#x2F;8，每次对16个bit进行加减运算，按照每8个bit的步长从头开始，即对文件的每个word进行整数加减变异</p>
+<p>know ints: 用于替换的基本都是可能会造成溢出的数，例：</p>
+<p>interest 16&#x2F;8，每次对16个bit进替换，按照每8个bit的步长从头开始，即对文件的每个word进行替换</p>
+<p>dictionary: 有以下子阶段：</p>
+<p>user extras (over)，从头开始，将用户提供的tokens依次替换到原文件中</p>
+<p>user extras (insert)，从头开始，将用户提供的tokens依次插入到原文件中</p>
+<p>auto extras (over)，从头开始，将自动检测的tokens依次替换到原文件中</p>
+<p>其中，用户提供的tokens，是在词典文件中设置并通过-x选项指定的，如果没有则跳过相应的子阶段。</p>
+<p>havoc：顾名思义，是充满了各种随机生成的变异，是对原文件的“大破坏”。具体来说，havoc包含了对原文件的多轮变异，每一轮都是将多种方式组合（stacked）而成</p>
+<p>splice：在任意选择的中点将队列中的两个随机输入拼接在一起.</p>
+<p>py&#x2F;custom&#x2F;req：</p>
+<p>trim：修建测试用例使其更短，但保证裁剪后仍能达到相同的执行路径</p>
+<p>eff</p>
+<p>item geometry：</p>
+<p>levels: 表示测试等级</p>
+<p>pending: 表示还没有经过fuzzing的输入数量</p>
+<p>pend fav: 表明fuzzer感兴趣的输入数量</p>
+<p>own finds: 表示在fuzzing过程中新找到的，或者是并行测试从另一个实例导入的数量</p>
+<p>imported: n&#x2F;a表明不可用，即没有导入</p>
+<p>stability: 表明相同输入是否产生了相同的行为，一般结果都是100%</p>
+<p>参考博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40025866/article/details/127823491">https://blog.csdn.net/qq_40025866/article/details/127823491</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/07/25/Exercise%201%20-%20Xpdf/" data-id="clkifzfiq00000wvf0xdk9v6i" data-title="Exercise 1 - Xpdf" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-clash科学上网" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/07/24/clash%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" class="article-date">
@@ -670,6 +908,10 @@
       <ul>
         
           <li>
+            <a href="/2023/08/09/Buuctf%20Web%EF%BC%8813-16%EF%BC%89/">Buuctf Web（13-16）</a>
+          </li>
+        
+          <li>
             <a href="/2023/08/08/Buuctf%20Web%EF%BC%889-12%EF%BC%89/">Buuctf Web（9-12）</a>
           </li>
         
@@ -683,10 +925,6 @@
         
           <li>
             <a href="/2023/08/01/Exercise%207%20-%20VLC%20Media%20Player/">Exercise 7 - VLC Media Player</a>
-          </li>
-        
-          <li>
-            <a href="/2023/07/31/Exercise%206%20-%20GIMP/">Exercise 6 - GIMP</a>
           </li>
         
       </ul>
