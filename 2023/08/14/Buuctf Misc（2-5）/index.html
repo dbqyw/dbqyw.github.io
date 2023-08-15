@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Buuctf Misc（2-5） | qinyiwen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Buuctf Misc（2-5）2、金三胖下载得到一个动图 使用Stegsolve逐帧查看    1flag&amp;#123;he11ohongke&amp;#125;  3、你竟然赶我走得到一张jpg图片 用Stegsolve打开 Analyse-File Format得到flag  1flag&amp;#123;stego_is_s0_bor1ing&amp;#125;  4、二维码扫描二维码，得到secret is he">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Buuctf Misc（2-5）">
+<meta property="og:url" content="http://example.com/2023/08/14/Buuctf%20Misc%EF%BC%882-5%EF%BC%89/index.html">
+<meta property="og:site_name" content="qinyiwen">
+<meta property="og:description" content="Buuctf Misc（2-5）2、金三胖下载得到一个动图 使用Stegsolve逐帧查看    1flag&amp;#123;he11ohongke&amp;#125;  3、你竟然赶我走得到一张jpg图片 用Stegsolve打开 Analyse-File Format得到flag  1flag&amp;#123;stego_is_s0_bor1ing&amp;#125;  4、二维码扫描二维码，得到secret is he">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/22ec8c35-3e0c-4728-9610-11900be31d5e">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/7e0a30aa-f5c9-455e-bf87-8a8ddce67c31">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/229d2aef-b25c-484c-970e-e283d44619e4">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/bf264ab0-599e-4e00-9b5e-153948df73a9">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/50cff623-01bd-4cb5-99e4-8b53e265afa7">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/b36ccdc5-e944-4957-8636-c08181239269">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/81a48217-c53d-4a9d-95e8-8c54209957bc">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/c8336589-a3e3-4052-a660-2b2639967d45">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/34c3a8ff-ef67-4e81-b865-fc64c46eac05">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/346bccbc-ef45-4667-9f7a-a8e8f00772a5">
+<meta property="article:published_time" content="2023-08-14T11:40:16.000Z">
+<meta property="article:modified_time" content="2023-08-15T12:36:46.097Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/22ec8c35-3e0c-4728-9610-11900be31d5e">
+  
+    <link rel="alternate" href="/atom.xml" title="qinyiwen" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">qinyiwen</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Buuctf Misc（2-5）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/08/14/Buuctf%20Misc%EF%BC%882-5%EF%BC%89/" class="article-date">
+  <time class="dt-published" datetime="2023-08-14T11:40:16.000Z" itemprop="datePublished">2023-08-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Buuctf Misc（2-5）
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Buuctf-Misc（2-5）"><a href="#Buuctf-Misc（2-5）" class="headerlink" title="Buuctf Misc（2-5）"></a>Buuctf Misc（2-5）</h3><h4 id="2、金三胖"><a href="#2、金三胖" class="headerlink" title="2、金三胖"></a>2、金三胖</h4><p>下载得到一个动图</p>
+<p>使用Stegsolve逐帧查看</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/22ec8c35-3e0c-4728-9610-11900be31d5e" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7e0a30aa-f5c9-455e-bf87-8a8ddce67c31" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/229d2aef-b25c-484c-970e-e283d44619e4" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;he11ohongke&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3、你竟然赶我走"><a href="#3、你竟然赶我走" class="headerlink" title="3、你竟然赶我走"></a>3、你竟然赶我走</h4><p>得到一张jpg图片</p>
+<p>用Stegsolve打开</p>
+<p>Analyse-File Format得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/bf264ab0-599e-4e00-9b5e-153948df73a9" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;stego_is_s0_bor1ing&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4、二维码"><a href="#4、二维码" class="headerlink" title="4、二维码"></a>4、二维码</h4><p>扫描二维码，得到secret is here</p>
+<p>先将png图片更改后缀转为txt文件，发现了4number.txt，还有一些PK值，c猜测隐藏了一个zip压缩包(zip的创始人名字简写为PK)和4number.txt文件</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/50cff623-01bd-4cb5-99e4-8b53e265afa7" alt="image"></p>
+<p>将后缀改为zip格式，用压缩软件能打开，并且发现一个4number.txt文件</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b36ccdc5-e944-4957-8636-c08181239269" alt="image"></p>
+<p>双击4number.txt，需要解压密码</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/81a48217-c53d-4a9d-95e8-8c54209957bc" alt="image"></p>
+<p>爆破，得到密码7639，解密得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/c8336589-a3e3-4052-a660-2b2639967d45" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;vjpw_wnoei&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5、大白"><a href="#5、大白" class="headerlink" title="5、大白"></a>5、大白</h4><p>根据题目提示，用010 Editor打开图像</p>
+<p>修改图像高度，与宽度一致</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/34c3a8ff-ef67-4e81-b865-fc64c46eac05" alt="image"></p>
+<p>保存，查看图像，得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/346bccbc-ef45-4667-9f7a-a8e8f00772a5" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;He1l0_d4_ba1&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/08/14/Buuctf%20Misc%EF%BC%882-5%EF%BC%89/" data-id="cllcagtdd0000nkvfc45jeysl" data-title="Buuctf Misc（2-5）" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/08/13/Buuctf%20Web%EF%BC%8829-32%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Buuctf Web（29-32）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/learn/" rel="tag">learn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 20px;">Fuzzing</a> <a href="/tags/learn/" style="font-size: 10px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 15px;">论文细读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/08/14/Buuctf%20Misc%EF%BC%882-5%EF%BC%89/">Buuctf Misc（2-5）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/13/Buuctf%20Web%EF%BC%8829-32%EF%BC%89/">Buuctf Web（29-32）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/12/Buuctf%20Web%EF%BC%8825-28%EF%BC%89/">Buuctf Web（25-28）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/11/Buuctf%20Web%EF%BC%8821-24%EF%BC%89/">Buuctf Web（21-24）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/10/Buuctf%20Web%EF%BC%8817-20%EF%BC%89/">Buuctf Web（17-20）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

