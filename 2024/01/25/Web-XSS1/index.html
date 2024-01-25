@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>XSS1-原理分类及攻击手法 | qinyiwen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="XSS跨站之原理分类及攻击手法XSS跨站漏洞产生的原理 往浏览器页面中插入恶意的HTML代码，比如说js、css、html标签等，当用户浏览该页面时，嵌入其中的恶意代码会执行，达到攻击用户的目的，比如说获取用户浏览器信息等。 XSS漏洞攻击的危害  盗取各类用户[账号，如机器登录帐号、用户网银帐号、各类管理员帐号 控制企业数据，包括读取、篡改、添加、删除企业敏感数据的能力 盗窃企业重要的具有商业价">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XSS1-原理分类及攻击手法">
+<meta property="og:url" content="http://example.com/2024/01/25/Web-XSS1/index.html">
+<meta property="og:site_name" content="qinyiwen">
+<meta property="og:description" content="XSS跨站之原理分类及攻击手法XSS跨站漏洞产生的原理 往浏览器页面中插入恶意的HTML代码，比如说js、css、html标签等，当用户浏览该页面时，嵌入其中的恶意代码会执行，达到攻击用户的目的，比如说获取用户浏览器信息等。 XSS漏洞攻击的危害  盗取各类用户[账号，如机器登录帐号、用户网银帐号、各类管理员帐号 控制企业数据，包括读取、篡改、添加、删除企业敏感数据的能力 盗窃企业重要的具有商业价">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/30396902-51e8-403c-86a6-522d6dcb129f">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/f797d7c2-5734-4c14-9d28-b44d899531f4">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/79034c3a-4c7d-4d47-b863-f6b908bbfbd7">
+<meta property="article:published_time" content="2024-01-25T09:14:45.000Z">
+<meta property="article:modified_time" content="2024-01-25T09:18:10.591Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Web安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/30396902-51e8-403c-86a6-522d6dcb129f">
+  
+    <link rel="alternate" href="/atom.xml" title="qinyiwen" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">qinyiwen</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Web-XSS1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/01/25/Web-XSS1/" class="article-date">
+  <time class="dt-published" datetime="2024-01-25T09:14:45.000Z" itemprop="datePublished">2024-01-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      XSS1-原理分类及攻击手法
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="XSS跨站之原理分类及攻击手法"><a href="#XSS跨站之原理分类及攻击手法" class="headerlink" title="XSS跨站之原理分类及攻击手法"></a>XSS跨站之原理分类及攻击手法</h4><p><strong>XSS跨站漏洞产生的原理</strong></p>
+<p>往浏览器页面中插入恶意的HTML代码，比如说js、css、html标签等，当用户浏览该页面时，嵌入其中的恶意代码会执行，达到攻击用户的目的，比如说获取用户浏览器信息等。</p>
+<p><strong>XSS漏洞攻击的危害</strong></p>
+<ul>
+<li>盗取各类用户[账号，如机器登录帐号、用户网银帐号、各类管理员帐号</li>
+<li>控制企业数据，包括读取、篡改、添加、删除企业敏感数据的能力</li>
+<li>盗窃企业重要的具有商业价值的资料</li>
+<li>非法转账</li>
+<li>强制发送电子邮件</li>
+<li>网站挂马</li>
+<li>控制受害者机器向其它网站发起攻击（重定向语句）</li>
+<li>窃取cookie的sessionid，冒充登录。</li>
+</ul>
+<p>XSS攻击利用到最大就需要自己有台服务器用于窃取信息，还要利用一点社工，骗取别人点击恶意的链接。</p>
+<p>XSS跨站漏洞执行的代码是js代码，产生层面是前端，有关的函数是一些输出函数（alert、print等）</p>
+<p>XSS跨站漏洞分类：反射，存储，DOM</p>
+<p>跨站测试代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#&#x27; onclick=&quot;alert(2)&quot;&gt;</span><br><span class="line">&lt;script&gt;alert(1)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>使用后端来运行代码（反射型和存储型），得手动分析来测试是什么问题</p>
+<p><strong>XSS漏洞的分类</strong></p>
+<p><strong>1.DOM型</strong>(不经过服务器，前端js代码的利用)：</p>
+<p>DOM型是针对前端代码的（有的页面跳转不是在url执行，是在HTML中执行），可以直接从源代码中发现存在XSS漏洞</p>
+<p>DOM树</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/30396902-51e8-403c-86a6-522d6dcb129f" alt="image"></p>
+<p>本地利用漏洞，这种漏洞存在于页面中客户端脚本自身。其攻击过程如下所示：</p>
+<p>Alice给Bob发送一个恶意构造了Web的<a target="_blank" rel="noopener" href="http://baike.baidu.com/item/URL">URL</a>。</p>
+<p>Bob点击并查看了这个URL。</p>
+<p>恶意页面中的JavaScript打开一个具有漏洞的HTML页面并将其安装在Bob电脑上。</p>
+<p>具有漏洞的HTML页面包含了在Bob电脑本地域执行的JavaScript。</p>
+<p>Alice的<a target="_blank" rel="noopener" href="http://baike.baidu.com/item/%E6%81%B6%E6%84%8F%E8%84%9A%E6%9C%AC">恶意脚本</a>可以在Bob的电脑上执行Bob所持有的权限下的命令。</p>
+<p><strong>2.反射型：</strong></p>
+<p>反射型XSS有get和post型，攻击产生一次，攻击的语句不会存储到对方的服务器</p>
+<p>这种漏洞和类型A有些类似，不同的是Web客户端使用Server端脚本生成页面为用户提供数据时，如果未经验证的用户数据被包含在页面中而未经<a target="_blank" rel="noopener" href="http://baike.baidu.com/item/HTML%E5%AE%9E%E4%BD%93">HTML实体</a>编码，客户端代码便能够注入到<a target="_blank" rel="noopener" href="http://baike.baidu.com/item/%E5%8A%A8%E6%80%81%E9%A1%B5%E9%9D%A2">动态页面</a>中。</p>
+<p>其攻击过程如下：</p>
+<p>Alice经常浏览某个网站，此网站为Bob所拥有。Bob的站点运行Alice使用用户名&#x2F;密码进行登录，并存储敏感信息(比如银行帐户信息)。</p>
+<p>Charly发现Bob的站点包含反射性的XSS漏洞。</p>
+<p>Charly编写一个利用漏洞的URL，并将其冒充为来自Bob的邮件发送给Alice。</p>
+<p>Alice在登录到Bob的站点后，浏览Charly提供的URL。</p>
+<p>嵌入到URL中的恶意脚本在Alice的浏览器中执行，就像它直接来自Bob的服务器一样。此脚本盗窃敏感信息(授权、信用卡、帐号信息等)然后在Alice完全不知情的情况下将这些信息发送到Charly的Web站点。</p>
+<p><strong>3.存储型（长久型，危害最大）：</strong></p>
+<p>存储型XSS，输入一行攻击脚本后，每次刷新页面都会攻击，攻击语句存储到对方的服务器了</p>
+<p>该类型是应用最为广泛而且有可能影响到Web服务器自身安全的漏洞，<a target="_blank" rel="noopener" href="http://baike.baidu.com/item/%E9%AA%87%E5%AE%A2">骇客</a>将攻击脚本上传到Web服务器上，使得所有访问该页面的用户都面临信息泄漏的可能，其中也包括了Web服务器的管理员。其攻击过程如下：</p>
+<p>Bob拥有一个Web站点，该站点允许用户发布信息&#x2F;浏览已发布的信息。</p>
+<p>Charly注意到Bob的站点具有类型C的XSS漏洞。</p>
+<p>Charly发布一个热点信息，吸引其它用户纷纷阅读。</p>
+<p>Bob或者是任何的其他人如Alice浏览该信息，其会话cookies或者其它信息将被Charly盗走。</p>
+<p>类型A直接威胁用户个体，而类型B和类型C所威胁的对象都是企业级Web应用。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">反射型</span><br><span class="line">发包 x=qyw=&gt;x.php=&gt;回显</span><br><span class="line"></span><br><span class="line">存储型</span><br><span class="line">发包 x=qyw=&gt;x.php=&gt;写到数据库某个表=&gt;x.php=&gt;回显</span><br><span class="line"></span><br><span class="line">DOM型</span><br><span class="line">发包 x=qyw=&gt;本地浏览器静态前端代码=&gt;x.php=&gt;回显</span><br></pre></td></tr></table></figure>
+
+<p>绕过<script>过滤</p>
+<p>有的网站存在<script>过滤</p>
+<p>在html中，onload关键字就是一个事件，其它的所有标签都没有这个属性，但是Body标签的有的。但是有一定的局限性，如果onload事件在你的代码之前已经被处理了，就不会触发了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;BODY onload=&quot;alert(&#x27;XSS&#x27;)&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>不过还有Onerror事件处理，图片没有指定也就是出错了，就会触发onerror事件，引发XSS漏洞，没有用<script>标签</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;IMG SRC=&quot;&quot; onerror=&quot;alert(&#x27;XSS&#x27;)&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>cookie session 用户凭据，通过凭据可以判断对方的身份信息</p>
+<p>cookie 存储在本地，存活事件较长 小中型</p>
+<p>session 会话 存储在服务器，存活时间较短 大型</p>
+<p>session更安全，但是会占用服务器的资源，且实现起来较为麻烦</p>
+<p><strong>靶场实践</strong></p>
+<p>反射型xss(get)</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f797d7c2-5734-4c14-9d28-b44d899531f4" alt="image"></p>
+<p>存储型xss，每次刷新的时候都会弹窗</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/79034c3a-4c7d-4d47-b863-f6b908bbfbd7" alt="image"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/01/25/Web-XSS1/" data-id="clrt05a9i00008wvf65sx1bby" data-title="XSS1-原理分类及攻击手法" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/01/25/Paper-Deep%20Learning%20Based%20Malware%20Traffic%20Classification%20for%20Power%20Internet%20of%20Things%20Network%20Security/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Deep Learning Based Malware Traffic Classification for Power Internet of Things Network Security</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/learn/" rel="tag">learn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 20px;">Fuzzing</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 10px;">Web安全</a> <a href="/tags/learn/" style="font-size: 13.33px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 16.67px;">论文细读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/01/25/Web-XSS1/">XSS1-原理分类及攻击手法</a>
+          </li>
+        
+          <li>
+            <a href="/2024/01/25/Paper-Deep%20Learning%20Based%20Malware%20Traffic%20Classification%20for%20Power%20Internet%20of%20Things%20Network%20Security/">Deep Learning Based Malware Traffic Classification for Power Internet of Things Network Security</a>
+          </li>
+        
+          <li>
+            <a href="/2024/01/24/PHP/">PHP</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/14/Buuctf%20Misc%EF%BC%882-5%EF%BC%89/">Buuctf Misc（2-5）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/13/Buuctf%20Web%EF%BC%8829-32%EF%BC%89/">Buuctf Web（29-32）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
