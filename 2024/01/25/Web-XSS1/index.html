@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/f797d7c2-5734-4c14-9d28-b44d899531f4">
 <meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/79034c3a-4c7d-4d47-b863-f6b908bbfbd7">
 <meta property="article:published_time" content="2024-01-25T09:14:45.000Z">
-<meta property="article:modified_time" content="2024-01-25T09:18:10.591Z">
+<meta property="article:modified_time" content="2024-01-25T09:29:34.383Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Web安全">
 <meta name="twitter:card" content="summary">
@@ -128,14 +128,14 @@
 <p>DOM树</p>
 <p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/30396902-51e8-403c-86a6-522d6dcb129f" alt="image"></p>
 <p>本地利用漏洞，这种漏洞存在于页面中客户端脚本自身。其攻击过程如下所示：</p>
-<p>Alice给Bob发送一个恶意构造了Web的<a target="_blank" rel="noopener" href="http://baike.baidu.com/item/URL">URL</a>。</p>
+<p>Alice给Bob发送一个恶意构造了Web的URL。</p>
 <p>Bob点击并查看了这个URL。</p>
 <p>恶意页面中的JavaScript打开一个具有漏洞的HTML页面并将其安装在Bob电脑上。</p>
 <p>具有漏洞的HTML页面包含了在Bob电脑本地域执行的JavaScript。</p>
-<p>Alice的<a target="_blank" rel="noopener" href="http://baike.baidu.com/item/%E6%81%B6%E6%84%8F%E8%84%9A%E6%9C%AC">恶意脚本</a>可以在Bob的电脑上执行Bob所持有的权限下的命令。</p>
+<p>Alice的恶意脚本可以在Bob的电脑上执行Bob所持有的权限下的命令。</p>
 <p><strong>2.反射型：</strong></p>
 <p>反射型XSS有get和post型，攻击产生一次，攻击的语句不会存储到对方的服务器</p>
-<p>这种漏洞和类型A有些类似，不同的是Web客户端使用Server端脚本生成页面为用户提供数据时，如果未经验证的用户数据被包含在页面中而未经<a target="_blank" rel="noopener" href="http://baike.baidu.com/item/HTML%E5%AE%9E%E4%BD%93">HTML实体</a>编码，客户端代码便能够注入到<a target="_blank" rel="noopener" href="http://baike.baidu.com/item/%E5%8A%A8%E6%80%81%E9%A1%B5%E9%9D%A2">动态页面</a>中。</p>
+<p>这种漏洞和类型A有些类似，不同的是Web客户端使用Server端脚本生成页面为用户提供数据时，如果未经验证的用户数据被包含在页面中而未经HTML实体编码，客户端代码便能够注入到动态页面中。</p>
 <p>其攻击过程如下：</p>
 <p>Alice经常浏览某个网站，此网站为Bob所拥有。Bob的站点运行Alice使用用户名&#x2F;密码进行登录，并存储敏感信息(比如银行帐户信息)。</p>
 <p>Charly发现Bob的站点包含反射性的XSS漏洞。</p>
@@ -152,12 +152,12 @@
 <p>类型A直接威胁用户个体，而类型B和类型C所威胁的对象都是企业级Web应用。</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">反射型</span><br><span class="line">发包 x=qyw=&gt;x.php=&gt;回显</span><br><span class="line"></span><br><span class="line">存储型</span><br><span class="line">发包 x=qyw=&gt;x.php=&gt;写到数据库某个表=&gt;x.php=&gt;回显</span><br><span class="line"></span><br><span class="line">DOM型</span><br><span class="line">发包 x=qyw=&gt;本地浏览器静态前端代码=&gt;x.php=&gt;回显</span><br></pre></td></tr></table></figure>
 
-<p>绕过<script>过滤</p>
-<p>有的网站存在<script>过滤</p>
+<p>绕过<code>&lt;script&gt;</code>过滤</p>
+<p>有的网站存在<code>&lt;script&gt;</code>过滤</p>
 <p>在html中，onload关键字就是一个事件，其它的所有标签都没有这个属性，但是Body标签的有的。但是有一定的局限性，如果onload事件在你的代码之前已经被处理了，就不会触发了</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;BODY onload=&quot;alert(&#x27;XSS&#x27;)&quot;&gt;</span><br></pre></td></tr></table></figure>
 
-<p>不过还有Onerror事件处理，图片没有指定也就是出错了，就会触发onerror事件，引发XSS漏洞，没有用<script>标签</p>
+<p>不过还有Onerror事件处理，图片没有指定也就是出错了，就会触发onerror事件，引发XSS漏洞，没有用<code>&lt;script&gt;</code>标签</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;IMG SRC=&quot;&quot; onerror=&quot;alert(&#x27;XSS&#x27;)&quot;&gt;</span><br></pre></td></tr></table></figure>
 
 <p>cookie session 用户凭据，通过凭据可以判断对方的身份信息</p>
