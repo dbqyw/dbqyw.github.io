@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>SQIRL | qinyiwen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="SQIRL: Grey-Box Detection of SQL Injection Vulnerabilities Using Reinforcement Learning 论文分享Wahaibi, S. A., Foley, M., &amp; Maffeis, S. (2023). SQIRL: Grey-Box Detection of SQL Injection Vulnerabilit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQIRL">
+<meta property="og:url" content="http://example.com/2024/01/27/Paper-SQIRL%20Grey-Box%20Detection%20of%20SQL%20Injection%20Vulnerabilities%20Using%20Reinforcement%20Learning/index.html">
+<meta property="og:site_name" content="qinyiwen">
+<meta property="og:description" content="SQIRL: Grey-Box Detection of SQL Injection Vulnerabilities Using Reinforcement Learning 论文分享Wahaibi, S. A., Foley, M., &amp; Maffeis, S. (2023). SQIRL: Grey-Box Detection of SQL Injection Vulnerabilit">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20240127201447031.png">
+<meta property="og:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20240127202037836.png">
+<meta property="og:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20240127203534266.png">
+<meta property="og:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20240127205224047.png">
+<meta property="article:published_time" content="2024-01-27T13:10:28.000Z">
+<meta property="article:modified_time" content="2024-01-27T13:13:05.003Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="论文细读">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20240127201447031.png">
+  
+    <link rel="alternate" href="/atom.xml" title="qinyiwen" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">qinyiwen</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Paper-SQIRL Grey-Box Detection of SQL Injection Vulnerabilities Using Reinforcement Learning" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/01/27/Paper-SQIRL%20Grey-Box%20Detection%20of%20SQL%20Injection%20Vulnerabilities%20Using%20Reinforcement%20Learning/" class="article-date">
+  <time class="dt-published" datetime="2024-01-27T13:10:28.000Z" itemprop="datePublished">2024-01-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      SQIRL
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="SQIRL-Grey-Box-Detection-of-SQL-Injection-Vulnerabilities-Using-Reinforcement-Learning-论文分享"><a href="#SQIRL-Grey-Box-Detection-of-SQL-Injection-Vulnerabilities-Using-Reinforcement-Learning-论文分享" class="headerlink" title="SQIRL: Grey-Box Detection of SQL Injection Vulnerabilities Using Reinforcement Learning 论文分享"></a>SQIRL: Grey-Box Detection of SQL Injection Vulnerabilities Using Reinforcement Learning 论文分享</h3><p>Wahaibi, S. A., Foley, M., &amp; Maffeis, S. (2023). SQIRL: Grey-Box Detection of SQL Injection Vulnerabilities Using Reinforcement Learning. <em>32nd USENIX Security Symposium (USENIX Security 23)</em>, 6097–6114.</p>
+<p>pdf链接：<a href="">usenix.org&#x2F;system&#x2F;files&#x2F;usenixsecurity23-al-wahaibi.pdf</a></p>
+<p>SQIRL：使用强化学习的SQL注入漏洞灰盒检测</p>
+<p>SQIRL是一种基于深度强化学习，使用多个工作代理和灰盒反馈来检测SQL注入漏洞的新方法，使用单个代理来学习如何修正SQL语法、转义上下文和绕过sanitisation。</p>
+<h5 id="现存的SQL注入漏洞扫描器局限"><a href="#现存的SQL注入漏洞扫描器局限" class="headerlink" title="现存的SQL注入漏洞扫描器局限"></a>现存的SQL注入漏洞扫描器局限</h5><ol>
+<li>漏洞扫描器通常用于在投入生产之前找到漏洞，但是它们有时依赖于错误处理和网页上的SQL查询的反馈，导致在不存在错误时的有效性不高</li>
+<li>现有的扫描器使用简单的基于规则的方法来覆盖最常见的SQL注入有效载荷，但是这些有效载荷缺乏多样性，并且无法根据特定的网络应用程序来制定有效载荷，导致扫描器忽略了合法的漏洞</li>
+</ol>
+<h5 id="提出问题"><a href="#提出问题" class="headerlink" title="提出问题"></a>提出问题</h5><p>如何生成针对每个注入点、特定上下文和防御的有效载荷</p>
+<h5 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h5><ol>
+<li><p>为代理实现一个强化学习(RL)环境，为SQL注入模糊Web应用程序，通过我们扩展的最先进的爬虫识别输入。</p>
+</li>
+<li><p>设计并实现了SQIRL，一种新的深度强化学习模糊方法。单个RL代理完成SQL注入的三项任务：语法修复、上下文转义和清理旁路，并且让这些工作在知识在代理之间共享。</p>
+</li>
+</ol>
+<h5 id="强化学习-RL"><a href="#强化学习-RL" class="headerlink" title="强化学习(RL)"></a>强化学习(RL)</h5><p>强化学习的主要思想是通过与环境的交互，基于奖励和惩罚来学习如何最好地完成任务，以实现长期累积奖励的最大化。在这个过程中，智能体通过尝试不同的行为，并根据获得的奖励和惩罚来调整自己的策略，以最大化长期累积奖励。强化学习考虑的是长期累积奖励，而不仅仅是即时奖励，因此智能体需要学会通过一系列看似不相关的行为来最大化长期奖励。此外，智能体还需要在探索和利用之间找到平衡，以最大化长期奖励。强化学习通常使用马尔科夫决策过程（MDP）来建模决策问题，其中包括状态、动作、奖励和转移概率。通过学习价值函数或策略函数来决定在每个状态下应该采取什么样的行动，以最大化长期奖励。</p>
+<h5 id="联邦学习-FL"><a href="#联邦学习-FL" class="headerlink" title="联邦学习(FL)"></a>联邦学习(FL)</h5><p>联邦学习是多个客户端模型在一段时间内独立训练，将学习得到的参数发送给中央服务器模型，服务器模型对得到的参数进行汇总（通常是求平均值），然乎将汇总后的参数发送给客户端，客户端使用新的参数进行训练，直至模型收敛。</p>
+<h5 id="查找SQL注入漏洞的主要步骤"><a href="#查找SQL注入漏洞的主要步骤" class="headerlink" title="查找SQL注入漏洞的主要步骤"></a>查找SQL注入漏洞的主要步骤</h5><ol>
+<li>识别可能容易受到SQL注入影响的输入位置。包括URL、输入标签和与网页相关的动态链接元素。</li>
+<li>一旦找到输入位置，就可以制作相关的有效负载。</li>
+</ol>
+<p>有效负载必须满足4个标准才能触发SQL注入</p>
+<ul>
+<li><p>生成语法有效的SQL，以避免执行错误</p>
+</li>
+<li><p>转义预期的SQL上下文</p>
+</li>
+<li><p>绕过应用于有效负载的任何基于黑名单的过滤</p>
+</li>
+<li><p>更改SQL语句的预期行为。例如，假设没有过滤，表1中红色显示的有效载荷会转义’并执行SLEEP语句。</p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20240127201447031.png" alt="image-20240127201447031"></p>
+</li>
+</ul>
+<h5 id="SQIRL实现"><a href="#SQIRL实现" class="headerlink" title="SQIRL实现"></a>SQIRL实现</h5><p>SQIRL架构</p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20240127202037836.png" alt="image-20240127202037836"></p>
+<p><strong>RL环境</strong></p>
+<p>绿色部分是RL代理，计算当前有效载荷的突变。RL环境将Web应用程序抽象为RL代理，作为接受操作并返回观察结果的组件，它需要抓取Web应用程序和监控SQL数据库，提供反馈机制没允许代理学习如何定制SQL注入有效载荷。</p>
+<p><strong>SQl  Proxy</strong></p>
+<p>SQL代理从数据库日志文件中检索SQL语句，用于SQIRL的抓取和模糊阶段。</p>
+<p><strong>State &amp; Extrinsic Reward</strong></p>
+<p>时刻 t 的状态由三个不同的部分组成：在t−1时刻注入的有效载荷；在时间t−1时从SQL代理中提取的SQL语句(在出现错误且没有新的SQL语句的情况下，本文使用在t−2时捕获的SQL语句)；如果在前一个时间步骤中出现SQL错误，则使用bit来标记。为了减少可能状态的空间，并鼓励泛化，有效负载和SQL语句被转换为通用形式：字符串和整数值分别被通用令牌STR和INT替换。</p>
+<p>这部分涉及一个算法，用于计算奖励、终止条件和下一局的过渡函数。</p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20240127203534266.png" alt="image-20240127203534266"></p>
+<p>如果没有发生错误，检测有效载荷是否更改了SQL的行为，出发成功的终止条件并奖励0。假如，SLEEP关键字八日注入，并且在预期的上下文之外没有进行过滤，这就是一个合法的SQL注入有效载荷，但是如果有效负载无法逃离上下文，被清理，不改变已执行的SQL的行为或者导致SQL语法错误，提供-1的奖励。过度函数中的行为更改、清理和专业上下文条件作为合法检查和正则表达式实现。</p>
+<p><strong>Payload Control Module</strong></p>
+<p>本地代理通过有效载荷控制模块(PCM)与Web应用程序交互。PCM将一个动作转换为具体的有效载荷，并将其注入Web应用中，计算结果状态和奖励，反馈给相关代理。</p>
+<p>生成具体有效载荷的操作</p>
+<ul>
+<li>上下文转义：从有效载荷中添加或删除基本令牌，如’，#，1&#x3D;1，SELECT</li>
+<li>行为更改：从有效载荷中添加或删除行为更改令牌，如AND SLEEP(0)，WHERE SLEEP(0)，SLEEP(0)</li>
+<li>过滤转义：更改现有有效载荷令牌，如通过关键字大小写(SeLect)、字符令牌(CHAR(20))和注释空白</li>
+</ul>
+<p>这张表是SQL有效负载和语句的令牌空间</p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20240127205224047.png" alt="image-20240127205224047"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/01/27/Paper-SQIRL%20Grey-Box%20Detection%20of%20SQL%20Injection%20Vulnerabilities%20Using%20Reinforcement%20Learning/" data-id="clrw3efvq0000ekvffk19eyta" data-title="SQIRL" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/01/26/Web-XSS1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">XSS1-原理分类及攻击手法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/learn/" rel="tag">learn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 20px;">Fuzzing</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 10px;">Web安全</a> <a href="/tags/learn/" style="font-size: 13.33px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 16.67px;">论文细读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/01/27/Paper-SQIRL%20Grey-Box%20Detection%20of%20SQL%20Injection%20Vulnerabilities%20Using%20Reinforcement%20Learning/">SQIRL</a>
+          </li>
+        
+          <li>
+            <a href="/2024/01/26/Web-XSS1/">XSS1-原理分类及攻击手法</a>
+          </li>
+        
+          <li>
+            <a href="/2024/01/25/Paper-Deep%20Learning%20Based%20Malware%20Traffic%20Classification%20for%20Power%20Internet%20of%20Things%20Network%20Security/">Deep Learning Based Malware Traffic Classification for Power Internet of Things Network Security</a>
+          </li>
+        
+          <li>
+            <a href="/2024/01/24/PHP/">PHP</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/14/Buuctf%20Misc%EF%BC%882-5%EF%BC%89/">Buuctf Misc（2-5）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
