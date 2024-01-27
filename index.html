@@ -125,11 +125,11 @@
 <li><p>绕过应用于有效负载的任何基于黑名单的过滤</p>
 </li>
 <li><p>更改SQL语句的预期行为。例如，假设没有过滤，表1中红色显示的有效载荷会转义’并执行SLEEP语句。</p>
-<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20240127201447031.png" alt="image-20240127201447031"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/0f058974-865d-4a4f-8cf1-29ff27da0e9e" alt="image"></p>
 </li>
 </ul>
 <h5 id="SQIRL实现"><a href="#SQIRL实现" class="headerlink" title="SQIRL实现"></a>SQIRL实现</h5><p>SQIRL架构</p>
-<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20240127202037836.png" alt="image-20240127202037836"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/3523614b-07ed-4d5d-968f-738f244d7148" alt="image"></p>
 <p><strong>RL环境</strong></p>
 <p>绿色部分是RL代理，计算当前有效载荷的突变。RL环境将Web应用程序抽象为RL代理，作为接受操作并返回观察结果的组件，它需要抓取Web应用程序和监控SQL数据库，提供反馈机制没允许代理学习如何定制SQL注入有效载荷。</p>
 <p><strong>SQl  Proxy</strong></p>
@@ -137,7 +137,7 @@
 <p><strong>State &amp; Extrinsic Reward</strong></p>
 <p>时刻 t 的状态由三个不同的部分组成：在t−1时刻注入的有效载荷；在时间t−1时从SQL代理中提取的SQL语句(在出现错误且没有新的SQL语句的情况下，本文使用在t−2时捕获的SQL语句)；如果在前一个时间步骤中出现SQL错误，则使用bit来标记。为了减少可能状态的空间，并鼓励泛化，有效负载和SQL语句被转换为通用形式：字符串和整数值分别被通用令牌STR和INT替换。</p>
 <p>这部分涉及一个算法，用于计算奖励、终止条件和下一局的过渡函数。</p>
-<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20240127203534266.png" alt="image-20240127203534266"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/0603f880-5e98-45a9-93db-d8ce70260d10" alt="image"></p>
 <p>如果没有发生错误，检测有效载荷是否更改了SQL的行为，出发成功的终止条件并奖励0。假如，SLEEP关键字八日注入，并且在预期的上下文之外没有进行过滤，这就是一个合法的SQL注入有效载荷，但是如果有效负载无法逃离上下文，被清理，不改变已执行的SQL的行为或者导致SQL语法错误，提供-1的奖励。过度函数中的行为更改、清理和专业上下文条件作为合法检查和正则表达式实现。</p>
 <p><strong>Payload Control Module</strong></p>
 <p>本地代理通过有效载荷控制模块(PCM)与Web应用程序交互。PCM将一个动作转换为具体的有效载荷，并将其注入Web应用中，计算结果状态和奖励，反馈给相关代理。</p>
@@ -148,7 +148,7 @@
 <li>过滤转义：更改现有有效载荷令牌，如通过关键字大小写(SeLect)、字符令牌(CHAR(20))和注释空白</li>
 </ul>
 <p>这张表是SQL有效负载和语句的令牌空间</p>
-<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20240127205224047.png" alt="image-20240127205224047"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/79a4be87-25ad-4d7c-aec9-ca270050aa6a" alt="image"></p>
 
       
     </div>
