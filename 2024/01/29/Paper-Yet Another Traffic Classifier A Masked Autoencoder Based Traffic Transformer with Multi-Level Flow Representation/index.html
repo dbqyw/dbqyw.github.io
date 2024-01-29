@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Yet Another Traffic Classifier | qinyiwen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Yet Another Traffic Classifier: A Masked Autoencoder Based Traffic Transformer with Multi-Level Flow Representation 论文分享Zhao, R., Zhan, M., Deng, X., Wang, Y., Wang, Y., Gui, G., &amp; Xue, Z. (2023).">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Yet Another Traffic Classifier">
+<meta property="og:url" content="http://example.com/2024/01/29/Paper-Yet%20Another%20Traffic%20Classifier%20A%20Masked%20Autoencoder%20Based%20Traffic%20Transformer%20with%20Multi-Level%20Flow%20Representation/index.html">
+<meta property="og:site_name" content="qinyiwen">
+<meta property="og:description" content="Yet Another Traffic Classifier: A Masked Autoencoder Based Traffic Transformer with Multi-Level Flow Representation 论文分享Zhao, R., Zhan, M., Deng, X., Wang, Y., Wang, Y., Gui, G., &amp; Xue, Z. (2023).">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20240129172841648.png">
+<meta property="article:published_time" content="2024-01-29T10:15:05.000Z">
+<meta property="article:modified_time" content="2024-01-29T10:20:56.222Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="论文细读">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20240129172841648.png">
+  
+    <link rel="alternate" href="/atom.xml" title="qinyiwen" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">qinyiwen</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Paper-Yet Another Traffic Classifier A Masked Autoencoder Based Traffic Transformer with Multi-Level Flow Representation" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/01/29/Paper-Yet%20Another%20Traffic%20Classifier%20A%20Masked%20Autoencoder%20Based%20Traffic%20Transformer%20with%20Multi-Level%20Flow%20Representation/" class="article-date">
+  <time class="dt-published" datetime="2024-01-29T10:15:05.000Z" itemprop="datePublished">2024-01-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Yet Another Traffic Classifier
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Yet-Another-Traffic-Classifier-A-Masked-Autoencoder-Based-Traffic-Transformer-with-Multi-Level-Flow-Representation-论文分享"><a href="#Yet-Another-Traffic-Classifier-A-Masked-Autoencoder-Based-Traffic-Transformer-with-Multi-Level-Flow-Representation-论文分享" class="headerlink" title="Yet Another Traffic Classifier: A Masked Autoencoder Based Traffic Transformer with Multi-Level Flow Representation 论文分享"></a>Yet Another Traffic Classifier: A Masked Autoencoder Based Traffic Transformer with Multi-Level Flow Representation 论文分享</h3><p>Zhao, R., Zhan, M., Deng, X., Wang, Y., Wang, Y., Gui, G., &amp; Xue, Z. (2023). Yet Another Traffic Classifier: A Masked Autoencoder Based Traffic Transformer with Multi-Level Flow Representation. Proceedings of the AAAI Conference on Artificial Intelligence, <em>37</em>(4), 5420-5427.</p>
+<p>pdf链接：<a target="_blank" rel="noopener" href="https://ojs.aaai.org/index.php/AAAI/article/download/25674/25446">https://ojs.aaai.org/index.php/AAAI/article/download/25674/25446</a></p>
+<p>另一种流量分类器:基于屏蔽自编码器的多级流表示流量转换器</p>
+<h5 id="现存的基于深度学习的流量分类方法局限"><a href="#现存的基于深度学习的流量分类方法局限" class="headerlink" title="现存的基于深度学习的流量分类方法局限"></a>现存的基于深度学习的流量分类方法局限</h5><ol>
+<li>流量重复只是从原始数据包字节生成，导致在没有重要信息的情况下产生</li>
+<li>直接应用深度学习算法的模型结构不考虑流量特征</li>
+<li>特定场景分类器培训通常需要劳动密集型和耗时的过程来标记数据</li>
+</ol>
+<h5 id="提出问题"><a href="#提出问题" class="headerlink" title="提出问题"></a>提出问题</h5><p>如何生成针对每个注入点、特定上下文和防御的有效载荷</p>
+<h5 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h5><ol>
+<li>使用带有MFR的基于MAE的交通变压器，称为YaTC，用于交通分类。 YaTC从三个角度突破了传统的流量分析方法：流量表示、分类器结构和培训策略。</li>
+<li>设计了一个MFR矩阵，该矩阵充分考虑了流层次结构来表示原始流量。 为了有效地利用MFR矩阵进行流量分析，构建了一个具有数据包级和流级张位机制的新型流量变压器。 它可以以更低的复杂度和更少的参数执行更高效的特征提取。</li>
+<li>应用基于MAE的自我监督学习范式来训练我们的分类器。 它首先利用大规模未标记的流量数据来学习通用的潜在重复，然后对一系列流量分类任务进行少量标记数据进行微调。</li>
+<li>在五个现实世界流量数据集上评估YaTC，本文方法远远优于最先进的方法。</li>
+</ol>
+<h5 id="Traffc-Analysis-Methods"><a href="#Traffc-Analysis-Methods" class="headerlink" title="Traffc Analysis Methods"></a>Traffc Analysis Methods</h5><p><strong>Rule-Based Methods</strong></p>
+<p>研究人员通过安全专家设计的u规则，利用流量数据的通信协议和端口号等基本属性来发现违反安全策略的行为。</p>
+<p><strong>ML-Based Methods</strong></p>
+<p>基于机器学习的方法，来探索流量的高维统计特征，比如通过准确度评估选择最佳统计特征，将其作为支持向量机的输入来识别网站流量，或者采用随机森林分析网站流量产生的统计特征。基于机器学习的方法结合统计特征可以分析复杂流量，但它们依赖于专家设计的统计特征，需要针对不同场景选择最优特征。</p>
+<p><strong>DL-Based Methods</strong></p>
+<p>基于深度学习的方法，基于原始数据包而非认为设计的特征来分析流量，已成为自动提取流量表示并实现显著性能提升的主要工具。这些方法依赖于足够多的标注训练数据，而手机和手动标注足够多的真实流量样本并不容易。</p>
+<h5 id="多级流量表示法"><a href="#多级流量表示法" class="headerlink" title="多级流量表示法"></a>多级流量表示法</h5><p>从原始数据中生成多级流量代表，所作为交通分类的输入。</p>
+<p>现存流量表示方法都是直接截取前面的数据流中的固定字节数形成二维矩阵，作为图像处理，通过DL算法进行分类，存在的问题：</p>
+<ol>
+<li>与报头相比，有效载荷的大小通常要大得多，而且充满了加密操作产生的不可力戒信息，导致矩阵中的底层语义信息过多，影响这些模型的有效性和效率。</li>
+<li>在某些流量中，第一个长数据包会占据整个矩阵，因此矩阵无法包含流量中其他数据包的数据。</li>
+</ol>
+<p>本文提出的MFR矩阵，用格式化的二维矩阵来表示原始流量，如图1所示</p>
+<ul>
+<li>根据IP地址、端口号和协议雷响将原始流量分成若干流量</li>
+<li>为了避免引入有偏差的互相干扰，一处流量的以太网头，将端口号设为零，并用随机地址替换IP，但保留其方向</li>
+<li>捕获流量中相邻的M个数据包，并将其格式化为大小为H×W的二维矩阵，作为该流量的表示</li>
+</ul>
+<p>注意：</p>
+<p>本文使用了原始字节作为流量的初始特征（流量表示矩阵中每个点的值），但在捕获原始流量的多层次信息时采用了特殊的设计：</p>
+<ul>
+<li>字节流：流量表示矩阵的每一行只包含一种流量字节，分为标题行和有效载荷行</li>
+<li>数据包级：每个数据包由报头矩阵和有效载荷矩阵表示，形成大小为H&#x2F;M*W的数据包级矩阵</li>
+<li>流量级：由于流量是由有序的数据包组成的美因茨M个相邻的数据包级矩阵会在第二维度上叠加，形成最终的MFR矩阵</li>
+</ul>
+<p>这样，每一层的信息都是固定的，不会出现低层信息溢出而导致高层信息丢失的情况</p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20240129172841648.png" alt="image-20240129172841648"></p>
+<p>数据处理的代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> glob</span><br><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> scapy.<span class="built_in">all</span> <span class="keyword">as</span> scapy</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">makedir</span>(<span class="params">path</span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        os.mkdir(path)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> E:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_5hp_list</span>(<span class="params">pcap_dir</span>):</span><br><span class="line">    packets = scapy.rdpcap(pcap_dir)</span><br><span class="line">    data = []</span><br><span class="line">    <span class="keyword">for</span> packet <span class="keyword">in</span> packets:</span><br><span class="line">        header = (binascii.hexlify(<span class="built_in">bytes</span>(packet[<span class="string">&#x27;IP&#x27;</span>]))).decode()</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            payload = (binascii.hexlify(<span class="built_in">bytes</span>(packet[<span class="string">&#x27;Raw&#x27;</span>]))).decode()</span><br><span class="line">            header = header.replace(payload, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            payload = <span class="string">&#x27;&#x27;</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(header) &gt; <span class="number">160</span>:</span><br><span class="line">            header = header[:<span class="number">160</span>]</span><br><span class="line">        <span class="keyword">elif</span> <span class="built_in">len</span>(header) &lt; <span class="number">160</span>:</span><br><span class="line">            header += <span class="string">&#x27;0&#x27;</span> * (<span class="number">160</span> - <span class="built_in">len</span>(header))</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(payload) &gt; <span class="number">480</span>:</span><br><span class="line">            payload = payload[:<span class="number">480</span>]</span><br><span class="line">        <span class="keyword">elif</span> <span class="built_in">len</span>(payload) &lt; <span class="number">480</span>:</span><br><span class="line">            payload += <span class="string">&#x27;0&#x27;</span> * (<span class="number">480</span> - <span class="built_in">len</span>(payload))</span><br><span class="line">        data.append((header, payload))</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(data) &gt;= <span class="number">5</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(data) &lt; <span class="number">5</span>:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>-<span class="built_in">len</span>(data)):</span><br><span class="line">            data.append((<span class="string">&#x27;0&#x27;</span>*<span class="number">160</span>, <span class="string">&#x27;0&#x27;</span>*<span class="number">480</span>))</span><br><span class="line">    final_data = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> h, p <span class="keyword">in</span> data:</span><br><span class="line">        final_data += h</span><br><span class="line">        final_data += p</span><br><span class="line">    <span class="keyword">return</span> final_data</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">MFR_generator</span>(<span class="params">flows_pcap_path, output_path</span>):</span><br><span class="line">    flows = glob.glob(flows_pcap_path + <span class="string">&quot;/*/*/*.pcap&quot;</span>)</span><br><span class="line">    makedir(output_path)</span><br><span class="line">    makedir(output_path + <span class="string">&quot;/train&quot;</span>)</span><br><span class="line">    makedir(output_path + <span class="string">&quot;/test&quot;</span>)</span><br><span class="line">    classes = glob.glob(flows_pcap_path + <span class="string">&quot;/*/*&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> cla <span class="keyword">in</span> tqdm(classes):</span><br><span class="line">        makedir(cla.replace(flows_pcap_path,output_path))</span><br><span class="line">    <span class="keyword">for</span> filename <span class="keyword">in</span> tqdm(filenames):</span><br><span class="line">        content = read_5hp_list(filename)</span><br><span class="line">        content = numpy.array([<span class="built_in">int</span>(content[i:i + <span class="number">2</span>], <span class="number">16</span>) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(content), <span class="number">2</span>)])</span><br><span class="line">        fh = numpy.reshape(content, (<span class="number">40</span>, <span class="number">40</span>))</span><br><span class="line">        fh = numpy.uint8(fh)</span><br><span class="line">        im = Image.fromarray(fh)</span><br><span class="line">        im.save(filename.replace(<span class="string">&#x27;.pcap&#x27;</span>,<span class="string">&#x27;.png&#x27;</span>).replace(flows_pcap_path,output_path))</span><br></pre></td></tr></table></figure>
+
+<p><strong>makedir</strong>：创建一个新的目录。它接受一个参数<code>path</code>，表示要创建的目录的路径。函数首先尝试使用<code>os.mkdir()</code>函数创建目录，如果出现任何异常则将其捕获并忽略，不做任何处理。这样可以确保即使在创建目录时出现问题，程序也不会中断。</p>
+<p><strong>read_5hp_list</strong>：首先使用<code>scapy.rdpcap()</code>函数读取pcap文件，然后遍历每个数据包。对于每个数据包，它提取IP头部的十六进制表示，并尝试提取原始数据Raw十六进制表示。如果数据包中没有原始数据，则将payload设为空字符串。然后根据特定的长度要求对header和payload进行处理，确保它们的长度符合要求。接下来，函数将处理后的header和payload添加到一个列表<code>data</code>中，如果列表长度超过5，则停止添加。如果列表长度不足5，则补充空数据。最后，函数将列表中的数据拼接成一个字符串<code>final_data</code>，并返回<code>final_data</code>字符串。</p>
+<p><strong>MFR_generator</strong>：函数接受两个参数<code>flows_pcap_path</code>和<code>output_path</code>，分别表示pcap文件所在的路径和输出路径。首先，函数使用<code>glob.glob()</code>函数获取<code>flows_pcap_path</code>目录下所有子目录中的pcap文件，并存储在名为<code>flows</code>的列表中。然后使用自定义函数<code>makedir()</code>创建输出路径及其子目录。接下来，函数遍历<code>classes</code>列表中的每个类别，对每个类别都调用<code>makedir()</code>函数创建相应的子目录。然后，函数遍历<code>filenames</code>列表中的每个文件，对每个文件都调用<code>read_5hp_list()</code>函数读取数据，并将数据转换成特定格式的图像文件。这里使用了<code>numpy</code>库将数据转换成数组，并使用<code>Image</code>库创建图像对象，并最终保存为png格式的图像文件</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/01/29/Paper-Yet%20Another%20Traffic%20Classifier%20A%20Masked%20Autoencoder%20Based%20Traffic%20Transformer%20with%20Multi-Level%20Flow%20Representation/" data-id="clrys4xho00007cvff5aw7pku" data-title="Yet Another Traffic Classifier" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/01/27/Paper-SQIRL%20Grey-Box%20Detection%20of%20SQL%20Injection%20Vulnerabilities%20Using%20Reinforcement%20Learning/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">SQIRL</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/learn/" rel="tag">learn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 20px;">Fuzzing</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 10px;">Web安全</a> <a href="/tags/learn/" style="font-size: 15px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 20px;">论文细读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/01/29/Paper-Yet%20Another%20Traffic%20Classifier%20A%20Masked%20Autoencoder%20Based%20Traffic%20Transformer%20with%20Multi-Level%20Flow%20Representation/">Yet Another Traffic Classifier</a>
+          </li>
+        
+          <li>
+            <a href="/2024/01/27/Paper-SQIRL%20Grey-Box%20Detection%20of%20SQL%20Injection%20Vulnerabilities%20Using%20Reinforcement%20Learning/">SQIRL</a>
+          </li>
+        
+          <li>
+            <a href="/2024/01/26/Web-XSS1/">XSS1-原理分类及攻击手法</a>
+          </li>
+        
+          <li>
+            <a href="/2024/01/25/Paper-Deep%20Learning%20Based%20Malware%20Traffic%20Classification%20for%20Power%20Internet%20of%20Things%20Network%20Security/">Deep Learning Based Malware Traffic Classification for Power Internet of Things Network Security</a>
+          </li>
+        
+          <li>
+            <a href="/2024/01/24/PHP/">PHP</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
