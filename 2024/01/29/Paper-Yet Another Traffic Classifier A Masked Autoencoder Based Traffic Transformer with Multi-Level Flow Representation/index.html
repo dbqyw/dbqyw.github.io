@@ -15,7 +15,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/850e3c29-2efe-44db-add9-bb5793e7f181">
 <meta property="article:published_time" content="2024-01-29T10:15:05.000Z">
-<meta property="article:modified_time" content="2024-01-29T13:01:04.601Z">
+<meta property="article:modified_time" content="2024-01-30T03:56:53.823Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="论文细读">
 <meta name="twitter:card" content="summary">
@@ -104,17 +104,20 @@
 <p>pdf链接：<a target="_blank" rel="noopener" href="https://ojs.aaai.org/index.php/AAAI/article/download/25674/25446">https://ojs.aaai.org/index.php/AAAI/article/download/25674/25446</a></p>
 <p>另一种流量分类器:基于屏蔽自编码器的多级流表示流量转换器</p>
 <h5 id="现存的基于深度学习的流量分类方法局限"><a href="#现存的基于深度学习的流量分类方法局限" class="headerlink" title="现存的基于深度学习的流量分类方法局限"></a>现存的基于深度学习的流量分类方法局限</h5><ol>
-<li>流量重复只是从原始数据包字节生成，导致在没有重要信息的情况下产生</li>
+<li><h5 id="流量重复只是从原始数据包字节生成，导致在没有重要信息的情况下产生"><a href="#流量重复只是从原始数据包字节生成，导致在没有重要信息的情况下产生" class="headerlink" title="流量重复只是从原始数据包字节生成，导致在没有重要信息的情况下产生"></a>流量重复只是从原始数据包字节生成，导致在没有重要信息的情况下产生</h5></li>
 <li>直接应用深度学习算法的模型结构不考虑流量特征</li>
 <li>特定场景分类器培训通常需要劳动密集型和耗时的过程来标记数据</li>
 </ol>
-<h5 id="提出问题"><a href="#提出问题" class="headerlink" title="提出问题"></a>提出问题</h5><p>如何生成针对每个注入点、特定上下文和防御的有效载荷</p>
+<h5 id="提出问题"><a href="#提出问题" class="headerlink" title="提出问题"></a>提出问题</h5><p>如何使分析仪器能够更准确地进行流量分类，在不同的流量中捕捉隐式的和鲁棒的模式。</p>
 <h5 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h5><ol>
 <li>使用带有MFR的基于MAE的交通变压器，称为YaTC，用于交通分类。 YaTC从三个角度突破了传统的流量分析方法：流量表示、分类器结构和培训策略。</li>
 <li>设计了一个MFR矩阵，该矩阵充分考虑了流层次结构来表示原始流量。 为了有效地利用MFR矩阵进行流量分析，构建了一个具有数据包级和流级张位机制的新型流量变压器。 它可以以更低的复杂度和更少的参数执行更高效的特征提取。</li>
 <li>应用基于MAE的自我监督学习范式来训练我们的分类器。 它首先利用大规模未标记的流量数据来学习通用的潜在重复，然后对一系列流量分类任务进行少量标记数据进行微调。</li>
 <li>在五个现实世界流量数据集上评估YaTC，本文方法远远优于最先进的方法。</li>
 </ol>
+<h5 id="MAE"><a href="#MAE" class="headerlink" title="MAE"></a>MAE</h5><p>MAE（Mean Absolute Error）是一种用于CV（Computer Vision，计算机视觉）的自监督学习方法。自监督学习是一种无需人工标注数据的机器学习方法，它利用输入数据本身的特性来进行学习。MAE方法利用图像数据的自相似性来进行自监督学习。它首先将输入图像进行一定的变换（如旋转、缩放、裁剪等），然后利用这些变换后的图像作为输入数据进行训练。通过比较原始图像和变换后图像之间的差异来学习图像的特征和结构。</p>
+<p>它的优点在于无需人工标注数据，可以利用大量的未标注图像进行训练，从而可以更好地利用数据资源。同时，MAE方法还可以提高模型的鲁棒性和泛化能力，因为它可以学习到图像的不变性特征，使模型对图像变换具有一定的鲁棒性。</p>
+<p>总的来说，MAE方法是一种有效的自监督学习方法，可以提高CV模型的性能和泛化能力，同时也可以节省人工标注数据的成本和时间</p>
 <h5 id="Traffc-Analysis-Methods"><a href="#Traffc-Analysis-Methods" class="headerlink" title="Traffc Analysis Methods"></a>Traffc Analysis Methods</h5><p><strong>Rule-Based Methods</strong></p>
 <p>研究人员通过安全专家设计的u规则，利用流量数据的通信协议和端口号等基本属性来发现违反安全策略的行为。</p>
 <p><strong>ML-Based Methods</strong></p>
