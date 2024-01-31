@@ -4,14 +4,19 @@
   <meta charset="utf-8">
   
   
-  <title>Archives: 2023/7 | qinyiwen</title>
+  <title>Web | qinyiwen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="qinyiwen">
-<meta property="og:url" content="http://example.com/archives/2023/07/page/2/index.html">
+  <meta name="description" content="HTTP基础知识请求行请求行由三个标记组成：请求方法、请求URL和HTTP版本，它们用空格分隔 例如：GET &#x2F;index.html HTTP&#x2F;1.1 HTTP规划定义了8中可能的请求方法  GET：请求指定的页面信息，并返回实体主体 POST：向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST请求可能会导致新的资源的建立和&#x2F;或">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web">
+<meta property="og:url" content="http://example.com/2024/01/31/Web-Basic/index.html">
 <meta property="og:site_name" content="qinyiwen">
+<meta property="og:description" content="HTTP基础知识请求行请求行由三个标记组成：请求方法、请求URL和HTTP版本，它们用空格分隔 例如：GET &#x2F;index.html HTTP&#x2F;1.1 HTTP规划定义了8中可能的请求方法  GET：请求指定的页面信息，并返回实体主体 POST：向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST请求可能会导致新的资源的建立和&#x2F;或">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-01-31T06:16:00.000Z">
+<meta property="article:modified_time" content="2024-01-31T07:25:32.004Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="learn">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="qinyiwen" type="application/atom+xml">
@@ -71,83 +76,91 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2023" class="archive-year">2023</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2023/07/09/Fuzzing-exercise2/" class="archive-article-date">
-  <time class="dt-published" datetime="2023-07-09T15:21:42.000Z" itemprop="datePublished">Jul 9</time>
+        <section id="main"><article id="post-Web-Basic" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/01/31/Web-Basic/" class="article-date">
+  <time class="dt-published" datetime="2024-01-31T06:16:00.000Z" itemprop="datePublished">2024-01-31</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/07/09/Fuzzing-exercise2/">Fuzzing exercise2</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      Web
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2023/07/08/Fuzzing-exercise1/" class="archive-article-date">
-  <time class="dt-published" datetime="2023-07-08T14:20:29.000Z" itemprop="datePublished">Jul 8</time>
-</a>
+    <div class="e-content article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/07/08/Fuzzing-exercise1/">Fuzzing exercise1</a>
-    </h1>
-  
+        <h4 id="HTTP基础知识"><a href="#HTTP基础知识" class="headerlink" title="HTTP基础知识"></a>HTTP基础知识</h4><h5 id="请求行"><a href="#请求行" class="headerlink" title="请求行"></a>请求行</h5><p>请求行由三个标记组成：请求方法、请求URL和HTTP版本，它们用空格分隔</p>
+<p>例如：GET &#x2F;index.html HTTP&#x2F;1.1</p>
+<p>HTTP规划定义了8中可能的请求方法</p>
+<ul>
+<li>GET：请求指定的页面信息，并返回实体主体</li>
+<li>POST：向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST请求可能会导致新的资源的建立和&#x2F;或已有资源的修改</li>
+<li>HEAD：类似于get请求，只不过返回的响应中没有具体的内容，用于获取报头，服务器只返回状态行和头标，不返回请求文档</li>
+<li>PUT：从客户端向服务器传送的数据取代指定的文档的内容</li>
+<li>DELETE：请求服务器删除指定的页面</li>
+<li>OPTIONS：关于服务器支持的请求方法信息的请求</li>
+<li>TRACE：web服务器反馈Http请求和其头标的请求</li>
+<li>CONNECT：已文档化，但当前未实现的一个方法，预留做隧道处理</li>
+</ul>
+<h5 id="请求头"><a href="#请求头" class="headerlink" title="请求头"></a>请求头</h5><p>由关键字／值对组成，每行一对，关键字和值用冒号分隔，请求头标通知服务器用于客户端的功能和标识</p>
+<ul>
+<li>HOST:主机或域名地址</li>
+<li>Accept:指浏览器或其他客户可以接受的MIME文件格式，Servlet可以根据它判断并返回适当的文件格式</li>
+<li>User－Agent:是客户浏览器名称</li>
+<li>Host:对应网址URL中的web名称和端口号</li>
+<li>Accept－Language:指出浏览器可以接受的语言种类，如en或en－us，指英语</li>
+<li>connection:用来告诉服务器是否可以维持固定的HTTP连接，http是无连接的，HTTP／１.１</li>
+</ul>
+<h5 id="Web漏洞"><a href="#Web漏洞" class="headerlink" title="Web漏洞"></a>Web漏洞</h5><p>文件包含漏洞 ..&#x2F;..&#x2F;..&#x2F;..&#x2F;</p>
+<p>想访问的文件，与url目录文件所在的文件夹相差几个文件夹，就写几个..&#x2F;</p>
+<p>如，想访问 WWW\xx.php</p>
+<p>但是url所获取的是 WWW\pikachu\vul\dir\soup\1.php</p>
+<p>相差四个，所以把1.php改为..&#x2F;..&#x2F;..&#x2F;..&#x2F;xx.php</p>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2023/07/07/%E8%AF%BB%E5%90%8E%E6%84%9F/" class="archive-article-date">
-  <time class="dt-published" datetime="2023-07-07T07:53:23.000Z" itemprop="datePublished">Jul 7</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2023/07/07/%E8%AF%BB%E5%90%8E%E6%84%9F/">读后感</a>
-    </h1>
-  
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/01/31/Web-Basic/" data-id="cls1greba0000govf9i4u8abi" data-title="Web" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/learn/" rel="tag">learn</a></li></ul>
 
-    </header>
+    </footer>
   </div>
-</article>
   
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/archives/2023/07/">&laquo; Prev</a><a class="page-number" href="/archives/2023/07/">1</a><span class="page-number current">2</span>
-  </nav>
+<nav id="article-nav">
+  
+    <a href="/2024/01/31/20240131/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          20240131
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2024/01/29/Paper-Yet%20Another%20Traffic%20Classifier%20A%20Masked%20Autoencoder%20Based%20Traffic%20Transformer%20with%20Multi-Level%20Flow%20Representation/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Yet Another Traffic Classifier</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
 
 </section>
         
