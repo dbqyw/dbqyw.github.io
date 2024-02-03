@@ -127,9 +127,9 @@
 </ul>
 <p>在RFC 1034中，还定义了DNS报文的各个字段的具体含义和格式要求，以及报文的传输方式和处理规则。这些规范使得不同的DNS实现能够遵循统一的标准，确保了DNS系统的互操作性和稳定性。</p>
 <p>下图是一个DNS消息的示例</p>
-<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20240203170154470.png" alt="image-20240203170154470"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/cd3dbcec-a849-45bb-8dd9-badd507bbf1c" alt="image"></p>
 <h4 id="DNS相关漏洞的分布和根本原因"><a href="#DNS相关漏洞的分布和根本原因" class="headerlink" title="DNS相关漏洞的分布和根本原因"></a>DNS相关漏洞的分布和根本原因</h4><p>下表是本文对主流DNS软件的DNS CVE研究结果</p>
-<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20240203162308991.png" alt="image-20240203162308991"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/da44b6ca-4c51-422b-bbdb-29a7492f25b1" alt="image"></p>
 <ul>
 <li>F1：大多数CVE都是关于解析器的。本文总共确定了与6个研究的DNS软件相关的291个CVE（132个CVE与其他DNS软件有关）。其中，245（84%）是关于解析器（例如，递归和转发器模式的CVE-2019-6477和CVE-2020-8621）。只有46个CVE是关于名称服务器的（例如，CVE-2020-8619和CVE-2017-3143）。</li>
 <li>F2：DNS软件中的多样化CVE。虽然BIND在CVE1的数量上占主导地位，但在其他软件（Technitium除外）中也发现了大量CVE。此外，本文发现245个CVE中只有13个CVE影响所有软件（例如，CVE-2020-12662下的NXNSAt-tack），这表明DNS软件的实现多种多样。</li>
@@ -335,7 +335,7 @@
 <p>​	“password”:”123456”</p>
 <p>}</p>
 <p>或者直接抓个包，按那种格式提交数据</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/2476579/1624337095372-9725dc09-ce09-469e-bc9e-63dffac04d31.png" alt="数据库注入.png"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f61f381e-2c5b-4b0f-ac1d-a6e4b2c6561c" alt="image"></p>
 <h5 id="Access注入"><a href="#Access注入" class="headerlink" title="Access注入"></a>Access注入</h5><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">数据库类型：Access、MySQL、SQL server、</span><br><span class="line">结构</span><br><span class="line">access</span><br><span class="line">	表名</span><br><span class="line">		列名</span><br><span class="line">			数据</span><br><span class="line">MySQL等</span><br><span class="line">	数据库名</span><br><span class="line">		表名</span><br><span class="line">			列名</span><br><span class="line">				数据</span><br><span class="line">我们进行sql注入时，用到的权限是由连接数据库的用户权限决定的</span><br><span class="line">access数据库在进行注入时，不需要union select，因为它只有一个数据库，直接查询信息就行，它也没有收集数据库名信息，表名信息的表，所以在就行注入时，就只能进行暴力猜</span><br><span class="line">1、判断有几列</span><br><span class="line">2、暴力猜</span><br><span class="line"></span><br><span class="line">遗留问题：</span><br><span class="line">access注入时，暴力破解如果列名或表名猜解不到</span><br></pre></td></tr></table></figure>
 
 <h5 id="MSSQL（SQL-server）注入"><a href="#MSSQL（SQL-server）注入" class="headerlink" title="MSSQL（SQL server）注入"></a>MSSQL（SQL server）注入</h5><p>MSSQL注入 </p>
