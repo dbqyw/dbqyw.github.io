@@ -73,6 +73,262 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-PHP" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/01/24/PHP/" class="article-date">
+  <time class="dt-published" datetime="2024-01-24T14:04:16.000Z" itemprop="datePublished">2024-01-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/01/24/PHP/">PHP</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="php变量规则"><a href="#php变量规则" class="headerlink" title="php变量规则"></a>php变量规则</h1><p>变量以$开始，后面跟着变量名称（不用声明变量类型）</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$text</span>=<span class="string">&quot;helloworld&quot;</span></span><br><span class="line"><span class="variable">$a</span>=<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>变量类型</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">local</span><br><span class="line">global 函数内访问全局变量</span><br><span class="line">static 函数完成时，它的所有变量通常会删除，希望某个局部变量不被删除，就使用static关键字声明</span><br></pre></td></tr></table></figure>
+
+<p>输出 echo</p>
+<p>输出变量</p>
+<p>$txt1&#x3D;”学习 PHP”;</p>
+<p>$cars&#x3D;array(“Volvo”,”BMW”,”Toyota”);</p>
+<p>echo $txt1;</p>
+<p>echo “&lt; br &gt;” 换行 </p>
+<p>echo “我车的品牌是 {$cars[0]}”;</p>
+<p>输出print 和echo使用方法一样</p>
+<p>PHP反序列化</p>
+<p>public protected 子类可用</p>
+<p>private 子类不可用</p>
+<h1 id="php序列化"><a href="#php序列化" class="headerlink" title="php序列化"></a>php序列化</h1><p>序列化的作用</p>
+<p>序列化是将对象的状态信息（属性）转换为可以存储或传输形式的过程</p>
+<p>对象 序列化为 字符串</p>
+<p>将对象或数组转化为可存储&#x2F;传输的字符串</p>
+<p>在php中使用函数serialize()来将对象或者数组进行序列化，并返回一个包含字节流的字符串来表示</p>
+<p>表达方式</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$a</span>=<span class="literal">null</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">serialize</span>(<span class="variable">$a</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>输出为N;</p>
+<p>对象的序列化</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">test</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="variable">$pub</span>=<span class="string">&quot;benben&quot;</span>;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">jineng</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">echo</span> <span class="variable language_">$this</span>-&gt;pub;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$a</span>=<span class="keyword">new</span> <span class="title function_ invoke__">test</span>();</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">serialize</span>(<span class="variable">$a</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>不能序列化类，可以序列化对象，输出为：</p>
+<p><code>O:4:&quot;test&quot;:1:&#123;s:3:&quot;pub&quot;;s:6:&quot;benben&quot;;&#125;</code></p>
+<p><code>O(object):4(类名长度):&quot;test&quot;(类名):1(变量数量):&#123;s:3(变量名字长度):&quot;pub&quot;(变量名字);s:6(值的长度):&quot;benben&quot;(变量值);&#125;</code></p>
+<p>private私有属性序列化时，在变量名前加”%00类名%00”，但是直接看看不见</p>
+<p>要先加上这个，再对私有属性进行反序列化</p>
+<h1 id="php反序列化"><a href="#php反序列化" class="headerlink" title="php反序列化"></a>php反序列化</h1><p>反序列化的特性</p>
+<p>1、反序列化之后的内容为一个对象</p>
+<p>2、反序列化生成的对象里的值，由反序列化里的值提供，与原有类预定义的值无关</p>
+<p>3、反序列化不触发类的成员方法，需要调用方法后才能触发</p>
+<p>[3 先反序列化，再调用类里面的成员方法，类不能被注释，否则找不到成员方法]</p>
+<p>反序列化 unserialize</p>
+<p>反序列化就是将序列化后的参数还原成实例化的对象</p>
+<p>序列化  serialize</p>
+<p>反序列化漏洞的成因：反序列化过程中，unserialize()接收的值（字符串）可控；通过更改这个值（字符串），得到所需要的代码，即生成的对象的属性值</p>
+<p>通过调用方法，出发代码执行</p>
+<p>eval()执行代码</p>
+<h1 id="魔术方法"><a href="#魔术方法" class="headerlink" title="魔术方法"></a>魔术方法</h1><p>魔术方法是一个预定义好的，在特定情况下自动触发的行为方法</p>
+<p>魔术方法的作用</p>
+<p>反序列化漏洞成因：反序列化过程中，unserialize()接收的值（字符串）可控，通过更改这个值（字符串）得到所需要的代码，通过调用方法，出发代码执行</p>
+<p>魔术方法在特定条件下自动调用相关方法，最终导致触发代码</p>
+<p>魔术方法触发时机，参数，返回值</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ac512080-8094-4f8e-91bf-a4967df8ada4" alt="image"></p>
+<h2 id="construct"><a href="#construct" class="headerlink" title="__construct()"></a>__construct()</h2><p><strong>__construct()</strong> 构造函数，在实例化一个对象的时候，首先会去自动执行的一个方法</p>
+<p>触发时机：实例化对象</p>
+<p>功能：提前清理不必要内容</p>
+<p>参数：非必要</p>
+<p>返回值</p>
+<p>在序列化和反序列化过程中不会被触发</p>
+<h2 id="distruct"><a href="#distruct" class="headerlink" title="__distruct()"></a>__distruct()</h2><p><strong>__distruct()</strong> 析构函数，在对象的所有引用被删除或者当对象被显式销毁时执行的魔术方法</p>
+<p>实例化对象结束后，代码运行完会销毁，触发构造函数__destruct()</p>
+<p>触发时机：对象引用完成，或对象被摧毁</p>
+<p>功能：</p>
+<p>参数：</p>
+<p>返回值</p>
+<p>在序列化过程中不会被触发</p>
+<p>在反序列化过程中会触发，反序列化得到的是对象，用完后会销毁，触发析构函数__distruct()</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/a4b6409a-6b95-4a39-8f26-7e5078d66760" alt="image"></p>
+<h2 id="sleep"><a href="#sleep" class="headerlink" title="__sleep()"></a>__sleep()</h2><p><strong>__sleep()</strong> 序列化serialize()函数会检查类中是否存在一个魔术方法__sleep()，如果存在，该方法会现被调用，然后才执行序列化操作，此功能可以用于清理对象，并返回一个包含对象中所有应被序列化的变量名称的数组，如果该方法未返回任何内容，则NULL被序列化，并产生一个E_NOTICE级别的错误</p>
+<p>触发时机：序列化serialize()之前</p>
+<p>功能：对象被序列化之前触发，返沪需要被序列化存储的成员属性，删除不必要的属性</p>
+<p>参数：成员属性</p>
+<p>返回值：需要被序列化存储的成员属性</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ac24a1bf-aa25-4408-81f9-5e493226c41a" alt="image"></p>
+<p>__sleep执行返回需要序列化的变量名，过滤掉password变量</p>
+<p>serialize()只序列化sleep返回的变量</p>
+<h2 id="wakeup"><a href="#wakeup" class="headerlink" title="__wakeup()"></a>__wakeup()</h2><p><strong>__wakeup()</strong> unserialize()会检查是否存在一个__wakeup()方法，如果存在，则会先调用__wakeup()方法，预先准备对象需要的资源。</p>
+<p>预先准备对象资源，返回void，常用于反序列化操作中重新建立数据库连接或执行其他初始化操作</p>
+<p>触发时机：反序列化unserialize()之前</p>
+<p>功能：</p>
+<p>参数：</p>
+<p>返回值：</p>
+<p>__wakeup()在反序列化unserialize()之前</p>
+<p>__destruct()在反序列化unserialize()之后</p>
+<p>有的题要绕开它们，避免值被改变</p>
+<h2 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="__toString()"></a>__toString()</h2><p><strong>__toString()</strong> 表达方式错误导致魔术方法触发</p>
+<p>触发时机：把对象当成字符串调用</p>
+<p>功能：</p>
+<p>参数：</p>
+<p>返回值：</p>
+<p>把类User实体化并赋值给$test，此时$test是个对象，调用对象可以使用print_r或者var_dump</p>
+<p>如果使用echo或者print只能调用字符串的方式去调用对象，即把对象当成字符串使用，此时自动触发toString()</p>
+<h2 id="invoke"><a href="#invoke" class="headerlink" title="__invoke()"></a>__invoke()</h2><p><strong>__invoke()</strong> 表达方式错误导致魔术方法触发</p>
+<p>触发时机：把对象当成函数调用</p>
+<p>功能：</p>
+<p>参数：</p>
+<p>返回值：</p>
+<p>把类User实体化并赋值给$test，此时$test是个对象，调用对象可以使用print_r或者var_dump</p>
+<p>加()是把test当成函数test()来调用，此时触发invoke()</p>
+<p>$test()</p>
+<h2 id="call"><a href="#call" class="headerlink" title="__call()"></a>__call()</h2><p><strong>__call()</strong> </p>
+<p>触发时机：调用一个不存在的方法</p>
+<p>功能：</p>
+<p>参数：2个参数传参$arg1,$arg2（参数个数与定义的__call()函数相对应）</p>
+<p>返回值：调用的不存在的方法的名称和参数</p>
+<p>调用的方法不存在，触发魔术方法__call()</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/1620df34-063d-47b4-bd90-4e8dee8f2d4a" alt="image"></p>
+<h2 id="callStatic"><a href="#callStatic" class="headerlink" title="__callStatic()"></a>__callStatic()</h2><p><strong>__callStatic()</strong> </p>
+<p>触发时机：静态调用或调用成员常量时使用的方法不存在</p>
+<p>功能：</p>
+<p>参数：2个参数传参$arg1,$arg2（参数个数与定义的__callStatic()函数相对应）</p>
+<p>返回值：调用的不存在的方法的名称和参数</p>
+<p>调用的方法不存在，触发魔术方法callStatic()</p>
+<p>静态调用 $test :: callxxx(‘a’)</p>
+<p>非静态调用 $test -&gt; callxxx(‘a’)</p>
+<h2 id="get"><a href="#get" class="headerlink" title="__get()"></a>__get()</h2><p><strong>__get()</strong> </p>
+<p>触发时机：调用的成员属性不存在</p>
+<p>功能：</p>
+<p>参数：传参$arg1</p>
+<p>返回值：不存在的成员属性的名称</p>
+<p>var2不存在</p>
+<p>$test -&gt; var2;</p>
+<p>__get($arg1)</p>
+<p>把var2赋值给$arg1</p>
+<p>最后输出var2</p>
+<h2 id="set"><a href="#set" class="headerlink" title="__set()"></a>__set()</h2><p><strong>__set()</strong> </p>
+<p>触发时机：给不存在的成员赋值属性</p>
+<p>功能：</p>
+<p>参数：传参$arg1,$arg2</p>
+<p>返回值：不存在的成员属性的名称和赋的值</p>
+<h2 id="isset"><a href="#isset" class="headerlink" title="__isset()"></a>__isset()</h2><p><strong>__isset()</strong> </p>
+<p>触发时机：对不可访问属性使用isset()或empty()时，__isset()会被调用</p>
+<p>功能：</p>
+<p>参数：传参$arg1</p>
+<p>返回值：不存在或不可访问的成员属性的名称</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f77d9eb7-790b-4a2b-a9e5-7ce6ac2c78ae" alt="image"></p>
+<h2 id="unset"><a href="#unset" class="headerlink" title="__unset()"></a>__unset()</h2><p><strong>__unset()</strong> </p>
+<p>触发时机：对不可访问属性使用unset()时</p>
+<p>功能：</p>
+<p>参数：传参$arg1</p>
+<p>返回值：不存在的成员属性的名称</p>
+<h2 id="clone"><a href="#clone" class="headerlink" title="__clone()"></a>__clone()</h2><p><strong>__clone()</strong> </p>
+<p>触发时机：当使用clone关键字拷贝完成一个对象后，新对象会自动调用定义的魔术方法__clone()</p>
+<p>功能：</p>
+<p>参数：</p>
+<p>返回值：</p>
+<h2 id="魔术方法总结"><a href="#魔术方法总结" class="headerlink" title="魔术方法总结"></a>魔术方法总结</h2><p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/a5f1cfa7-8a39-4006-9da5-e88d05037ac6" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/1d20ae88-8cf7-445d-b8b8-9ee1fe9cbf57" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/87ebba2f-9a57-438b-b175-9a05684e6fd5" alt="image"></p>
+<h1 id="POP链构造，POC编写"><a href="#POP链构造，POC编写" class="headerlink" title="POP链构造，POC编写"></a>POP链构造，POC编写</h1><p><strong>POP链</strong></p>
+<p>在反序列化中，我们能控制的数据就是对象中的属性值（成员变量），所以在PHP反序列化中有一种漏洞利用的方法叫”面向属性编程“，即POP</p>
+<p>POP链就是利用魔法方法在里面进行多次跳转然后获取敏感数据的一种payload</p>
+<p><strong>POC编写</strong></p>
+<p>POC中文译作概念验证，在安全界可以理解成漏洞验证程序，POC是一段不完整的程序，仅仅是为了证明提出者的观点的一段代码</p>
+<p>编写一段不完整的程序，获取所需要的序列化字符串</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/664dfe0f-e131-4c81-bce1-8b586adaa113" alt="image"></p>
+<p>要触发Modifier的append得到flag，value&#x3D;flag.php</p>
+<p>要触发Modifier的__invoke()  把对象当成函数调用</p>
+<p>触发Test的__get()  给不存在的成员属性赋值，p赋值为Modifier对象，就能return对象</p>
+<p>然后触发get，给不存在的成员属性赋值，给Show中的$str赋值为Test属性，</p>
+<p>然后需要触发__wakeup，反序列化之前，在wakeuo中，让source为Show对象，一定要是Show的对象，否则无法触发tostring</p>
+<p>再把对象当字符串用，就能触发tostring</p>
+<h1 id="字符串逃逸基础-字符减少"><a href="#字符串逃逸基础-字符减少" class="headerlink" title="字符串逃逸基础_字符减少"></a>字符串逃逸基础_字符减少</h1><p>反序列化分隔符</p>
+<p>反序列化以;}结束，后面的字符串不影响正常的反序列化</p>
+<p>属性逃逸</p>
+<p>一般在数据先经过一次serialize再经过unserialize，再这个中间反序列化的字符串变多或者变少的时候有可能存在反序列化属性逃逸</p>
+<p>构造值，让倒数第二个“及之前的功能性代码变为值，则后面的值变成功能性代码</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/34903358-33f5-461a-a413-eea3b32c0dc9" alt="image"></p>
+<p>反序列化字符串逃逸：多套一处一个成员属性，第一个字符串减少，吃掉有效代码，在第二个字符串构造代码</p>
+<h1 id="字符串逃逸基础-字符减增多"><a href="#字符串逃逸基础-字符减增多" class="headerlink" title="字符串逃逸基础_字符减增多"></a>字符串逃逸基础_字符减增多</h1><p>反序列化字符串减少逃逸：多逃逸出一个成员属性，第一个字符串减少，吃掉有效代码，在第二个字符串构造带吗</p>
+<p>反序列化字符串增多逃逸：构造出一个逃逸成员属性，第一个字符串增多，吐出多余代码，把多余位代码构造成逃逸的成员属性</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b6508253-d62e-4cd4-a60d-b5e830250f9b" alt="image"></p>
+<p>第一个字符串增多，吐出多余代码，把多余代码构造成逃逸成员属性</p>
+<p><strong>字符串逃逸增多，例题思考</strong></p>
+<p>profile是test对象，且pass值为escaping</p>
+<p>把$name中的$safe替换为hack</p>
+<p>__construct()实例化对象时会触发</p>
+<p>实例化test对象时会触发__construct，把$param的值赋给test对象的user</p>
+<p>然后反序列化时，会把$param中的flag和php都转为hack</p>
+<p>要改变pass的值，但是分析一遍过后发现没有对pass进行更改，因此利用filter中将php替换为hack，字符串逃逸，字符增多，把有效代码往外吐</p>
+<p>“;s:4:”pass”;s:8:”escaping”;}</p>
+<p>要吐出29个</p>
+<p>所以要29个php替换为hack</p>
+<p><strong>字符串逃逸减少，例题思考</strong></p>
+<p>要让$profile-&gt;vip为true，才能输出flag</p>
+<p>题目要获取user和pass</p>
+<p>param为user</p>
+<p>user和pass的值为test类的user和pass值</p>
+<p>filter是把flag和php替换为hk</p>
+<p>字符串减少，把后面的包进来</p>
+<p>要变成功能性代码的</p>
+<p>s:4:”user”;s:?:”fff”;s:4:”pass”;s:25:”1”;<strong>s:3:”vip”;s:4:”true”;}</strong>“</p>
+<p>前面要包住20个，flag包2，php包1</p>
+<p>10个flag</p>
+<p>?user&#x3D;flagflagflagflagflagflagflagflagflagflag &amp;pass&#x3D;1”;s:3:”vip”;b:1;}</p>
+<p>O:4:”test”:3:{s:4:”user”;s:4:”flag”;s:4:”pass”;s:6:”benben”;s:3:”vip”;b:1;}</p>
+<h1 id="wakeup绕过"><a href="#wakeup绕过" class="headerlink" title="wakeup绕过"></a>wakeup绕过</h1><p>反序列化漏洞：CVE-2016-7124</p>
+<p>漏洞产生原因：如果存在__wakeup方法，调用unserilize()方法之前</p>
+<p>会先调用__wakeup方法，但是序列化字符串中表示对象属性个数的值大于真实的属性个数时</p>
+<p>会跳过__wakeup()的执行</p>
+<p>把成员属性数量+1，就能绕过__wakeup()</p>
+<p>如果题目中正则表达式，不允许O后面跟数字，就写成O:+6</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;/[oc]:\d+:/i&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<p>$a &#x3D; ‘O:+6:”secret”:2:{s:4:”file”;s:8:”flag.php”;}’;</p>
+<p>echo urlencode($a);</p>
+<p>记得最后要urlencode一下</p>
+<h1 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h1><p>符号&amp;</p>
+<p>$a-&gt;enter&#x3D;&amp;$a-&gt;secret</p>
+<p>保证$a-&gt;enter的值和$a-&gt;secret的值一直一样</p>
+<h1 id="session反序列化漏洞"><a href="#session反序列化漏洞" class="headerlink" title="session反序列化漏洞"></a>session反序列化漏洞</h1><p>当session_strat()被调用或者php.ini中session.auto_start为1时，PHP内部调用会话管理器，访问用户session被序列化以后，存储到指定目录（默认为&#x2F;tmp）</p>
+<p>存取数据的格式有多种，常用的由三种</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d66a2d5a-cef5-403c-8f53-509e07146229" alt="image"></p>
+<p>漏洞产生：写入格式和读取格式不一样  </p>
+<p>当网站序列化并存储session，与反序列化并读取session的方式不同，就可能导致session反序列化漏洞的产生。</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/034b1373-ca69-4b5c-9212-8488505fcc51" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/34ca214d-e437-4039-8876-cf507964ecbc" alt="image"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/01/24/PHP/" data-id="clrrksg850000ewvf6jzg0n81" data-title="PHP" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/learn/" rel="tag">learn</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Buuctf Misc（2-5）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/08/14/Buuctf%20Misc%EF%BC%882-5%EF%BC%89/" class="article-date">
@@ -1123,128 +1379,6 @@
 
 
   
-    <article id="post-Exercise 7 - VLC Media Player" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/08/01/Exercise%207%20-%20VLC%20Media%20Player/" class="article-date">
-  <time class="dt-published" datetime="2023-08-01T15:21:53.000Z" itemprop="datePublished">2023-08-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/08/01/Exercise%207%20-%20VLC%20Media%20Player/">Exercise 7 - VLC Media Player</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="Exercise-7-VLC-Media-Player"><a href="#Exercise-7-VLC-Media-Player" class="headerlink" title="Exercise 7 - VLC Media Player"></a>Exercise 7 - VLC Media Player</h3><h4 id="一、实验背景"><a href="#一、实验背景" class="headerlink" title="一、实验背景"></a>一、实验背景</h4><p><strong>CVE-2019-14776</strong>是一个越界读取漏洞，可以通过精心制作的WMV&#x2F;ASF (Windows Media Video)文件触发。越界读取是当程序读取数据超过预期缓冲区的末尾或开始之前时发生的漏洞。因此，它允许远程攻击者导致拒绝服务或可能从进程内存中获取潜在的敏感信息。</p>
-<p>越界读取漏洞（<a target="_blank" rel="noopener" href="https://cwe.mitre.org/data/definitions/125.html%EF%BC%89">https://cwe.mitre.org/data/definitions/125.html）</a></p>
-<p><strong>部分仪器仪表</strong></p>
-<p>使用进化覆盖引导的模糊器的优点之一是，它能够自己找到新的执行路径。然而，这通常也是一个缺点。当我们面对具有高度模块化架构的软件(如VLC媒体播放器)时，每个模块执行特定的任务。</p>
-<p>那么，假设我们给监控器提供了一个有效的MKV文件。但是在对输入文件进行了几次修改之后，“magic bytes”文件发生了变化，现在我们的程序将输入文件视为AVI文件。因此，这个“变异的MKV文件”现在由AVI Demux处理。一段时间后，文件魔术字节再次改变，现在文件被视为MPEG文件。在这两种情况下，这个新修改的文件增加代码覆盖率的可能性都很低，因为这个新文件没有任何有效的语法结构。</p>
-<p>简而言之，如果我们不对代码覆盖率施加限制，模糊测试者很容易选择错误的路径，从而使模糊测试过程效率降低。</p>
-<p>为了解决这个问题，afl++包含了一个部分插装特性，它允许指定应该使用或不使用插装来编译哪些函数&#x2F;文件。这有助于模糊器专注于程序的重要部分，通过执行无趣的代码路径来避免不必要的噪声和干扰。</p>
-<p>为了使用它，我们在编译时设置环境AFL_LLVM_ALLOWLIST变量。这个环境变量必须指向一个包含所有应该检测的函数&#x2F;文件名的文件。</p>
-<p>afl++部分仪器（<a target="_blank" rel="noopener" href="https://github.com/AFLplusplus/AFLplusplus/blob/stable/instrumentation/README.instrument_list.md%EF%BC%89">https://github.com/AFLplusplus/AFLplusplus/blob/stable/instrumentation/README.instrument_list.md）</a></p>
-<h4 id="二、实验目的"><a href="#二、实验目的" class="headerlink" title="二、实验目的"></a>二、实验目的</h4><p>模糊<strong>VLC</strong>媒体播放器。目标是在VLC 3.0.7.1中找到<a target="_blank" rel="noopener" href="https://nvd.nist.gov/vuln/detail/CVE-2019-14776"><strong>CVE-2019-14776</strong></a>的崩溃&#x2F;PoC</p>
-<h4 id="三、实验环境："><a href="#三、实验环境：" class="headerlink" title="三、实验环境："></a>三、实验环境：</h4><p>win10，VMware，Ubuntu 20.04.2 LTS（虚拟机用户名密码均为fuzz）</p>
-<h4 id="四、实验步骤"><a href="#四、实验步骤" class="headerlink" title="四、实验步骤"></a>四、实验步骤</h4><h5 id="1、下载并构建目标"><a href="#1、下载并构建目标" class="headerlink" title="1、下载并构建目标"></a>1、下载并构建目标</h5><p>得到模糊目标，为要模糊化的项目创建一个新目录</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME</span><br><span class="line">mkdir fuzzing_vlc &amp;&amp; cd fuzzing_vlc</span><br></pre></td></tr></table></figure>
-
-<p>下载并解压vlc-3.0.7.1.tar.xz</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://download.videolan.org/pub/videolan/vlc/3.0.7.1/vlc-3.0.7.1.tar.xz</span><br><span class="line">tar -xvf vlc-3.0.7.1.tar.xz &amp;&amp; cd vlc-3.0.7.1/</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/3202c8c2-020e-43e7-acdd-6b1fc2e1b5d3" alt="image"></p>
-<p>发现下载链接连接失败，用管理员身份下载，解决问题</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/cd3e5bab-c56e-461b-bf35-3a206fe5ca17" alt="image"></p>
-<h5 id="2、构建VCL"><a href="#2、构建VCL" class="headerlink" title="2、构建VCL"></a>2、构建VCL</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=&quot;$HOME/fuzzing_vlc/vlc-3.0.7.1/install&quot; --disable-a52 --disable-lua --disable-qt</span><br><span class="line">make -j$(nproc)</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8b5ea12b-8a45-4fc8-98c8-055762f3074e" alt="image"></p>
-<p>报错</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/0abd4ced-6a37-410c-abbd-67d841f13c68" alt="image"></p>
-<p>解决方案</p>
-<p>安装一些必要的依赖库</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">apt-get install libxcb-composite0-dev libxcb-glx0-dev libxcb-dri2-0-dev libxcb-xf86dri0-dev libxcb-xinerama0-dev libxcb-render-util0-dev</span><br><span class="line">apt-get install libxcb-xv0-dev</span><br><span class="line">apt-get install libxcb-randr0-dev</span><br><span class="line">apt-get install libasound2-dev</span><br><span class="line">apt-get install libvlc-dev</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/0982fa2d-3152-4151-8ada-79eb2f254b18" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/34af0e30-08f8-44bc-9349-8f8e6ce30010" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/96b4bcc3-158c-4b6e-ba44-2ababb31bfad" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9f19e66f-ad36-4128-9c95-612efba4dd7e" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/73c23d48-c702-439c-97f2-8662bad8ad61" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/e218173c-f154-40cb-aca9-f3963f021a79" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d737430f-45fd-4c50-bde3-90fc21f656b8" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b0692ec5-08db-4708-8dd7-de887b5a130e" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/440e516b-b84e-46c4-811b-a04766c51586" alt="image"></p>
-<p>安装完依赖库后，重新运行.config，成功构建VCL</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/fd9c3400-3ea2-4430-baa4-e1e3748ca356" alt="image"></p>
-<p>测试工作是否正确</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/vlc-static --help</span><br></pre></td></tr></table></figure>
-
-<p>如看到以下页面，说明工作正确</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2f1b8946-18bc-46d3-a7ef-e80a8c48401c" alt="image"></p>
-<h5 id="3、种子语料库创建"><a href="#3、种子语料库创建" class="headerlink" title="3、种子语料库创建"></a>3、种子语料库创建</h5><p>可以在<a target="_blank" rel="noopener" href="https://samples.ffmpeg.org/">ffmpeg示例库</a>中找到大量视频示例。</p>
-<p>建议挑选一些样本，然后使用视频编辑器将视频文件缩小到尽可能小的大小。</p>
-<p>以下是一些开源视频编辑器的例子:</p>
-<p>——(OpenShot) (<a target="_blank" rel="noopener" href="https://www.openshot.org/">https://www.openshot.org/</a>)</p>
-<p>——(Shotcut) (<a target="_blank" rel="noopener" href="https://shotcut.org/">https://shotcut.org/</a>)</p>
-<p>或者复制<a href="./InputCorpus/short2.wmv">short2.wmv</a>和<a href="./InputCorpus/veryshort.wmv">veryshort.wmv</a>文件到AFL输入文件夹</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/723e0f2a-62c7-4376-b9e2-c3e281cf0240" alt="image"></p>
-<h5 id="4、fuzzing线束"><a href="#4、fuzzing线束" class="headerlink" title="4、fuzzing线束"></a>4、fuzzing线束</h5><p>如果尝试直接模糊“vlc-static”二进制文件，将看到AFL每秒只执行几次。这是因为VLC启动非常耗时。这就是为什么为模糊测试VLC创建一个自定义模糊测试线束。</p>
-<p>修改’ ‘ .&#x2F;test&#x2F;vlc-demux-run.c ‘ ‘文件以包含模糊测试工具。通过这种方式，只需执行以下操作即可编译该harness:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd test</span><br><span class="line">make vlc-demux-run -j$(nproc) LDFLAGS=&quot;-fsanitize=address&quot;</span><br><span class="line">cd ..</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8c630391-698e-495d-ae8b-520a844d8999" alt="image"></p>
-<p>由于该错误存在于ASF解模中，所以调用<strong>vlc_demux_process_memory</strong>函数。这个函数尝试删除先前存储在内存中的数据缓冲区。可以在这里找到代码修改(.&#x2F;fuzzing_harness.patch)</p>
-<h5 id="5、部分仪器化"><a href="#5、部分仪器化" class="headerlink" title="5、部分仪器化"></a>5、部分仪器化</h5><p>一开始，尝试只包括ASF拆模所涉及的文件名。不幸的是，这种方法不起作用。似乎文件名匹配是<a target="_blank" rel="noopener" href="https://github.com/AFLplusplus/AFLplusplus/issues/1018#issuecomment-879045408">并不总是可能的</a>，所以选择了一个混合的方法，包括函数匹配和文件名匹配</p>
-<p>可以下载部分检测文件(.&#x2F;Partial_instrumentation)</p>
-<h5 id="6、小改动"><a href="#6、小改动" class="headerlink" title="6、小改动"></a>6、小改动</h5><p>为了加快ASF模糊测试的速度，建议将这个补丁应用到<strong>modules&#x2F;demux&#x2F;libasf.c</strong> (目前没有更多的线索;)):[speeup .patch](.&#x2F; speeup .patch)</p>
-<h5 id="7、fuzzing"><a href="#7、fuzzing" class="headerlink" title="7、fuzzing"></a>7、fuzzing</h5><p>使用<strong>afl-clang-fast</strong>作为编译器并启用ASAN构建VLC的时间</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CC=&quot;afl-clang-fast&quot; CXX=&quot;afl-clang-fast++&quot; ./configure --prefix=&quot;$HOME/fuzzing_vlc/vlc-3.0.7.1/install&quot; --disable-a52 --disable-lua --disable-qt --with-sanitizer=address</span><br><span class="line">AFL_LLVM_ALLOWLIST=$HOME/fuzzing_vlc/vlc-3.0.7.1/Partial_instrumentation make -j$(nproc) LDFLAGS=&quot;-fsanitize=address&quot;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/75b90691-fdd0-4623-959a-509166ccf415" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8805c9e9-c6df-49bc-95e8-4100fa926990" alt="image"></p>
-<p>构建模糊控制装置</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd test</span><br><span class="line">make vlc-demux-run -j$(nproc) LDFLAGS=&quot;-fsanitize=address&quot;</span><br><span class="line">cd ..  </span><br></pre></td></tr></table></figure>
-
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7375cb28-c429-4fcb-8f73-86377f36c6c9" alt="image"></p>
-<p>运行fuzzer</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">afl-fuzz -t 100 -m none -i &#x27;./afl_in&#x27; -o &#x27;./afl_out&#x27; -x asf_dictionary.dict -D -M master -- ./test/vlc-demux-run @@    </span><br></pre></td></tr></table></figure>
-
-<p>注意事项：超时参数严重依赖于计算机，需要调整这个值</p>
-<p>过一段时间，可以看到多个崩溃</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/378225ea-06c2-4351-a815-85f48b7a257c" alt="image"></p>
-<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230802153658669.png" alt="image-20230802153658669"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/63ee9621-c317-45f4-b390-4628ce9960a5" alt="Image1"></p>
-<h5 id="8、Triage"><a href="#8、Triage" class="headerlink" title="8、Triage"></a>8、Triage</h5><p>ASan跟踪可能看起来像</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/21e1a6e2-dd80-41fb-8660-8646c6502027" alt="image3"></p>
-<h5 id="9、修复问题"><a href="#9、修复问题" class="headerlink" title="9、修复问题"></a>9、修复问题</h5><p>修复这两个bug后重建目标，并检查PoC不再使程序崩溃</p>
-<h4 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h4><p>通过这个实验，我了解了<strong>CVE-2019-14776</strong>漏洞，学会如何使用部分仪器只对程序的相关部分进行仪器检测，如何编写模糊测试工具来更有效地测试大型应用程序</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/08/01/Exercise%207%20-%20VLC%20Media%20Player/" data-id="clktgz1j70000p8vff6fg5aw8" data-title="Exercise 7 - VLC Media Player" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -1295,6 +1429,10 @@
       <ul>
         
           <li>
+            <a href="/2024/02/06/Web-File/">Web-File1</a>
+          </li>
+        
+          <li>
             <a href="/2024/02/03/Paper-Code%20Vulnerability%20Detection%20via%20Signal-Aware%20AI/">RESOLVERFUZZ</a>
           </li>
         
@@ -1308,10 +1446,6 @@
         
           <li>
             <a href="/2024/01/31/20240131/">20240131</a>
-          </li>
-        
-          <li>
-            <a href="/2024/01/31/Web-Basic/">Web-Basic</a>
           </li>
         
       </ul>
