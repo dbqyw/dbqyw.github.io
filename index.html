@@ -73,6 +73,68 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Paper-IvySyn Automated Vulnerability Discovery in Deep Learning Frameworks" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/08/Paper-IvySyn%20Automated%20Vulnerability%20Discovery%20in%20Deep%20Learning%20Frameworks/" class="article-date">
+  <time class="dt-published" datetime="2024-02-08T10:18:02.000Z" itemprop="datePublished">2024-02-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/02/08/Paper-IvySyn%20Automated%20Vulnerability%20Discovery%20in%20Deep%20Learning%20Frameworks/">IvySyn</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="IvySyn-Automated-Vulnerability-Discovery-in-Deep-Learning-Frameworks-论文分享"><a href="#IvySyn-Automated-Vulnerability-Discovery-in-Deep-Learning-Frameworks-论文分享" class="headerlink" title="IvySyn: Automated Vulnerability Discovery in Deep Learning Frameworks 论文分享"></a>IvySyn: Automated Vulnerability Discovery in Deep Learning Frameworks 论文分享</h3><p>Neophytos Christou, undefined., et al, “IvySyn: Automated Vulnerability Discovery in Deep Learning Frameworks,” in 32nd USENIX Security Symposium (USENIX Security 23), 2023, pp. 2383–2400.</p>
+<p>pdf链接：<a href="">usenix.org&#x2F;system&#x2F;files&#x2F;usenixsecurity23-christou.pdf</a></p>
+<p>IvySyn：自动发现深度学习框架中的漏洞</p>
+<p>IvySyn是第一个用于发现深度学习框架中的内存错误漏洞的全自动框架，它会自动合成高级语言（如Python）中的代码片段</p>
+<h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>人工智能应用越来越广泛，深度学习（DL）一直走在人工智能技术的前沿。深度学习框架通常为模型开发人员提供一套丰富的高级应用程序接口，开发者可以通过这些接口执行特定的DL操作，但是这些操作的重要部分（内核）是用C&#x2F;C++等内存不安全语言实现的。因此DL框架底层实现存在漏洞，这些漏洞可能导致功能不正确、数值错误、性能下降、内存耗尽和CPU&#x2F;GPU&#x2F;TPU锁定，以及致命的的运行时和内存安全错误。</p>
+<h4 id="现存的深度学习框架漏洞发现方法局限"><a href="#现存的深度学习框架漏洞发现方法局限" class="headerlink" title="现存的深度学习框架漏洞发现方法局限"></a>现存的深度学习框架漏洞发现方法局限</h4><p>过去了方法试图通过直接在高级应用程序接口上使用模糊处理来回答类似问题，但是是半自动或非自动的，需要领域专家注释来指定有效的参数-值组合，或者需要开发人员手动编写辅助代码。</p>
+<h5 id="提出问题"><a href="#提出问题" class="headerlink" title="提出问题"></a>提出问题</h5><ol>
+<li>在本地DL内核中，是否有低级应用程序接口的违规输入会引发内存错误？</li>
+<li>是否有任何高级应用程序接口可以将上述违规输入传播到低级内核代码中？</li>
+</ol>
+<h4 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h4><ol>
+<li>利用原生API的静态类型性质，这使本文能够在低级内核代码上执行基于类型感知突变的模糊</li>
+<li>给定低级API的一组违规输入，本文利用从低级到高级API的固有DL框架映射，并合成代码片段，在低级、原生代码上触发内存错误，并将输入传递给高级API</li>
+<li>设计并实现IvySyn，IvySyn框架中实现了本文自下而上的方法，它不需要域专家注释或手动编写的驱动程序代码</li>
+</ol>
+<h4 id="相关知识"><a href="#相关知识" class="headerlink" title="相关知识"></a>相关知识</h4><p><strong>内核</strong>：DL框架的核心功能由原生C&#x2F;C++代码提供，实现标准操作，如张量操作、数学、讨论和梯度计算、池化和其他DL特定操作。此类操作的实际本机实现称为内核。在C&#x2F;C++等语言中实现核心操作不仅提供了更好的性能，还允许框架开发人员为不同的硬件设备（例如CPU、GPU和TPU）提供多个优 化版本。内核被建议避免使用（或取决于）共享状态，每个调用都是自包含的，以便易于并行。这是IvySyn构建的一个重要属性，可以无缝添加其内核模糊钩子。</p>
+<p><strong>绑定</strong>：即使DL框架提供低级内核API，模型开发人员通常通过Python等高级语言执行特定于DL的操作。因此，为了通过开发人员可访问的API公开这些操作的子集，DL框架生成高级绑定。这些绑定将喂给Python API的输入参数转换为相应的C&#x2F;C++参数，并透明地调用适当的内核，抽象出有关底层外函数接口的实现细节。IvySyn基于DL框架映射（绑定⇄内核）和低级崩溃输入，以无缝合成代码片段，包括各自的高级API。尽管这些绑定不一定打算由de-velopers使用，但它们仍然被公开曝光，并且可以从Python中调用，使攻击者能够直接访问本机内核实现中可利用的漏洞。</p>
+<p><strong>高级API和DL模型</strong>：高级语言绑定（如上述）由其他特定于语言的高级API（例如，在Python中实现）进一步包装。在调用相应操作之前，后者可能会在原始绑定上添加一些抽象，例如参数的预处理或额外的健全性检查；或者可能只是包装器，向框架模块添加文档和统一导出操作。最终，围绕内核操作绑定的高级API是模型开发人员打算使用的API。我们称这些开发人员可访问和记录的API为高级API。通常，在为各种任务构建DL模型时，会使用多个此类高级API，例如自动驾驶汽车的图像分类[36]，恶意软件检测和人脸识别。测试深度学习框架。DL框架在其底层实现中存在错误，经验表明，此类错误可能会导致内存安全错误、致命的运行时错误、不正确或不一致的功能性、数值错误、性能下降、内存消耗和CPU&#x2F;GPU&#x2F;TPU锁定。原生、C&#x2F;C++、DL框架部分（例如内核）中的错误特别令人感兴趣，因为它们可能会导致致命的运行时错误和内存错误，并可能被攻击者滥用。</p>
+<p><strong>内存错误</strong>：</p>
+<p>IvySyn旨在发现触发以下内容的崩溃输入：</p>
+<p>（a）内存安全错误，如（任意）内存损坏和内存泄露漏洞</p>
+<p>（b）致命的运行时错误——（a）和（b）在模糊&#x2F;运行时期间表现为崩溃（即带有SIGABRT、SIGFPE和SIGSEGV异常的异常进程终止）。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/08/Paper-IvySyn%20Automated%20Vulnerability%20Discovery%20in%20Deep%20Learning%20Frameworks/" data-id="clscsnyfv0000vcvferw4ai99" data-title="IvySyn" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Web-File2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/02/07/Web-File2/" class="article-date">
@@ -1059,113 +1121,6 @@
 
 
   
-    <article id="post-Web-XSS1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/01/26/Web-XSS1/" class="article-date">
-  <time class="dt-published" datetime="2024-01-26T09:14:45.000Z" itemprop="datePublished">2024-01-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/01/26/Web-XSS1/">XSS1-原理分类及攻击手法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h4 id="XSS跨站之原理分类及攻击手法"><a href="#XSS跨站之原理分类及攻击手法" class="headerlink" title="XSS跨站之原理分类及攻击手法"></a>XSS跨站之原理分类及攻击手法</h4><p><strong>XSS跨站漏洞产生的原理</strong></p>
-<p>往浏览器页面中插入恶意的HTML代码，比如说js、css、html标签等，当用户浏览该页面时，嵌入其中的恶意代码会执行，达到攻击用户的目的，比如说获取用户浏览器信息等。</p>
-<p><strong>XSS漏洞攻击的危害</strong></p>
-<ul>
-<li>盗取各类用户[账号，如机器登录帐号、用户网银帐号、各类管理员帐号</li>
-<li>控制企业数据，包括读取、篡改、添加、删除企业敏感数据的能力</li>
-<li>盗窃企业重要的具有商业价值的资料</li>
-<li>非法转账</li>
-<li>强制发送电子邮件</li>
-<li>网站挂马</li>
-<li>控制受害者机器向其它网站发起攻击（重定向语句）</li>
-<li>窃取cookie的sessionid，冒充登录。</li>
-</ul>
-<p>XSS攻击利用到最大就需要自己有台服务器用于窃取信息，还要利用一点社工，骗取别人点击恶意的链接。</p>
-<p>XSS跨站漏洞执行的代码是js代码，产生层面是前端，有关的函数是一些输出函数（alert、print等）</p>
-<p>XSS跨站漏洞分类：反射，存储，DOM</p>
-<p>跨站测试代码：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#&#x27; onclick=&quot;alert(2)&quot;&gt;</span><br><span class="line">&lt;script&gt;alert(1)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>使用后端来运行代码（反射型和存储型），得手动分析来测试是什么问题</p>
-<p><strong>XSS漏洞的分类</strong></p>
-<p><strong>1.DOM型</strong>(不经过服务器，前端js代码的利用)：</p>
-<p>DOM型是针对前端代码的（有的页面跳转不是在url执行，是在HTML中执行），可以直接从源代码中发现存在XSS漏洞</p>
-<p>DOM树</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/30396902-51e8-403c-86a6-522d6dcb129f" alt="image"></p>
-<p>本地利用漏洞，这种漏洞存在于页面中客户端脚本自身。其攻击过程如下所示：</p>
-<p>Alice给Bob发送一个恶意构造了Web的URL。</p>
-<p>Bob点击并查看了这个URL。</p>
-<p>恶意页面中的JavaScript打开一个具有漏洞的HTML页面并将其安装在Bob电脑上。</p>
-<p>具有漏洞的HTML页面包含了在Bob电脑本地域执行的JavaScript。</p>
-<p>Alice的恶意脚本可以在Bob的电脑上执行Bob所持有的权限下的命令。</p>
-<p><strong>2.反射型：</strong></p>
-<p>反射型XSS有get和post型，攻击产生一次，攻击的语句不会存储到对方的服务器</p>
-<p>这种漏洞和类型A有些类似，不同的是Web客户端使用Server端脚本生成页面为用户提供数据时，如果未经验证的用户数据被包含在页面中而未经HTML实体编码，客户端代码便能够注入到动态页面中。</p>
-<p>其攻击过程如下：</p>
-<p>Alice经常浏览某个网站，此网站为Bob所拥有。Bob的站点运行Alice使用用户名&#x2F;密码进行登录，并存储敏感信息(比如银行帐户信息)。</p>
-<p>Charly发现Bob的站点包含反射性的XSS漏洞。</p>
-<p>Charly编写一个利用漏洞的URL，并将其冒充为来自Bob的邮件发送给Alice。</p>
-<p>Alice在登录到Bob的站点后，浏览Charly提供的URL。</p>
-<p>嵌入到URL中的恶意脚本在Alice的浏览器中执行，就像它直接来自Bob的服务器一样。此脚本盗窃敏感信息(授权、信用卡、帐号信息等)然后在Alice完全不知情的情况下将这些信息发送到Charly的Web站点。</p>
-<p><strong>3.存储型（长久型，危害最大）：</strong></p>
-<p>存储型XSS，输入一行攻击脚本后，每次刷新页面都会攻击，攻击语句存储到对方的服务器了</p>
-<p>该类型是应用最为广泛而且有可能影响到Web服务器自身安全的漏洞，<a target="_blank" rel="noopener" href="http://baike.baidu.com/item/%E9%AA%87%E5%AE%A2">骇客</a>将攻击脚本上传到Web服务器上，使得所有访问该页面的用户都面临信息泄漏的可能，其中也包括了Web服务器的管理员。其攻击过程如下：</p>
-<p>Bob拥有一个Web站点，该站点允许用户发布信息&#x2F;浏览已发布的信息。</p>
-<p>Charly注意到Bob的站点具有类型C的XSS漏洞。</p>
-<p>Charly发布一个热点信息，吸引其它用户纷纷阅读。</p>
-<p>Bob或者是任何的其他人如Alice浏览该信息，其会话cookies或者其它信息将被Charly盗走。</p>
-<p>类型A直接威胁用户个体，而类型B和类型C所威胁的对象都是企业级Web应用。</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">反射型</span><br><span class="line">发包 x=qyw=&gt;x.php=&gt;回显</span><br><span class="line"></span><br><span class="line">存储型</span><br><span class="line">发包 x=qyw=&gt;x.php=&gt;写到数据库某个表=&gt;x.php=&gt;回显</span><br><span class="line"></span><br><span class="line">DOM型</span><br><span class="line">发包 x=qyw=&gt;本地浏览器静态前端代码=&gt;x.php=&gt;回显</span><br></pre></td></tr></table></figure>
-
-<p>绕过<code>&lt;script&gt;</code>过滤</p>
-<p>有的网站存在<code>&lt;script&gt;</code>过滤</p>
-<p>在html中，onload关键字就是一个事件，其它的所有标签都没有这个属性，但是Body标签的有的。但是有一定的局限性，如果onload事件在你的代码之前已经被处理了，就不会触发了</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;BODY onload=&quot;alert(&#x27;XSS&#x27;)&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>不过还有Onerror事件处理，图片没有指定也就是出错了，就会触发onerror事件，引发XSS漏洞，没有用<code>&lt;script&gt;</code>标签</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;IMG SRC=&quot;&quot; onerror=&quot;alert(&#x27;XSS&#x27;)&quot;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>cookie session 用户凭据，通过凭据可以判断对方的身份信息</p>
-<p>cookie 存储在本地，存活事件较长 小中型</p>
-<p>session 会话 存储在服务器，存活时间较短 大型</p>
-<p>session更安全，但是会占用服务器的资源，且实现起来较为麻烦</p>
-<p><strong>靶场实践</strong></p>
-<p>反射型xss(get)</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f797d7c2-5734-4c14-9d28-b44d899531f4" alt="image"></p>
-<p>存储型xss，每次刷新的时候都会弹窗</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/79034c3a-4c7d-4d47-b863-f6b908bbfbd7" alt="image"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/01/26/Web-XSS1/" data-id="clrt05a9i00008wvf65sx1bby" data-title="XSS1-原理分类及攻击手法" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -1216,6 +1171,10 @@
       <ul>
         
           <li>
+            <a href="/2024/02/08/Paper-IvySyn%20Automated%20Vulnerability%20Discovery%20in%20Deep%20Learning%20Frameworks/">IvySyn</a>
+          </li>
+        
+          <li>
             <a href="/2024/02/07/Web-File2/">Web-File2</a>
           </li>
         
@@ -1229,10 +1188,6 @@
         
           <li>
             <a href="/2024/02/01/Web-SQLi1/">SQLi1</a>
-          </li>
-        
-          <li>
-            <a href="/2024/02/01/Web-SQLi2/">SQLi2</a>
           </li>
         
       </ul>
