@@ -73,6 +73,92 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Paper-SQIRL" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/16/Paper-SQIRL/" class="article-date">
+  <time class="dt-published" datetime="2024-02-16T13:15:59.000Z" itemprop="datePublished">2024-02-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/02/16/Paper-SQIRL/">SQIRL__</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="SQIRL-Grey-Box-Detection-of-SQL-Injection-Vulnerabilities-Using-Reinforcement-Learning-论文分享"><a href="#SQIRL-Grey-Box-Detection-of-SQL-Injection-Vulnerabilities-Using-Reinforcement-Learning-论文分享" class="headerlink" title="SQIRL: Grey-Box Detection of SQL Injection Vulnerabilities Using Reinforcement Learning 论文分享"></a>SQIRL: Grey-Box Detection of SQL Injection Vulnerabilities Using Reinforcement Learning 论文分享</h3><p>Wahaibi, S. A., Foley, M., &amp; Maffeis, S. (2023). SQIRL: Grey-Box Detection of SQL Injection Vulnerabilities Using Reinforcement Learning. <em>32nd USENIX Security Symposium (USENIX Security 23)</em>, 6097–6114.</p>
+<p>pdf链接：<a href="">usenix.org&#x2F;system&#x2F;files&#x2F;usenixsecurity23-al-wahaibi.pdf</a></p>
+<p>SQIRL：使用强化学习的SQL注入漏洞灰盒检测</p>
+<p>SQIRL是一种基于深度强化学习，使用多个工作代理和灰盒反馈来检测SQL注入漏洞的新方法，使用单个代理来学习如何修正SQL语法、转义上下文和绕过sanitisation。</p>
+<p>SQIRL：使用强化学习的SQL注入漏洞灰盒检测，SOIRL是一种基于深度强化学习，使用多个工作代理和灰盒反馈来检测SQL注入漏洞的新方法，使用单个代理来学习如何修正SQL语法、转义上下文和绕过sanitisation</p>
+<h5 id="绕过sanitisation"><a href="#绕过sanitisation" class="headerlink" title="绕过sanitisation"></a>绕过sanitisation</h5><p>sanitize相当于把HTML语句中不允许出现的元素和属性删除</p>
+<p>绕过sanitisation就是绕过这些不允许出现的元素和属性</p>
+<p>syntax fixing, context escape, and sanitisation bypass</p>
+<h5 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h5><p>SQL数据库应用广泛，为攻击者提供了重要的攻击面，但是由于只有复杂的有效载荷才会出发SQLi漏洞，因此SQLi漏洞很难被发现</p>
+<p>现存的SQL注入漏洞扫描器局限</p>
+<ol>
+<li>漏洞扫描器通常用于在投入生产之前找到漏洞，但是它们有时依赖于错误处理和网页上的SQL查询的反馈，导致在不存在错误时的有效性不高</li>
+<li>现有的扫描器使用简单的基于规则的方法来覆盖最常见的SQL注入有效载荷，但是这些有效载荷缺乏多样性，并且无法根据特定的网络应用程序来制定有效载荷，导致扫描器忽略了合法的漏洞</li>
+</ol>
+<p>本文的贡献</p>
+<ol>
+<li>为代理实现一个强化学习(RL)环境，为SQL注入模糊Web应用程序，通过我们扩展的最先进的爬虫识别输入。</li>
+<li>设计并实现了SQIRL，一种新的深度强化学习模糊方法。单个RL代理完成SQL注入的三项任务：语法修复、上下文转义和清理旁路，并且使用联合方式的工作代理在代理之间共享这些知识</li>
+</ol>
+<h5 id="强化学习"><a href="#强化学习" class="headerlink" title="强化学习"></a>强化学习</h5><p> （待补充）</p>
+<h5 id="联邦学习"><a href="#联邦学习" class="headerlink" title="联邦学习"></a>联邦学习</h5><p>联邦学习是多个客户端模型在一段时间内独立训练，将学习得到的参数发送给中央服务器模型，服务器模型对得到的参数进行汇总（通常是求平均值），然乎将汇总后的参数发送给客户端，客户端使用新的参数进行训练，直至模型收敛。</p>
+<p>在RL模型中使用FL，有两种形式，一种是横向的，即客户端与不同的环境交互；另一种是纵向的，也就是客户端与同一环境的多个实例交互，纵向RL通常被称为在RL环境中使用“worker”</p>
+<p>SQL注入漏洞就是在网络应用程序的客户端注入有效载荷，使服务器上的网络应用程序数据库中执行意外的SQL查询。</p>
+<p>SQL注入有效载荷的示例如下表所示</p>
+<p>A：SQLi有效载荷（粉红色标出），转义其SQL上下文，导致数据库暂停1秒</p>
+<p>B-D：SQL查询，显示用户输入可能出现的13个语义不同的位置</p>
+<p>E：当前WordPress中危险的参数化查询模式示例</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/0f058974-865d-4a4f-8cf1-29ff27da0e9e" alt="image"> </p>
+<p>查找SQLi漏洞的主要步骤</p>
+<p>1、识别可能易受SQLi攻击的输入位置，这些位置包括URL、输入标记以及与网页相关的动态链接元素</p>
+<p>2、一旦找到输入位置，就可以制作有效载荷，有效载荷必须满足4个条件才能触发SQLi</p>
+<p>1）生成语法上有效的SQL，以避免执行中的错误</p>
+<p>2）逃避预期的SQL上下文</p>
+<p>3）绕过应用于负载的任何基于黑名单的过滤</p>
+<p>4）改变SQL语句的预期行为</p>
+<p>例如（假设没有过滤，标1中红色所示的有效负载会转义为“并执行SLEEP语句”）</p>
+<p>SQLi有效载荷的特点：</p>
+<p>1、现有有效载荷的稀疏性，针对输入验证和校验，能够绕过这些验证和校验的有效载荷变得越来越复杂</p>
+<p>2、现有有效载荷分布不均，导致出现群集，即通过有效载荷的变化产生漏洞</p>
+<p>这张图是本文对收集到的1028个独特有效载荷进行PCA降维（通过字节对编码对有效载荷进行标记，使用Doc2Vec提取每个有效载荷的128个特征嵌入，并通过PCA将嵌入从128维减少到3维）</p>
+<p>下图就展示了现在有效载荷空间中有效载荷分布不均</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/65da16d0-9d11-4b9f-885b-e92977aa6f16" alt="image"> </p>
+<p>SQIRL实现</p>
+<p>架构</p>
+<p>图2：SQIRL体系结构。RL代理(绿色)计算当前有效载荷的突变。N个联合的本地工人(紫色)训练不同的代理为全局代理收集经验。然后，与web应用程序交互的环境元素(蓝色)找到输入位置，在请求中提交有效载荷，并监控数据库是否成功注入。</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/3523614b-07ed-4d5d-968f-738f244d7148" alt="image"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/16/Paper-SQIRL/" data-id="clsooc1v300004kvfb94bbhvr" data-title="SQIRL__" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-20240215" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/02/15/20240215/" class="article-date">
@@ -1115,73 +1201,6 @@
 
 
   
-    <article id="post-Web-Basic" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/01/31/Web-Basic/" class="article-date">
-  <time class="dt-published" datetime="2024-01-31T06:16:00.000Z" itemprop="datePublished">2024-01-31</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/01/31/Web-Basic/">Web-Basic</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h4 id="HTTP基础知识"><a href="#HTTP基础知识" class="headerlink" title="HTTP基础知识"></a>HTTP基础知识</h4><h5 id="请求行"><a href="#请求行" class="headerlink" title="请求行"></a>请求行</h5><p>请求行由三个标记组成：请求方法、请求URL和HTTP版本，它们用空格分隔</p>
-<p>例如：GET &#x2F;index.html HTTP&#x2F;1.1</p>
-<p>HTTP规划定义了8中可能的请求方法</p>
-<ul>
-<li>GET：请求指定的页面信息，并返回实体主体</li>
-<li>POST：向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST请求可能会导致新的资源的建立和&#x2F;或已有资源的修改</li>
-<li>HEAD：类似于get请求，只不过返回的响应中没有具体的内容，用于获取报头，服务器只返回状态行和头标，不返回请求文档</li>
-<li>PUT：从客户端向服务器传送的数据取代指定的文档的内容</li>
-<li>DELETE：请求服务器删除指定的页面</li>
-<li>OPTIONS：关于服务器支持的请求方法信息的请求</li>
-<li>TRACE：web服务器反馈Http请求和其头标的请求</li>
-<li>CONNECT：已文档化，但当前未实现的一个方法，预留做隧道处理</li>
-</ul>
-<h5 id="请求头"><a href="#请求头" class="headerlink" title="请求头"></a>请求头</h5><p>由关键字／值对组成，每行一对，关键字和值用冒号分隔，请求头标通知服务器用于客户端的功能和标识</p>
-<ul>
-<li>HOST:主机或域名地址</li>
-<li>Accept:指浏览器或其他客户可以接受的MIME文件格式，Servlet可以根据它判断并返回适当的文件格式</li>
-<li>User－Agent:是客户浏览器名称</li>
-<li>Host:对应网址URL中的web名称和端口号</li>
-<li>Accept－Language:指出浏览器可以接受的语言种类，如en或en－us，指英语</li>
-<li>connection:用来告诉服务器是否可以维持固定的HTTP连接，http是无连接的，HTTP／１.１</li>
-</ul>
-<h5 id="Web漏洞"><a href="#Web漏洞" class="headerlink" title="Web漏洞"></a>Web漏洞</h5><p>文件包含漏洞 ..&#x2F;..&#x2F;..&#x2F;..&#x2F;</p>
-<p>想访问的文件，与url目录文件所在的文件夹相差几个文件夹，就写几个..&#x2F;</p>
-<p>如，想访问 WWW\xx.php</p>
-<p>但是url所获取的是 WWW\pikachu\vul\dir\soup\1.php</p>
-<p>相差四个，所以把1.php改为..&#x2F;..&#x2F;..&#x2F;..&#x2F;xx.php</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/01/31/Web-Basic/" data-id="cls1greba0000govf9i4u8abi" data-title="Web-Basic" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -1232,6 +1251,10 @@
       <ul>
         
           <li>
+            <a href="/2024/02/16/Paper-SQIRL/">SQIRL__</a>
+          </li>
+        
+          <li>
             <a href="/2024/02/15/20240215/">20240215</a>
           </li>
         
@@ -1245,10 +1268,6 @@
         
           <li>
             <a href="/2024/02/07/Web-File2/">Web-File2</a>
-          </li>
-        
-          <li>
-            <a href="/2024/02/06/Web-File1/">Web-File1</a>
           </li>
         
       </ul>
