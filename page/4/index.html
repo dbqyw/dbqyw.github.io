@@ -73,6 +73,131 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Exercise 4 - LibTIFF" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/07/29/Exercise%204%20-%20LibTIFF/" class="article-date">
+  <time class="dt-published" datetime="2023-07-29T12:03:56.000Z" itemprop="datePublished">2023-07-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/07/29/Exercise%204%20-%20LibTIFF/">Exercise 4 - LibTIFF</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Exercise-4-LibTIFF"><a href="#Exercise-4-LibTIFF" class="headerlink" title="Exercise 4 - LibTIFF"></a>Exercise 4 - LibTIFF</h3><h4 id="一、实验背景"><a href="#一、实验背景" class="headerlink" title="一、实验背景"></a>一、实验背景</h4><p><strong>CVE-2016-9297</strong>是一个越界读取漏洞，可以通过制作TIFF_SETGET_C16ASCII或TIFF_SETGET_C32_ASCII标签值触发。越界读取是当程序读取数据超过预期缓冲区的末尾或开始之前时发生的漏洞。因此，它允许远程攻击者导致拒绝服务或可能从进程内存中获取潜在的敏感信息。</p>
+<p>越界读取漏洞（<a target="_blank" rel="noopener" href="https://cwe.mitre.org/data/definitions/125.html%EF%BC%89">https://cwe.mitre.org/data/definitions/125.html）</a></p>
+<h4 id="二、实验目的"><a href="#二、实验目的" class="headerlink" title="二、实验目的"></a>二、实验目的</h4><p>模糊<strong>LibTIFF</strong>图像库，在libtiff 4.0.4中找到<a target="_blank" rel="noopener" href="https://www.cvedetails.com/cve/CVE-2016-9297/"><strong>CVE-2016-9297</strong></a>漏洞&#x2F;PoC，以测量崩溃&#x2F;PoC的代码覆盖数据</p>
+<h4 id="三、实验环境："><a href="#三、实验环境：" class="headerlink" title="三、实验环境："></a>三、实验环境：</h4><p>win10，VMware，Ubuntu 20.04.2 LTS（虚拟机用户名密码均为fuzz）</p>
+<h4 id="四、实验步骤"><a href="#四、实验步骤" class="headerlink" title="四、实验步骤"></a>四、实验步骤</h4><h5 id="1、下载并构建目标"><a href="#1、下载并构建目标" class="headerlink" title="1、下载并构建目标"></a>1、下载并构建目标</h5><p>得到模糊目标，为要模糊化的项目创建一个新目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME</span><br><span class="line">mkdir fuzzing_tiff &amp;&amp; cd fuzzing_tiff/</span><br></pre></td></tr></table></figure>
+
+<p>下载并解压libtiff 4.0.4</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://download.osgeo.org/libtiff/tiff-4.0.4.tar.gz</span><br><span class="line">tar -xzvf tiff-4.0.4.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9291b692-50f9-4453-bf58-24c524d9607c" alt="image"></p>
+<p>构建并安装libtiff</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd tiff-4.0.4/</span><br><span class="line">./configure --prefix=&quot;$HOME/fuzzing_tiff/install/&quot; --disable-shared</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9e3eec16-353a-479d-98d4-c9c87564ad5e" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/951ec19d-b751-4e5b-a68e-f0d650c65d64" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/272999fa-1623-49fb-ac98-4f47afae76b1" alt="image"></p>
+<p>作为目标二进制，可以模糊’ ‘ tiffinfo ‘ ‘二进制位于’ ‘ &#x2F;bin ‘ ‘文件夹，使用’ ‘ &#x2F;test&#x2F;images&#x2F; ‘ ‘文件夹中的示例图像作为种子输入语料库。</p>
+<p>测试工作是否正常</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$HOME/fuzzing_tiff/install/bin/tiffinfo -D -j -c -r -s -w $HOME/fuzzing_tiff/tiff-4.0.4/test/images/palette-1c-1b.tiff</span><br></pre></td></tr></table></figure>
+
+<p>看到如下页面说明正常</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/3c61fc6b-be71-4a36-a358-144d5ef0616d" alt="image"></p>
+<p>在最后一个命令行中，启用了所有这些标志:”-j -c -r -s -w”。这是为了提高代码覆盖率，增加发现bug的机会。</p>
+<p>但是我们如何度量给定输入情况的代码覆盖率呢?</p>
+<h5 id="2、代码覆盖率"><a href="#2、代码覆盖率" class="headerlink" title="2、代码覆盖率"></a>2、代码覆盖率</h5><p>代码覆盖率是一个软件度量，显示每行代码被触发的次数。通过使用代码覆盖率，我们将了解哪些部分的代码已经被模糊器到达，并可视化模糊过程。</p>
+<p>安装lcov</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install lcov</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8b0a9dc5-650e-4803-9ca9-e36026a2661d" alt="image"></p>
+<p>用“——coverage”标志重新构建libTIFF(编译器和链接器)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">rm -r $HOME/fuzzing_tiff/install</span><br><span class="line">cd $HOME/fuzzing_tiff/tiff-4.0.4/</span><br><span class="line">make clean</span><br><span class="line">  </span><br><span class="line">CFLAGS=&quot;--coverage&quot; LDFLAGS=&quot;--coverage&quot; ./configure --prefix=&quot;$HOME/fuzzing_tiff/install/&quot; --disable-shared</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d433cee5-46a3-49f4-8167-77410b2df996" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9d6aa61c-41b2-42ed-bcf9-e20ecf36d270" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/a421a445-6681-4da9-9ffe-9dd902ddb3a7" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d7329e66-432f-4b83-b471-0fbefd78454f" alt="image"></p>
+<p>通过输入以下代码来收集代码覆盖率数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME/fuzzing_tiff/tiff-4.0.4/</span><br><span class="line">lcov --zerocounters --directory ./</span><br><span class="line">lcov --capture --initial --directory ./ --output-file app.info</span><br><span class="line">$HOME/fuzzing_tiff/install/bin/tiffinfo -D -j -c -r -s -w $HOME/fuzzing_tiff/tiff-4.0.4/test/images/palette-1c-1b.tiff</span><br><span class="line">lcov --no-checksum --directory ./ --capture --output-file app2.info</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/c7110cb6-9ea8-42b6-9d41-c45f5d80f90c" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/1c3dbde4-b2dc-4fff-90df-28af3a8030a6" alt="image"></p>
+<p>每一个命令的解释:</p>
+<ul>
+<li><code>lcov --zerocounters --directory ./</code> : 重置之前的计数器</li>
+<li><code>lcov --capture --initial --directory ./ --output-file app.info</code> : 返回“基线”覆盖率数据文件，该文件包含每个测量行的零覆盖率</li>
+<li><code>$HOME/fuzzing_tiff/install/bin/tiffinfo -D -j -c -r -s -w $HOME/fuzzing_tiff/tiff-4.0.4/test/images/palette-1c-1b.tiff</code> : 运行需要分析的应用程序，可以使用不同的输入多次运行它</li>
+<li><code>lcov --no-checksum --directory ./ --capture --output-file app2.info</code>: 将当前覆盖状态保存到app2.info文件中</li>
+</ul>
+<p>最后，生成HTML输出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">genhtml --highlight --legend -output-directory ./html-coverage/ ./app2.info</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/cce49fe6-c4cf-4399-8e8b-93192e7f0ed2" alt="image"></p>
+<p>如果一切顺利，代码覆盖率报告将在“html-coverage”文件夹中创建。只要打开<code>./html-coverage/index.html</code>文件，可以看到如下内容</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ac681a9e-0274-4858-9968-aa026d149254" alt="image"></p>
+<p>可以浏览不同的文件夹和文件，并查看每行执行的次数</p>
+<h5 id="3、fuzzing"><a href="#3、fuzzing" class="headerlink" title="3、fuzzing"></a>3、fuzzing</h5><p>要编译启用了ASAN的libtiff</p>
+<p>首先，要清理所有之前编译过的目标文件和可执行文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rm -r $HOME/fuzzing_tiff/install</span><br><span class="line">cd $HOME/fuzzing_tiff/tiff-4.0.4/</span><br><span class="line">make clean</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/09a2593d-14da-4ac8-af56-c8da612bbc1e" alt="image"></p>
+<p>调用make之前设置AFL_USE_ASAN&#x3D;1</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export LLVM_CONFIG=&quot;llvm-config-11&quot;</span><br><span class="line">CC=afl-clang-lto ./configure --prefix=&quot;$HOME/fuzzing_tiff/install/&quot; --disable-shared</span><br><span class="line">AFL_USE_ASAN=1 make -j4</span><br><span class="line">AFL_USE_ASAN=1 make install</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/11b06f56-0bfc-4cec-9edf-facbfe023453" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7600f523-f6ee-4865-b184-2e2ac0801bb5" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/db8de18a-f4fd-4e20-ba92-df2997d3d018" alt="image"></p>
+<p>使用以下命令运行fuzzer</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">afl-fuzz -m none -i $HOME/fuzzing_tiff/tiff-4.0.4/test/images/ -o $HOME/fuzzing_tiff/out/ -s 123 -- $HOME/fuzzing_tiff/install/bin/tiffinfo -D -j -c -r -s -w @@</span><br></pre></td></tr></table></figure>
+
+<p>几分钟后可以看见有多个崩溃</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/810f991e-914f-4399-be93-bebb5a8d3d3f" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2a43fc75-44f5-4e70-875d-b12e612e0bd3" alt="image"></p>
+<h5 id="4、Triage"><a href="#4、Triage" class="headerlink" title="4、Triage"></a>4、Triage</h5><p>ASan跟踪可能看起来如下图所示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$HOME/fuzzing_tiff/install/bin/tiffinfo -D -j -c -r -s -w &#x27;/home/fuzz/fuzzing_tiff/out/default/crashes/id:000000,sig:06,src:000000,time:1806,execs:1009,op:havoc,rep:1&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>可以得到一个很好的奔溃摘要，包括执行跟踪</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d2cd658d-76fb-46c4-b06c-bd53d3b12cca" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/875f63bb-309b-41e4-8953-5c656452de7d" alt="image"></p>
+<p>报错信息</p>
+<p>AddressSanitizer: heap-buffer-overflow on address 0x602000000071 at pc 0x0000002aafc2 bp 0x7ffd9d5ea570 sp 0x7ffd9d5e9d30</p>
+<p>堆溢出</p>
+<h5 id="5、代码覆盖度量"><a href="#5、代码覆盖度量" class="headerlink" title="5、代码覆盖度量"></a>5、代码覆盖度量</h5><p>尝试度量PoC的代码覆盖率。<strong>需要获得一个覆盖率html报告</strong>，类似于上面的例子。</p>
+<h5 id="6、修复问题"><a href="#6、修复问题" class="headerlink" title="6、修复问题"></a>6、修复问题</h5><p>修复bug后重建目标，并检查PoC不再使程序崩溃</p>
+<h4 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h4><p>通过这个实验，我了解了<strong>CVE-2016-9297</strong>漏洞，学会如何使用LCOV来衡量代码覆盖率，如何使用代码覆盖率数据来提高模糊测试的有效性、</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/07/29/Exercise%204%20-%20LibTIFF/" data-id="clkr6x7zn0000jgvf5oxhc4ry" data-title="Exercise 4 - LibTIFF" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Exercise 3 - TCPdump" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/07/28/Exercise%203%20-%20TCPdump/" class="article-date">
@@ -1051,118 +1176,6 @@
 
 
   
-    <article id="post-Fuzzing-exercise1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/07/08/Fuzzing-exercise1/" class="article-date">
-  <time class="dt-published" datetime="2023-07-08T14:20:29.000Z" itemprop="datePublished">2023-07-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/07/08/Fuzzing-exercise1/">Fuzzing exercise1</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="Fuzzing-exercise1"><a href="#Fuzzing-exercise1" class="headerlink" title="Fuzzing exercise1"></a>Fuzzing exercise1</h1><h2 id="环境准备-Ubuntu-20-04-2-LTS"><a href="#环境准备-Ubuntu-20-04-2-LTS" class="headerlink" title="环境准备 Ubuntu 20.04.2 LTS"></a>环境准备 Ubuntu 20.04.2 LTS</h2><p>username: fuzz</p>
-<p>password: fuzz</p>
-下载并构建目标
-<p>首先得到模糊目标。为要模糊化的项目创建一个新目录</p>
-<img width="317" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d948710c-406b-4972-a182-d657efcf1d4e">
-<p>安装一些额外的工具(make和gcc)，使环境完全准备好</p>
-<p>首先要更新apt</p>
-<p><img width="337" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/15e9567e-b482-4d1e-bf79-cfd581e3d76a"></p>
-<p><img width="347" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ee66a031-3b16-4129-8804-d1e0b72d1c70"></p>
-<p>下载Xpdf 3.02并解压</p>
-<p><img width="363" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/80d747b9-4574-4f52-8d98-3236bc36e0b6"></p>
-<p><img width="331" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/73185429-6879-4656-861f-2bcf2ffd202c"></p>
-<p>构建Xpdf</p>
-<p><img width="361" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/39cce4fe-dde6-4304-9a28-fbde1e4fbb73"></p>
-<p><img width="363" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8510a266-ce8d-450d-9eea-b5535d803fd4"></p>
-<p><img width="261" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d17eb6d0-c211-4fdb-9172-ef5a484eda6f"></p>
-<p><img width="297" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/25698387-3fe4-4d5e-9ebe-93a4423755fe"></p>
-<p>下载一些PDF来测试构建是否成功</p>
-<p><img width="359" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/63f75383-8647-430a-8b94-735832b90b8e"></p>
-<p><img width="366" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7b3b8e29-3f1f-4456-a297-ab3582a0e9da"></p>
-<p>开始测试</p>
-<p><img width="365" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/e272064c-14c6-4521-bc84-603e9de43a44"></p>
-<p><img width="359" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ffb59f24-fbe8-43a6-8b67-f43345a99416"></p>
-安装AFL++
-安装依赖项
-<p><img width="415" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/bf47ee30-275e-46a5-8ae2-40e64e5c2768"></p>
-<p><img width="369" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6c4ef3ea-cdd9-4520-81f5-77c3b2701fea"></p>
-<p><img width="362" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/27ed4844-df74-42cc-9b6b-d7c7fe99bbe9"></p>
-构建AFL++
-<p><img width="367" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d7b85617-91b2-41a2-80e1-d15ba0a10d85"></p>
-<p><img width="367" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d7b85617-91b2-41a2-80e1-d15ba0a10d85"></p>
-<p><img width="242" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/4c66183c-34bb-46ee-b008-e1b1ce70b535"></p>
-<p><img width="361" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/233e6290-8b6e-42ff-8722-3debcb2889eb"></p>
-<p><img width="416" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f1b66699-a192-43f6-a954-e7716a33f920"></p>
-<p><img width="272" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b0ef1543-f015-487d-9f51-011395fafa21"></p>
-<p>afl-fuzz查看是否安装成功</p>
-<p><img width="379" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/28d2f364-f8b7-4319-aec9-8f7a13423e9e"></p>
-<p>安装docker</p>
-<p><img width="298" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f7feaa09-caa0-4da7-970f-75373de2a56b"></p>
-<p><img width="298" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/28fb0207-4cd5-473c-a64e-277ad8745eb0">
-</p>
-<p><img width="321" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/4def31b5-ed07-4b65-900e-58e9ebf9ed77">
-</p>
-<p>afl-fuzz查看是否安装成功</p>
-<p><img width="379" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/5575e9e7-6282-4e65-a0d4-25573c60cdaa">
-</p>
-# 认识AFL++
-<p>AFL是一个覆盖引导的模糊器，这意味着它收集每个突变输入的覆盖信息，以便发现新的执行路径和潜在的错误。当源代码可用时，AFL可以使用插装，在每个基本块(函数、循环等)的开头插入函数调用</p>
-<p>要为我们的目标应用程序启用插装，我们需要使用AFL的编译器编译代码</p>
-<p>首先，我们要清理所有之前编译过的目标文件和可执行文件</p>
-<p><img width="336" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/1c27508c-20a1-468d-81e1-84673a408943">
-</p>
-<p>现在使用**afl-clang-fast**编译器构建xpdf</p>
-<p><img width="415" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/697cbd2a-6f5d-4e6b-9eb7-a4e8f0c2205a">
-</p>
-<p><img width="253" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/c9b7bc7b-9fca-40dc-b137-3f6ceab1fdb9">
-</p>
-<p><img width="296" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/cf31c080-8204-427b-bdbf-ecf6ba8f2a00">
-</p>
-<p>运行fuzzer</p>
-<p><img width="416" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/3dfb2666-b95a-44f3-9674-18502107b67b">
-</p>
-<p>每个选项的简要说明:</p>
-<p>- *-i*表示我们必须放置输入大小写的目录(即文件示例)</p>
-<p>- *-o*表示afl++存储修改后文件的目录</p>
-<p>- *-s*表示使用静态随机种子</p>
-<p>*@@*是AFL将用每个输入文件名替换的占位符目标的命令行</p>
-<p>基本上，fuzzer会运行这个命令</p>
-<p>$HOME/fuzzing_xpdf/install/bin/pdftotext <input-file-name> $HOME/fuzzing_xpdf/output '用于每个不同的输入文件。</p>
-<p>由于收到消息 [-] Hmm...，进行如下操作</p>
-<p><img width="415" alt="image" src="https://github.com/dbqyw/qyw.github.io/assets/130265921/fe83182b-385c-4ce6-9716-26cfefe63f32">
-</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/07/08/Fuzzing-exercise1/" data-id="cljwast91000000vf8w3mf34k" data-title="Fuzzing exercise1" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -1191,7 +1204,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CTF/" style="font-size: 17.5px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 17.5px;">Fuzzing</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 12.5px;">Web安全</a> <a href="/tags/learn/" style="font-size: 15px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 20px;">论文细读</a>
+      <a href="/tags/CTF/" style="font-size: 16.67px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 16.67px;">Fuzzing</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 13.33px;">Web安全</a> <a href="/tags/learn/" style="font-size: 16.67px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 20px;">论文细读</a>
     </div>
   </div>
 
@@ -1213,6 +1226,10 @@
       <ul>
         
           <li>
+            <a href="/2024/02/21/20240221/">20240221</a>
+          </li>
+        
+          <li>
             <a href="/2024/02/20/20240220/">20240220</a>
           </li>
         
@@ -1226,10 +1243,6 @@
         
           <li>
             <a href="/2024/02/15/20240215/">20240215</a>
-          </li>
-        
-          <li>
-            <a href="/2024/02/14/20240214/">20240214</a>
           </li>
         
       </ul>
