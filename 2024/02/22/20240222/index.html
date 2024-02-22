@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>20240222 | qinyiwen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="CSP2023-9-1 坐标变换（其一）简单的坐标平移操作。首先从输入中读取两个整数n和m，表示有n组坐标点和m组平移向量。然后通过一个循环读取n组坐标点的x和y坐标，并将它们的和分别累加到sumx和sumy中。接着再通过一个循环读取m组平移向量的x和y坐标，将它们分别加上sumx和sumy，得到新的x和y坐标，最后输出这两个新坐标。通过这个操作，实现了将n组坐标点进行平移的功能。 1234567">
+<meta property="og:type" content="article">
+<meta property="og:title" content="20240222">
+<meta property="og:url" content="http://example.com/2024/02/22/20240222/index.html">
+<meta property="og:site_name" content="qinyiwen">
+<meta property="og:description" content="CSP2023-9-1 坐标变换（其一）简单的坐标平移操作。首先从输入中读取两个整数n和m，表示有n组坐标点和m组平移向量。然后通过一个循环读取n组坐标点的x和y坐标，并将它们的和分别累加到sumx和sumy中。接着再通过一个循环读取m组平移向量的x和y坐标，将它们分别加上sumx和sumy，得到新的x和y坐标，最后输出这两个新坐标。通过这个操作，实现了将n组坐标点进行平移的功能。 1234567">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/2d01e952-8e74-4151-bf1d-d2c66d2400dd">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/2fb29ae2-8d79-4bd8-9f13-4a171e8223f0">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/1b7ce3c6-69b4-4f52-8eb8-ddb32dbcb43e">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/a6c6e305-19c0-4d40-9ded-1f61d8e1f0b3">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/19f46d7a-f13d-46d8-943e-edcdcdf53c93">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/6d96f999-4b00-4463-92d1-181397975739">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/db1ef7c7-60e1-4e0d-8d2c-56f9c5a535ce">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/5f427204-8f49-423a-9536-6d0cbe3e0761">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/bce80f81-80f9-4529-b511-47c0fca9a2c9">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/7dfe98f9-5a49-4a6b-b599-3bfca11b40dc">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/24807ed6-347a-4351-87d5-655f11e62061">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/516f5189-c10d-4d47-ba7b-ed8b0f44666b">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/c26e0f72-c8ef-41ec-8d13-81b973edde69">
+<meta property="article:published_time" content="2024-02-22T08:07:22.000Z">
+<meta property="article:modified_time" content="2024-02-22T08:30:28.462Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="learn">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/2d01e952-8e74-4151-bf1d-d2c66d2400dd">
+  
+    <link rel="alternate" href="/atom.xml" title="qinyiwen" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">qinyiwen</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-20240222" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/22/20240222/" class="article-date">
+  <time class="dt-published" datetime="2024-02-22T08:07:22.000Z" itemprop="datePublished">2024-02-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      20240222
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="CSP"><a href="#CSP" class="headerlink" title="CSP"></a>CSP</h4><h5 id="2023-9-1-坐标变换（其一）"><a href="#2023-9-1-坐标变换（其一）" class="headerlink" title="2023-9-1 坐标变换（其一）"></a>2023-9-1 坐标变换（其一）</h5><p>简单的坐标平移操作。首先从输入中读取两个整数n和m，表示有n组坐标点和m组平移向量。然后通过一个循环读取n组坐标点的x和y坐标，并将它们的和分别累加到sumx和sumy中。接着再通过一个循环读取m组平移向量的x和y坐标，将它们分别加上sumx和sumy，得到新的x和y坐标，最后输出这两个新坐标。通过这个操作，实现了将n组坐标点进行平移的功能。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,m,i,sumx=<span class="number">0</span>,sumy=<span class="number">0</span>,x,y;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin&gt;&gt;x&gt;&gt;y;</span><br><span class="line">        sumx+=x;</span><br><span class="line">        sumy+=y;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;m;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin&gt;&gt;x&gt;&gt;y;</span><br><span class="line">        x+=sumx;</span><br><span class="line">        y+=sumy;</span><br><span class="line">        cout&lt;&lt;x&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;y&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2023-9-2-坐标变换（其二）"><a href="#2023-9-2-坐标变换（其二）" class="headerlink" title="2023-9-2 坐标变换（其二）"></a>2023-9-2 坐标变换（其二）</h5><p>二维坐标变换。首先从输入中读取两个整数n和m，表示有n个变换操作和m组坐标点需要进行变换。然后使用两个vector数组k和xt分别存储变换系数和坐标偏移量。接着通过一个循环读取n个变换操作，每个操作包含一个整数x和一个浮点数cz，根据x的值来更新变换系数k和坐标偏移量xt。最后通过一个循环读取m组坐标点和两个整数cz1和cz2，根据之前计算的变换系数和坐标偏移量，对坐标点进行线性变换，然后输出变换后的坐标点。</p>
+<p>注意：</p>
+<p>在C++中，<code>fixed</code>和<code>setprecision(3)</code>是用来设置输出浮点数的格式和精度的。具体说明如下：</p>
+<ul>
+<li><code>fixed</code>：指定浮点数的输出格式为固定小数点表示。即输出的浮点数将以小数点表示，而不是科学计数法。</li>
+<li><code>setprecision(3)</code>：指定浮点数的输出精度为3位小数。即输出的浮点数将保留3位小数。</li>
+</ul>
+<p>在代码中，<code>cout&lt;&lt;fixed&lt;&lt;setprecision(3)</code>的作用是设置之后输出的浮点数都将采用固定小数点表示，并保留3位小数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n,m;</span><br><span class="line"></span><br><span class="line"><span class="function">vector&lt;<span class="type">double</span>&gt; <span class="title">k</span><span class="params">(<span class="number">100005</span>,<span class="number">1</span>)</span></span>;</span><br><span class="line"><span class="function">vector&lt;<span class="type">double</span>&gt; <span class="title">xt</span><span class="params">(<span class="number">100005</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> x;</span><br><span class="line">        <span class="type">double</span> cz;</span><br><span class="line">        cin&gt;&gt;x&gt;&gt;cz;</span><br><span class="line">        <span class="keyword">if</span>(x==<span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            k[i]=k[i<span class="number">-1</span>]*cz;</span><br><span class="line">            xt[i]=xt[i<span class="number">-1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            k[i]=k[i<span class="number">-1</span>];</span><br><span class="line">            xt[i]=xt[i<span class="number">-1</span>]+cz;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;m;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> cz1,cz2;</span><br><span class="line">        <span class="type">double</span> x,y;</span><br><span class="line">        cin&gt;&gt;cz1&gt;&gt;cz2&gt;&gt;x&gt;&gt;y;</span><br><span class="line">        <span class="type">double</span> bs=k[cz2]/k[cz1<span class="number">-1</span>];</span><br><span class="line">        <span class="type">double</span> ds=xt[cz2]-xt[cz1<span class="number">-1</span>];</span><br><span class="line">        cout&lt;&lt;fixed&lt;&lt;<span class="built_in">setprecision</span>(<span class="number">3</span>)&lt;&lt;(x*<span class="built_in">cos</span>(ds)-y*<span class="built_in">sin</span>(ds))*bs&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;(x*<span class="built_in">sin</span>(ds)+y*<span class="built_in">cos</span>(ds))*bs&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="BuuCTF"><a href="#BuuCTF" class="headerlink" title="BuuCTF"></a>BuuCTF</h4><h5 id="19、BuyFlag"><a href="#19、BuyFlag" class="headerlink" title="19、BuyFlag"></a>19、BuyFlag</h5><p>查看源代码，发现有两个php文件链接，点击一个查看</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2d01e952-8e74-4151-bf1d-d2c66d2400dd" alt="image"></p>
+<p>点击右边的菜单，有PAYFLAG，点击查看</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2fb29ae2-8d79-4bd8-9f13-4a171e8223f0" alt="image"></p>
+<p>出现这段话</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/1b7ce3c6-69b4-4f52-8eb8-ddb32dbcb43e" alt="image"></p>
+<p>查看源代码，用POST的方式传参，money&#x3D;100000000，password&#x3D;404，但是password不能为数字，所以password等于404+任意字符</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/a6c6e305-19c0-4d40-9ded-1f61d8e1f0b3" alt="image"></p>
+<p>前面提示必须是cuit的学生，所以修改cookie里的<code>user=0</code>为<code>user=1</code></p>
+<p>修改uesr&#x3D;0为user&#x3D;1，页面变了，提示输入password</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/19f46d7a-f13d-46d8-943e-edcdcdf53c93" alt="image"></p>
+<p>post传参，password&#x3D;404a&amp;money&#x3D;100000000，提示数字太长</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6d96f999-4b00-4463-92d1-181397975739" alt="image"></p>
+<p>尝试次方 1e9，得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/db1ef7c7-60e1-4e0d-8d2c-56f9c5a535ce" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;2eaf1e59-0556-4816-b343-80a3466e934e&#125; </span><br></pre></td></tr></table></figure>
+
+<h5 id="20、Easy-MD5"><a href="#20、Easy-MD5" class="headerlink" title="20、Easy MD5"></a>20、Easy MD5</h5><p>查看源代码，找不到有用的信息，抓包</p>
+<p>看到有一个提示：<code>Hint: select * from &#39;admin&#39; where password=md5($pass,true)</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/5f427204-8f49-423a-9536-6d0cbe3e0761" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">md5(string,raw)</span><br><span class="line"></span><br><span class="line">string	必需，规定要计算的字符串。</span><br><span class="line"></span><br><span class="line">raw	可选，规定十六进制或二进制输出格式： TRUE - 原始 16 字符二进制格式；FALSE - 默认。32 字符十六进制数</span><br><span class="line"></span><br><span class="line">需要构造or来绕过password，md5(ffifdyop,true)=&#x27;or&#x27;6\xc9]\x99\xe9!r,\xf9\xedb\x1c</span><br><span class="line"></span><br><span class="line">原sql查询语句则变为select * from user where username =&#x27;admin&#x27; and password =&#x27;&#x27;or&#x27;6\xc9]\x99\xe9!r,\xf9\xedb\x1c&#x27;即可绕过</span><br><span class="line"></span><br><span class="line">类似的字符串还有:md5(129581926211651571912466741651878684928,true)=\x06\xdaT0D\x9f\x8fo#\xdf\xc1&#x27;or&#x27;8</span><br></pre></td></tr></table></figure>
+
+<p>输入ffifdyop</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/bce80f81-80f9-4529-b511-47c0fca9a2c9" alt="image"></p>
+<p>提交</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7dfe98f9-5a49-4a6b-b599-3bfca11b40dc" alt="image"></p>
+<p>查看源代码</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/24807ed6-347a-4351-87d5-655f11e62061" alt="image"></p>
+<p>用get传参，满足a!&#x3D;b且md5(a)&#x3D;md5(b)</p>
+<p>md5加密后的值开头为0E，则说明它们的值相等</p>
+<p>payload：<code>/levels91.php?a=s878926199a&amp;b=s155964671a</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/516f5189-c10d-4d47-ba7b-ed8b0f44666b" alt="image"></p>
+<p>包含flag.php文件</p>
+<p>用post传参，满足param1!&#x3D;param2且md5(param1)&#x3D;md5(param2)</p>
+<p>这里用php数组绕过，由于哈希函数无法处理php数组，在遇到数组时返回false，我们就可以利用false&#x3D;&#x3D;false成立使条件成立。</p>
+<p><code>param1[]=1&amp;param2[]=2</code></p>
+<p>得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/c26e0f72-c8ef-41ec-8d13-81b973edde69" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;5699128f-b8b5-4580-9e90-8ab95639eb15&#125; </span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/22/20240222/" data-id="clswyrd4z0000pcvf6nbe8tn3" data-title="20240222" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/learn/" rel="tag">learn</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/02/21/20240221/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">20240221</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/learn/" rel="tag">learn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 15px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 15px;">Fuzzing</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 12.5px;">Web安全</a> <a href="/tags/learn/" style="font-size: 17.5px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 20px;">论文细读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/02/22/20240222/">20240222</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/21/20240221/">20240221</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/20/20240220/">20240220</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/18/20240218/">20240218</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/16/Paper-SQIRL/">SQIRL__</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

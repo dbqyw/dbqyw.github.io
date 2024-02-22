@@ -73,6 +73,70 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Fuzzing-exercise2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/07/09/Fuzzing-exercise2/" class="article-date">
+  <time class="dt-published" datetime="2023-07-09T15:21:42.000Z" itemprop="datePublished">2023-07-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/07/09/Fuzzing-exercise2/">Fuzzing exercise2</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Fuzzing-exercise-2"><a href="#Fuzzing-exercise-2" class="headerlink" title="Fuzzing exercise 2"></a>Fuzzing exercise 2</h1><h2 id="环境准备-Ubuntu-20-04-2-LTS"><a href="#环境准备-Ubuntu-20-04-2-LTS" class="headerlink" title="环境准备 Ubuntu 20.04.2 LTS"></a>环境准备 Ubuntu 20.04.2 LTS</h2><p>username: fuzz</p>
+<p>password: fuzz
+
+<h2 id="下载并构建目标"><a href="#下载并构建目标" class="headerlink" title="下载并构建目标"></a>下载并构建目标</h2><p>在得到模糊目标前为模糊项目创建一个目录</p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230709213823034.png" alt="image-20230709213823034"></p>
+<p>下载libxif压缩包并进行解压</p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230709214557514.png" alt="image-20230709214557514"></p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230709214615468.png" alt="image-20230709214615468"></p>
+<p>构建并安装libxif</p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230709214744249.png" alt="image-20230709214744249"></p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230709214811146.png" alt="image-20230709214811146"></p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230709214839197.png" alt="image-20230709214839197"></p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230709214901711.png" alt="image-20230709214901711"></p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230709214925242.png" alt="image-20230709214925242"></p>
+<h2 id="选择一个接口应用程序"><a href="#选择一个接口应用程序" class="headerlink" title="选择一个接口应用程序"></a>选择一个接口应用程序</h2><p>libexif是一个库，用另一个应用程序来使用这个库，这个应用程序将被模糊化。</p>
+<p>使用<strong>exif命令行</strong>。输入以下命令下载并解压缩exif命令行0.6.15</p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230709215144197.png" alt="image-20230709215144197"></p>
+<p>构建并安装exif命令行实用程序</p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230709215229927.png" alt="image-20230709215229927"></p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230709215301307.png" alt="image-20230709215301307"></p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230709215329280.png" alt="image-20230709215329280"></p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230709215454122.png" alt="image-20230709215454122"></p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230709215525683.png" alt="image-20230709215525683"></p>
+<p><img src="C:\Users\15646\AppData\Roaming\Typora\typora-user-images\image-20230709215535552.png" alt="image-20230709215535552"></p>
+<h3 id="在此处出现问题，还在解决中"><a href="#在此处出现问题，还在解决中" class="headerlink" title="在此处出现问题，还在解决中"></a>在此处出现问题，还在解决中</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/07/09/Fuzzing-exercise2/" data-id="cljwast9a000100vfej0ubv27" data-title="Fuzzing exercise2" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Fuzzing-exercise1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/07/08/Fuzzing-exercise1/" class="article-date">
@@ -260,7 +324,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CTF/" style="font-size: 16.67px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 16.67px;">Fuzzing</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 13.33px;">Web安全</a> <a href="/tags/learn/" style="font-size: 16.67px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 20px;">论文细读</a>
+      <a href="/tags/CTF/" style="font-size: 15px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 15px;">Fuzzing</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 12.5px;">Web安全</a> <a href="/tags/learn/" style="font-size: 17.5px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 20px;">论文细读</a>
     </div>
   </div>
 
@@ -282,6 +346,10 @@
       <ul>
         
           <li>
+            <a href="/2024/02/22/20240222/">20240222</a>
+          </li>
+        
+          <li>
             <a href="/2024/02/21/20240221/">20240221</a>
           </li>
         
@@ -295,10 +363,6 @@
         
           <li>
             <a href="/2024/02/16/Paper-SQIRL/">SQIRL__</a>
-          </li>
-        
-          <li>
-            <a href="/2024/02/15/20240215/">20240215</a>
           </li>
         
       </ul>
