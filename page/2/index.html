@@ -73,6 +73,147 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Web-File1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/06/Web-File1/" class="article-date">
+  <time class="dt-published" datetime="2024-02-06T11:55:39.000Z" itemprop="datePublished">2024-02-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/02/06/Web-File1/">Web-File1</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h4><h5 id="搭建靶场-Vulhub"><a href="#搭建靶场-Vulhub" class="headerlink" title="搭建靶场 Vulhub"></a>搭建靶场 Vulhub</h5><p>开靶场</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">进入tomcat所在目录</span><br><span class="line">完整路径/home/fuzz/vulhub/tomcat/tomcat8</span><br><span class="line">cd vulhub/tomcat/tomcat8</span><br><span class="line">建立容器</span><br><span class="line">docker-compose build</span><br><span class="line">开启漏洞环境</span><br><span class="line">docker-compose up -d</span><br><span class="line">出现绿色的done就是创建好了</span><br><span class="line">查看本机ip</span><br><span class="line">ifconfig</span><br><span class="line">然后访问 </span><br><span class="line">http://your-ip:8080/manager/html</span><br></pre></td></tr></table></figure>
+
+<p>关靶场</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">在tomcat8目录下将靶场关掉</span><br><span class="line">docker-compose down</span><br></pre></td></tr></table></figure>
+
+<h5 id="相关知识"><a href="#相关知识" class="headerlink" title="相关知识"></a>相关知识</h5><p>思路，要知道是那种类型的漏洞，如果不知道，就按照常规处理</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/388b9289-db0f-431e-8811-231a7fa3a35c" alt="image"></p>
+<p>1、什么是文件上传漏洞？</p>
+<p>只要有文件上传的地方，就有可能存在文件上传漏洞，要判断文件上传部分的代码是否写得完整，安全，要是存在疏忽，就有文件上传漏洞存在的可能</p>
+<p>2、文件上传漏洞有哪些危害？</p>
+<p>可以上传后门文件webshell，获取到当前网站权限，高危漏洞</p>
+<p>3、文件上传漏洞如何查找及判断？</p>
+<p>查找</p>
+<p>①黑盒查找，对方的源码我们不知道，需要自己判断，可以通过扫描目录、敏感文件，有的字典中会有上传地址，通过扫描获取上传地址，或者在网站上给出的相关应用，比如说备案中心，一般可以上传图像</p>
+<p>②白盒查找，有对方的源代码，可以分析源代码查找有无文件上传功能，文件上传地址</p>
+<p>主要方法是扫描，寻找上传点</p>
+<p>4、文件上传漏洞有哪些需要注意的地方？</p>
+<p>要对文件上传的类型进行区分，比如说是利用编辑器，就搜索这个编辑器的相关漏洞，然后利用漏洞上传</p>
+<p>文件上传常见验证：</p>
+<p>后缀名，类型，文件头等</p>
+<p>后缀名：黑名单，白名单</p>
+<p>文件类型：MIME信息</p>
+<p>文件头：内容头信息</p>
+<h4 id="文件上传之过滤方式"><a href="#文件上传之过滤方式" class="headerlink" title="文件上传之过滤方式"></a>文件上传之过滤方式</h4><h5 id="upload靶场"><a href="#upload靶场" class="headerlink" title="upload靶场"></a>upload靶场</h5><h5 id="相关函数"><a href="#相关函数" class="headerlink" title="相关函数"></a>相关函数</h5><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/aaron_miller/article/details/106143006">upload-labs靶场通关（文件上传漏洞靶场）_風月长情的博客-CSDN博客</a></p>
+<p><strong>move_uploaded_file(file,newloc)</strong></p>
+<ul>
+<li>将上传的文件移动到新位置，通过HTTP POST上传文件，如果目标文件已存在，则会被覆盖</li>
+<li>file：要移动的文件</li>
+<li>newloc：规定文件的位置</li>
+</ul>
+<p><strong>unlink(file)</strong> </p>
+<p>删除文件</p>
+<p><strong>in_array(search,array)</strong></p>
+<p>搜索数组中是否存在指定的值</p>
+<p>一句话木马</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php phpinfo();?&gt;</span><br><span class="line">&lt;?php eval($_POST[a];?&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="Pass-01（前端JS绕过-x2F-客户端校验绕过）"><a href="#Pass-01（前端JS绕过-x2F-客户端校验绕过）" class="headerlink" title="Pass-01（前端JS绕过&#x2F;客户端校验绕过）"></a>Pass-01（前端JS绕过&#x2F;客户端校验绕过）</h5><p>有的网页采用js前端验证，可以在浏览器把js禁用，绕过验证，但是如果网站需要其它js代码才能正常运行，就不能采用这种方法</p>
+<p>这道题是在前端使用了js对不合法图片进行检查</p>
+<p>方法1</p>
+<p>把网页源代码下载下来，删除js验证部分的代码，然后在图片上传的部分添加action，告诉它提交给谁</p>
+<p>查看抓包信息，得到提交地址</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/e49f589e-be44-43b5-b6c9-f896c2524426" alt="image"></p>
+<p>编辑代码，并且删除js验证部分的代码，再运行，就可以提交成功</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d72bda3d-d4f6-408d-8e32-9d96764841a5" alt="image"></p>
+<p>如果页面没有PHP代码来上传数据，只用JS来上传，就会抓不到包</p>
+<p>方法2</p>
+<p>在上传前，删除源码中的onsubmit&#x3D;”return checkFile()”</p>
+<p>方法3</p>
+<p>先将php文件后缀改为png，抓包，如何修改后缀名位.php在上传就可以上传成功</p>
+<h5 id="Pass-02（后端验证文件类型–MIME校验）"><a href="#Pass-02（后端验证文件类型–MIME校验）" class="headerlink" title="Pass-02（后端验证文件类型–MIME校验）"></a>Pass-02（后端验证文件类型–MIME校验）</h5><p>点击右上角查看源码</p>
+<p>源代码对图片类型进行了分析</p>
+<p>方法1</p>
+<p>上传一个图片文件，抓包记录它的MIME类型</p>
+<p>上传一句话木马，抓包修改文件的MIME类型为刚才记录的 Content-Type</p>
+<p>然后点击Forward提交，上传成功</p>
+<p>方法2</p>
+<p>修改文件后缀为图像文件，抓包修改文件名后缀</p>
+<p><a target="_blank" rel="noopener" href="https://cn-sec.com/archives/68414.html">finecms前台任意文件上传漏洞 | CN-SEC 中文网</a></p>
+<h4 id="刷题"><a href="#刷题" class="headerlink" title="刷题"></a>刷题</h4><h5 id="13、Upload"><a href="#13、Upload" class="headerlink" title="13、Upload"></a>13、Upload</h5><p>创建一个木马文件</p>
+<p>可绕过的后缀名检测：<code>php,php3,php4,php5,phtml.pht</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d5773950-aba3-4d69-a0d9-9c2fe6191a33" alt="image"></p>
+<p>上传该文件，显示Not image!</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8b9a3900-f491-4db5-93ce-7f7b44e9b7a6" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/5051e49c-61ef-4826-9d5e-7cf5f8a80d93" alt="image"></p>
+<p>抓包，修改<code>Content-Type</code>的内容为 <code>image/jpeg</code>，send，查看文件名后缀应为.phtml</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/60a1de1b-9b4e-43d7-a5fd-ee5509f92155" alt="image"></p>
+<p>使用蚁剑</p>
+<p>URL地址为：<code>/upload/a.phtml</code></p>
+<p>连接密码为：<code>a</code></p>
+<p>测试连接，连接成功后添加</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/db0568d7-6c26-4c82-9143-76b47e48f6c1" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/257b7d7f-ab0b-40ff-8b31-f6fd24c64273" alt="image"></p>
+<p>右键单击，文件管理，查看根目录，找到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ad1fc581-4537-4c03-ac3f-bd0b85cb88e2" alt="image"></p>
+<p>双击查看flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/e2bff410-6c2e-406d-a06b-ae6b6d83e92b" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;34c3fd89-3b0b-450b-9953-287122b67247&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="14、Upload"><a href="#14、Upload" class="headerlink" title="14、Upload"></a>14、Upload</h5><p>上传一句话木马<code>&lt;?php eval($_POST[a]);?&gt;</code>，修改后缀名为<code>.jpg</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/c12f4d12-96db-41d7-8f3a-6e9c6d95deb0" alt="image"></p>
+<p>抓包，显示上传成功</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/52dea5e6-0636-44ab-a307-104363826373" alt="image"></p>
+<p>使用蚁剑连接，URL地址为：<code>http://458e3dd3-d7c3-41c5-b4cd-06727f565048.node4.buuoj.cn:81/./uplo4d/394659692a460258b45a99f1424ea357.jpg</code></p>
+<p>连接密码为：<code>a</code></p>
+<p>尝试一下，测试连接显示返回数据为空</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/3cac98aa-ef81-4468-a8ef-e0792d7a8c6d" alt="image"></p>
+<p>尝试修改后缀名为.phtml</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/455b5f6b-955a-4acc-98f4-1e4766489658" alt="image"></p>
+<p>使用蚁剑连接，URL地址为：<code>http://458e3dd3-d7c3-41c5-b4cd-06727f565048.node4.buuoj.cn:81/./uplo4d/71056c0c9cb12f2b7d720156da9eabf1.phtml</code></p>
+<p>连接密码为：<code>a</code></p>
+<p>测试连接，连接成功 后添加</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/6d2c4b89-6449-40f7-b266-2fb166362b62" alt="image"></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d91e8710-36d0-45ea-b5af-941f2b401a04" alt="image"></p>
+<p>右键单击，文件管理</p>
+<p>在根目录中找到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9ca56033-b394-40c2-8378-bcc65f53e15b" alt="image"></p>
+<p>双击查看flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9166d150-0624-44fd-b1ef-9fea0ea3dfef" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;8337ba06-02fe-47b4-8563-e341d08b19fe&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/06/Web-File1/" data-id="clsa003oc0000uovf5tsjeevx" data-title="Web-File1" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Paper-Code Vulnerability Detection via Signal-Aware AI" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/02/03/Paper-Code%20Vulnerability%20Detection%20via%20Signal-Aware%20AI/" class="article-date">
@@ -985,262 +1126,6 @@
 
 
   
-    <article id="post-PHP" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/01/24/PHP/" class="article-date">
-  <time class="dt-published" datetime="2024-01-24T14:04:16.000Z" itemprop="datePublished">2024-01-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/01/24/PHP/">PHP</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="php变量规则"><a href="#php变量规则" class="headerlink" title="php变量规则"></a>php变量规则</h1><p>变量以$开始，后面跟着变量名称（不用声明变量类型）</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$text</span>=<span class="string">&quot;helloworld&quot;</span></span><br><span class="line"><span class="variable">$a</span>=<span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<p>变量类型</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">local</span><br><span class="line">global 函数内访问全局变量</span><br><span class="line">static 函数完成时，它的所有变量通常会删除，希望某个局部变量不被删除，就使用static关键字声明</span><br></pre></td></tr></table></figure>
-
-<p>输出 echo</p>
-<p>输出变量</p>
-<p>$txt1&#x3D;”学习 PHP”;</p>
-<p>$cars&#x3D;array(“Volvo”,”BMW”,”Toyota”);</p>
-<p>echo $txt1;</p>
-<p>echo “&lt; br &gt;” 换行 </p>
-<p>echo “我车的品牌是 {$cars[0]}”;</p>
-<p>输出print 和echo使用方法一样</p>
-<p>PHP反序列化</p>
-<p>public protected 子类可用</p>
-<p>private 子类不可用</p>
-<h1 id="php序列化"><a href="#php序列化" class="headerlink" title="php序列化"></a>php序列化</h1><p>序列化的作用</p>
-<p>序列化是将对象的状态信息（属性）转换为可以存储或传输形式的过程</p>
-<p>对象 序列化为 字符串</p>
-<p>将对象或数组转化为可存储&#x2F;传输的字符串</p>
-<p>在php中使用函数serialize()来将对象或者数组进行序列化，并返回一个包含字节流的字符串来表示</p>
-<p>表达方式</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$a</span>=<span class="literal">null</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">serialize</span>(<span class="variable">$a</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>输出为N;</p>
-<p>对象的序列化</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">test</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="variable">$pub</span>=<span class="string">&quot;benben&quot;</span>;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">jineng</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">echo</span> <span class="variable language_">$this</span>-&gt;pub;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$a</span>=<span class="keyword">new</span> <span class="title function_ invoke__">test</span>();</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">serialize</span>(<span class="variable">$a</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>不能序列化类，可以序列化对象，输出为：</p>
-<p><code>O:4:&quot;test&quot;:1:&#123;s:3:&quot;pub&quot;;s:6:&quot;benben&quot;;&#125;</code></p>
-<p><code>O(object):4(类名长度):&quot;test&quot;(类名):1(变量数量):&#123;s:3(变量名字长度):&quot;pub&quot;(变量名字);s:6(值的长度):&quot;benben&quot;(变量值);&#125;</code></p>
-<p>private私有属性序列化时，在变量名前加”%00类名%00”，但是直接看看不见</p>
-<p>要先加上这个，再对私有属性进行反序列化</p>
-<h1 id="php反序列化"><a href="#php反序列化" class="headerlink" title="php反序列化"></a>php反序列化</h1><p>反序列化的特性</p>
-<p>1、反序列化之后的内容为一个对象</p>
-<p>2、反序列化生成的对象里的值，由反序列化里的值提供，与原有类预定义的值无关</p>
-<p>3、反序列化不触发类的成员方法，需要调用方法后才能触发</p>
-<p>[3 先反序列化，再调用类里面的成员方法，类不能被注释，否则找不到成员方法]</p>
-<p>反序列化 unserialize</p>
-<p>反序列化就是将序列化后的参数还原成实例化的对象</p>
-<p>序列化  serialize</p>
-<p>反序列化漏洞的成因：反序列化过程中，unserialize()接收的值（字符串）可控；通过更改这个值（字符串），得到所需要的代码，即生成的对象的属性值</p>
-<p>通过调用方法，出发代码执行</p>
-<p>eval()执行代码</p>
-<h1 id="魔术方法"><a href="#魔术方法" class="headerlink" title="魔术方法"></a>魔术方法</h1><p>魔术方法是一个预定义好的，在特定情况下自动触发的行为方法</p>
-<p>魔术方法的作用</p>
-<p>反序列化漏洞成因：反序列化过程中，unserialize()接收的值（字符串）可控，通过更改这个值（字符串）得到所需要的代码，通过调用方法，出发代码执行</p>
-<p>魔术方法在特定条件下自动调用相关方法，最终导致触发代码</p>
-<p>魔术方法触发时机，参数，返回值</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ac512080-8094-4f8e-91bf-a4967df8ada4" alt="image"></p>
-<h2 id="construct"><a href="#construct" class="headerlink" title="__construct()"></a>__construct()</h2><p><strong>__construct()</strong> 构造函数，在实例化一个对象的时候，首先会去自动执行的一个方法</p>
-<p>触发时机：实例化对象</p>
-<p>功能：提前清理不必要内容</p>
-<p>参数：非必要</p>
-<p>返回值</p>
-<p>在序列化和反序列化过程中不会被触发</p>
-<h2 id="distruct"><a href="#distruct" class="headerlink" title="__distruct()"></a>__distruct()</h2><p><strong>__distruct()</strong> 析构函数，在对象的所有引用被删除或者当对象被显式销毁时执行的魔术方法</p>
-<p>实例化对象结束后，代码运行完会销毁，触发构造函数__destruct()</p>
-<p>触发时机：对象引用完成，或对象被摧毁</p>
-<p>功能：</p>
-<p>参数：</p>
-<p>返回值</p>
-<p>在序列化过程中不会被触发</p>
-<p>在反序列化过程中会触发，反序列化得到的是对象，用完后会销毁，触发析构函数__distruct()</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/a4b6409a-6b95-4a39-8f26-7e5078d66760" alt="image"></p>
-<h2 id="sleep"><a href="#sleep" class="headerlink" title="__sleep()"></a>__sleep()</h2><p><strong>__sleep()</strong> 序列化serialize()函数会检查类中是否存在一个魔术方法__sleep()，如果存在，该方法会现被调用，然后才执行序列化操作，此功能可以用于清理对象，并返回一个包含对象中所有应被序列化的变量名称的数组，如果该方法未返回任何内容，则NULL被序列化，并产生一个E_NOTICE级别的错误</p>
-<p>触发时机：序列化serialize()之前</p>
-<p>功能：对象被序列化之前触发，返沪需要被序列化存储的成员属性，删除不必要的属性</p>
-<p>参数：成员属性</p>
-<p>返回值：需要被序列化存储的成员属性</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ac24a1bf-aa25-4408-81f9-5e493226c41a" alt="image"></p>
-<p>__sleep执行返回需要序列化的变量名，过滤掉password变量</p>
-<p>serialize()只序列化sleep返回的变量</p>
-<h2 id="wakeup"><a href="#wakeup" class="headerlink" title="__wakeup()"></a>__wakeup()</h2><p><strong>__wakeup()</strong> unserialize()会检查是否存在一个__wakeup()方法，如果存在，则会先调用__wakeup()方法，预先准备对象需要的资源。</p>
-<p>预先准备对象资源，返回void，常用于反序列化操作中重新建立数据库连接或执行其他初始化操作</p>
-<p>触发时机：反序列化unserialize()之前</p>
-<p>功能：</p>
-<p>参数：</p>
-<p>返回值：</p>
-<p>__wakeup()在反序列化unserialize()之前</p>
-<p>__destruct()在反序列化unserialize()之后</p>
-<p>有的题要绕开它们，避免值被改变</p>
-<h2 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="__toString()"></a>__toString()</h2><p><strong>__toString()</strong> 表达方式错误导致魔术方法触发</p>
-<p>触发时机：把对象当成字符串调用</p>
-<p>功能：</p>
-<p>参数：</p>
-<p>返回值：</p>
-<p>把类User实体化并赋值给$test，此时$test是个对象，调用对象可以使用print_r或者var_dump</p>
-<p>如果使用echo或者print只能调用字符串的方式去调用对象，即把对象当成字符串使用，此时自动触发toString()</p>
-<h2 id="invoke"><a href="#invoke" class="headerlink" title="__invoke()"></a>__invoke()</h2><p><strong>__invoke()</strong> 表达方式错误导致魔术方法触发</p>
-<p>触发时机：把对象当成函数调用</p>
-<p>功能：</p>
-<p>参数：</p>
-<p>返回值：</p>
-<p>把类User实体化并赋值给$test，此时$test是个对象，调用对象可以使用print_r或者var_dump</p>
-<p>加()是把test当成函数test()来调用，此时触发invoke()</p>
-<p>$test()</p>
-<h2 id="call"><a href="#call" class="headerlink" title="__call()"></a>__call()</h2><p><strong>__call()</strong> </p>
-<p>触发时机：调用一个不存在的方法</p>
-<p>功能：</p>
-<p>参数：2个参数传参$arg1,$arg2（参数个数与定义的__call()函数相对应）</p>
-<p>返回值：调用的不存在的方法的名称和参数</p>
-<p>调用的方法不存在，触发魔术方法__call()</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/1620df34-063d-47b4-bd90-4e8dee8f2d4a" alt="image"></p>
-<h2 id="callStatic"><a href="#callStatic" class="headerlink" title="__callStatic()"></a>__callStatic()</h2><p><strong>__callStatic()</strong> </p>
-<p>触发时机：静态调用或调用成员常量时使用的方法不存在</p>
-<p>功能：</p>
-<p>参数：2个参数传参$arg1,$arg2（参数个数与定义的__callStatic()函数相对应）</p>
-<p>返回值：调用的不存在的方法的名称和参数</p>
-<p>调用的方法不存在，触发魔术方法callStatic()</p>
-<p>静态调用 $test :: callxxx(‘a’)</p>
-<p>非静态调用 $test -&gt; callxxx(‘a’)</p>
-<h2 id="get"><a href="#get" class="headerlink" title="__get()"></a>__get()</h2><p><strong>__get()</strong> </p>
-<p>触发时机：调用的成员属性不存在</p>
-<p>功能：</p>
-<p>参数：传参$arg1</p>
-<p>返回值：不存在的成员属性的名称</p>
-<p>var2不存在</p>
-<p>$test -&gt; var2;</p>
-<p>__get($arg1)</p>
-<p>把var2赋值给$arg1</p>
-<p>最后输出var2</p>
-<h2 id="set"><a href="#set" class="headerlink" title="__set()"></a>__set()</h2><p><strong>__set()</strong> </p>
-<p>触发时机：给不存在的成员赋值属性</p>
-<p>功能：</p>
-<p>参数：传参$arg1,$arg2</p>
-<p>返回值：不存在的成员属性的名称和赋的值</p>
-<h2 id="isset"><a href="#isset" class="headerlink" title="__isset()"></a>__isset()</h2><p><strong>__isset()</strong> </p>
-<p>触发时机：对不可访问属性使用isset()或empty()时，__isset()会被调用</p>
-<p>功能：</p>
-<p>参数：传参$arg1</p>
-<p>返回值：不存在或不可访问的成员属性的名称</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f77d9eb7-790b-4a2b-a9e5-7ce6ac2c78ae" alt="image"></p>
-<h2 id="unset"><a href="#unset" class="headerlink" title="__unset()"></a>__unset()</h2><p><strong>__unset()</strong> </p>
-<p>触发时机：对不可访问属性使用unset()时</p>
-<p>功能：</p>
-<p>参数：传参$arg1</p>
-<p>返回值：不存在的成员属性的名称</p>
-<h2 id="clone"><a href="#clone" class="headerlink" title="__clone()"></a>__clone()</h2><p><strong>__clone()</strong> </p>
-<p>触发时机：当使用clone关键字拷贝完成一个对象后，新对象会自动调用定义的魔术方法__clone()</p>
-<p>功能：</p>
-<p>参数：</p>
-<p>返回值：</p>
-<h2 id="魔术方法总结"><a href="#魔术方法总结" class="headerlink" title="魔术方法总结"></a>魔术方法总结</h2><p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/a5f1cfa7-8a39-4006-9da5-e88d05037ac6" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/1d20ae88-8cf7-445d-b8b8-9ee1fe9cbf57" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/87ebba2f-9a57-438b-b175-9a05684e6fd5" alt="image"></p>
-<h1 id="POP链构造，POC编写"><a href="#POP链构造，POC编写" class="headerlink" title="POP链构造，POC编写"></a>POP链构造，POC编写</h1><p><strong>POP链</strong></p>
-<p>在反序列化中，我们能控制的数据就是对象中的属性值（成员变量），所以在PHP反序列化中有一种漏洞利用的方法叫”面向属性编程“，即POP</p>
-<p>POP链就是利用魔法方法在里面进行多次跳转然后获取敏感数据的一种payload</p>
-<p><strong>POC编写</strong></p>
-<p>POC中文译作概念验证，在安全界可以理解成漏洞验证程序，POC是一段不完整的程序，仅仅是为了证明提出者的观点的一段代码</p>
-<p>编写一段不完整的程序，获取所需要的序列化字符串</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/664dfe0f-e131-4c81-bce1-8b586adaa113" alt="image"></p>
-<p>要触发Modifier的append得到flag，value&#x3D;flag.php</p>
-<p>要触发Modifier的__invoke()  把对象当成函数调用</p>
-<p>触发Test的__get()  给不存在的成员属性赋值，p赋值为Modifier对象，就能return对象</p>
-<p>然后触发get，给不存在的成员属性赋值，给Show中的$str赋值为Test属性，</p>
-<p>然后需要触发__wakeup，反序列化之前，在wakeuo中，让source为Show对象，一定要是Show的对象，否则无法触发tostring</p>
-<p>再把对象当字符串用，就能触发tostring</p>
-<h1 id="字符串逃逸基础-字符减少"><a href="#字符串逃逸基础-字符减少" class="headerlink" title="字符串逃逸基础_字符减少"></a>字符串逃逸基础_字符减少</h1><p>反序列化分隔符</p>
-<p>反序列化以;}结束，后面的字符串不影响正常的反序列化</p>
-<p>属性逃逸</p>
-<p>一般在数据先经过一次serialize再经过unserialize，再这个中间反序列化的字符串变多或者变少的时候有可能存在反序列化属性逃逸</p>
-<p>构造值，让倒数第二个“及之前的功能性代码变为值，则后面的值变成功能性代码</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/34903358-33f5-461a-a413-eea3b32c0dc9" alt="image"></p>
-<p>反序列化字符串逃逸：多套一处一个成员属性，第一个字符串减少，吃掉有效代码，在第二个字符串构造代码</p>
-<h1 id="字符串逃逸基础-字符减增多"><a href="#字符串逃逸基础-字符减增多" class="headerlink" title="字符串逃逸基础_字符减增多"></a>字符串逃逸基础_字符减增多</h1><p>反序列化字符串减少逃逸：多逃逸出一个成员属性，第一个字符串减少，吃掉有效代码，在第二个字符串构造带吗</p>
-<p>反序列化字符串增多逃逸：构造出一个逃逸成员属性，第一个字符串增多，吐出多余代码，把多余位代码构造成逃逸的成员属性</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b6508253-d62e-4cd4-a60d-b5e830250f9b" alt="image"></p>
-<p>第一个字符串增多，吐出多余代码，把多余代码构造成逃逸成员属性</p>
-<p><strong>字符串逃逸增多，例题思考</strong></p>
-<p>profile是test对象，且pass值为escaping</p>
-<p>把$name中的$safe替换为hack</p>
-<p>__construct()实例化对象时会触发</p>
-<p>实例化test对象时会触发__construct，把$param的值赋给test对象的user</p>
-<p>然后反序列化时，会把$param中的flag和php都转为hack</p>
-<p>要改变pass的值，但是分析一遍过后发现没有对pass进行更改，因此利用filter中将php替换为hack，字符串逃逸，字符增多，把有效代码往外吐</p>
-<p>“;s:4:”pass”;s:8:”escaping”;}</p>
-<p>要吐出29个</p>
-<p>所以要29个php替换为hack</p>
-<p><strong>字符串逃逸减少，例题思考</strong></p>
-<p>要让$profile-&gt;vip为true，才能输出flag</p>
-<p>题目要获取user和pass</p>
-<p>param为user</p>
-<p>user和pass的值为test类的user和pass值</p>
-<p>filter是把flag和php替换为hk</p>
-<p>字符串减少，把后面的包进来</p>
-<p>要变成功能性代码的</p>
-<p>s:4:”user”;s:?:”fff”;s:4:”pass”;s:25:”1”;<strong>s:3:”vip”;s:4:”true”;}</strong>“</p>
-<p>前面要包住20个，flag包2，php包1</p>
-<p>10个flag</p>
-<p>?user&#x3D;flagflagflagflagflagflagflagflagflagflag &amp;pass&#x3D;1”;s:3:”vip”;b:1;}</p>
-<p>O:4:”test”:3:{s:4:”user”;s:4:”flag”;s:4:”pass”;s:6:”benben”;s:3:”vip”;b:1;}</p>
-<h1 id="wakeup绕过"><a href="#wakeup绕过" class="headerlink" title="wakeup绕过"></a>wakeup绕过</h1><p>反序列化漏洞：CVE-2016-7124</p>
-<p>漏洞产生原因：如果存在__wakeup方法，调用unserilize()方法之前</p>
-<p>会先调用__wakeup方法，但是序列化字符串中表示对象属性个数的值大于真实的属性个数时</p>
-<p>会跳过__wakeup()的执行</p>
-<p>把成员属性数量+1，就能绕过__wakeup()</p>
-<p>如果题目中正则表达式，不允许O后面跟数字，就写成O:+6</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;/[oc]:\d+:/i&#x27;</span><br></pre></td></tr></table></figure>
-
-<p>例如：</p>
-<p>$a &#x3D; ‘O:+6:”secret”:2:{s:4:”file”;s:8:”flag.php”;}’;</p>
-<p>echo urlencode($a);</p>
-<p>记得最后要urlencode一下</p>
-<h1 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h1><p>符号&amp;</p>
-<p>$a-&gt;enter&#x3D;&amp;$a-&gt;secret</p>
-<p>保证$a-&gt;enter的值和$a-&gt;secret的值一直一样</p>
-<h1 id="session反序列化漏洞"><a href="#session反序列化漏洞" class="headerlink" title="session反序列化漏洞"></a>session反序列化漏洞</h1><p>当session_strat()被调用或者php.ini中session.auto_start为1时，PHP内部调用会话管理器，访问用户session被序列化以后，存储到指定目录（默认为&#x2F;tmp）</p>
-<p>存取数据的格式有多种，常用的由三种</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d66a2d5a-cef5-403c-8f53-509e07146229" alt="image"></p>
-<p>漏洞产生：写入格式和读取格式不一样  </p>
-<p>当网站序列化并存储session，与反序列化并读取session的方式不同，就可能导致session反序列化漏洞的产生。</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/034b1373-ca69-4b5c-9212-8488505fcc51" alt="image"></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/34ca214d-e437-4039-8876-cf507964ecbc" alt="image"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/01/24/PHP/" data-id="clrrksg850000ewvf6jzg0n81" data-title="PHP" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/learn/" rel="tag">learn</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -1291,6 +1176,10 @@
       <ul>
         
           <li>
+            <a href="/2024/02/23/20240223/">20240222</a>
+          </li>
+        
+          <li>
             <a href="/2024/02/22/20240222/">20240222</a>
           </li>
         
@@ -1304,10 +1193,6 @@
         
           <li>
             <a href="/2024/02/18/20240218/">20240218</a>
-          </li>
-        
-          <li>
-            <a href="/2024/02/16/Paper-SQIRL/">SQIRL__</a>
           </li>
         
       </ul>

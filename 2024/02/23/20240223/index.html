@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   
   
-  <title>Buuctf Web（21-24） | qinyiwen</title>
+  <title>20240222 | qinyiwen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Buuctf Web（21-24）21、easy_tornado题目首页有三个链接，首先查看&#x2F;flag.txt，可以看到flag在&#x2F;fllllllllllllag中  查看&#x2F;fllllllllllllag，显示Error  并且url变成了&#x2F;error?msg&#x3D;Error  查看&#x2F;welcome.txt，内容为render  12rend">
+  <meta name="description" content="CSP2023-5-1 重复局面本题的主要思想是读取n个8个字符串的组合，统计每个组合在数组中出现的次数并输出。 首先从标准输入中读取一个整数n，然后定义了一个字符串数组xq，长度为101。接着使用两个嵌套的for循环，将每次循环中读取的8个字符串s依次添加到xq数组中的第i个位置。接着定义一个整数num，用来记录当前字符串在数组中出现的次数。然后再次使用一个循环遍历之前已经存储的字符串，如果有和">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Buuctf Web（21-24）">
-<meta property="og:url" content="http://example.com/2023/08/11/Buuctf%20Web%EF%BC%8821-24%EF%BC%89/index.html">
+<meta property="og:title" content="20240222">
+<meta property="og:url" content="http://example.com/2024/02/23/20240223/index.html">
 <meta property="og:site_name" content="qinyiwen">
-<meta property="og:description" content="Buuctf Web（21-24）21、easy_tornado题目首页有三个链接，首先查看&#x2F;flag.txt，可以看到flag在&#x2F;fllllllllllllag中  查看&#x2F;fllllllllllllag，显示Error  并且url变成了&#x2F;error?msg&#x3D;Error  查看&#x2F;welcome.txt，内容为render  12rend">
+<meta property="og:description" content="CSP2023-5-1 重复局面本题的主要思想是读取n个8个字符串的组合，统计每个组合在数组中出现的次数并输出。 首先从标准输入中读取一个整数n，然后定义了一个字符串数组xq，长度为101。接着使用两个嵌套的for循环，将每次循环中读取的8个字符串s依次添加到xq数组中的第i个位置。接着定义一个整数num，用来记录当前字符串在数组中出现的次数。然后再次使用一个循环遍历之前已经存储的字符串，如果有和">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/8124ed8c-6dfb-4f89-b050-8a841a4e56b2">
 <meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/9a24200a-c33a-4ec5-b86a-0f598b975988">
@@ -30,22 +30,10 @@
 <meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/d87e4454-5a16-4fea-9512-9bef90f01a9c">
 <meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/bc16f3dc-36de-4130-885a-8334541c24ee">
 <meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/b1fe4d77-4ed1-4c7b-a261-dbf716519595">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/546f346f-4cc2-4387-99b5-e4f679a198c6">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/eb0d84c7-11ba-4569-86ce-2d852e01f523">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/e02853bf-cf0e-4480-a249-a94d1e290c97">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/8647b067-6164-4385-a7a1-3d27b8eb1697">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/2ed62ae4-cebd-49e4-9fff-62144ce580d8">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/7acb96ce-aecd-4d57-813d-096ae3ddf798">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/22b156d1-ff92-4112-a963-03edd63872d5">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/bd421ff2-86f8-48fc-8536-ba0c204a473a">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/ff8cc374-6ccb-426b-8372-707bdb01642a">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/750e7fdf-d5d6-4c19-a5eb-19b42d5f7b33">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/9ebb7fdd-ca59-4728-bf1d-30e878e931e2">
-<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/64288a23-13c1-4116-8574-dba7738b1408">
-<meta property="article:published_time" content="2023-08-11T11:44:06.000Z">
-<meta property="article:modified_time" content="2023-08-12T12:53:14.636Z">
+<meta property="article:published_time" content="2024-02-23T09:15:29.000Z">
+<meta property="article:modified_time" content="2024-02-23T04:20:57.190Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="learn">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/8124ed8c-6dfb-4f89-b050-8a841a4e56b2">
   
@@ -106,10 +94,10 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-Buuctf Web（21-24）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-20240223" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2023/08/11/Buuctf%20Web%EF%BC%8821-24%EF%BC%89/" class="article-date">
-  <time class="dt-published" datetime="2023-08-11T11:44:06.000Z" itemprop="datePublished">2023-08-11</time>
+    <a href="/2024/02/23/20240223/" class="article-date">
+  <time class="dt-published" datetime="2024-02-23T09:15:29.000Z" itemprop="datePublished">2024-02-23</time>
 </a>
     
   </div>
@@ -120,7 +108,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      Buuctf Web（21-24）
+      20240222
     </h1>
   
 
@@ -128,7 +116,15 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h3 id="Buuctf-Web（21-24）"><a href="#Buuctf-Web（21-24）" class="headerlink" title="Buuctf Web（21-24）"></a>Buuctf Web（21-24）</h3><h4 id="21、easy-tornado"><a href="#21、easy-tornado" class="headerlink" title="21、easy_tornado"></a>21、easy_tornado</h4><p>题目首页有三个链接，首先查看&#x2F;flag.txt，可以看到flag在&#x2F;fllllllllllllag中</p>
+        <h4 id="CSP"><a href="#CSP" class="headerlink" title="CSP"></a>CSP</h4><h5 id="2023-5-1-重复局面"><a href="#2023-5-1-重复局面" class="headerlink" title="2023-5-1 重复局面"></a>2023-5-1 重复局面</h5><p>本题的主要思想是读取n个8个字符串的组合，统计每个组合在数组中出现的次数并输出。</p>
+<p>首先从标准输入中读取一个整数n，然后定义了一个字符串数组xq，长度为101。接着使用两个嵌套的for循环，将每次循环中读取的8个字符串s依次添加到xq数组中的第i个位置。接着定义一个整数num，用来记录当前字符串在数组中出现的次数。然后再次使用一个循环遍历之前已经存储的字符串，如果有和当前字符串相同的，则num加1。最后输出num的值，表示当前字符串在数组中出现的次数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,i,j;</span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    string xq[<span class="number">101</span>],s;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;<span class="number">8</span>;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            cin&gt;&gt;s;</span><br><span class="line">            xq[i]+=s;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> num=<span class="number">1</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;i;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(xq[j]==xq[i]) num++;</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;num&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2023-3-1-田地丈量"><a href="#2023-3-1-田地丈量" class="headerlink" title="2023-3-1 田地丈量"></a>2023-3-1 田地丈量</h5><p>这道题的思想是计算n个矩形区域和给定区域(a,b)的交集总面积。</p>
+<p>首先从标准输入中读取三个整数n，a，b。然后使用一个循环读取n组四个整数x1，y1，x2，y2。这四个整数表示一个矩形区域的左下角和右上角的坐标。在每次循环中，通过比较输入的矩形区域和给定的区域(a,b)是否有交集，如果有交集，则计算两个矩形区域的交集面积并累加到sum变量中。计算交集面积的方法是通过计算两个矩形区域在x和y轴上的重合部分的长度，然后相乘得到交集面积。最后输出sum变量的值，表示所有矩形区域和给定区域(a,b)的交集总面积。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,a,b,i,j,x1,x2,y1,y2,sum=<span class="number">0</span>;;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;a&gt;&gt;b;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin&gt;&gt;x1&gt;&gt;y1&gt;&gt;x2&gt;&gt;y2;</span><br><span class="line">        <span class="comment">//if((x1&lt;a &amp;&amp; y1&lt;b) || (x2&gt;0 &amp;&amp; y2&gt;0) || (x1&lt;a &amp;&amp; y2&gt;0) || (x2&gt;0 &amp;&amp; y1&lt;b)) //有交集</span></span><br><span class="line">        <span class="comment">//&#123;</span></span><br><span class="line">        <span class="type">int</span> x=<span class="built_in">min</span>(x2,a)-<span class="built_in">max</span>(x1,<span class="number">0</span>);</span><br><span class="line">        <span class="type">int</span> y=<span class="built_in">min</span>(y2,b)-<span class="built_in">max</span>(y1,<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">if</span>(x&gt;<span class="number">0</span>&amp;&amp;y&gt;<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            sum+=x*y;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//sum+=x*y;</span></span><br><span class="line">        <span class="comment">//&#125;</span></span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;sum&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="BuuCTF"><a href="#BuuCTF" class="headerlink" title="BuuCTF"></a>BuuCTF</h4><h5 id="21、easy-tornado"><a href="#21、easy-tornado" class="headerlink" title="21、easy_tornado"></a>21、easy_tornado</h5><p>题目首页有三个链接，首先查看&#x2F;flag.txt，可以看到flag在&#x2F;fllllllllllllag中</p>
 <p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8124ed8c-6dfb-4f89-b050-8a841a4e56b2" alt="image"></p>
 <p>查看&#x2F;fllllllllllllag，显示Error</p>
 <p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9a24200a-c33a-4ec5-b86a-0f598b975988" alt="image"></p>
@@ -156,7 +152,7 @@
 <p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2f83150e-3dd7-4d3a-89b2-1b63b92c9691" alt="image"></p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;5673c2e4-27f7-4962-8d87-f449b8069952&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="22、admin"><a href="#22、admin" class="headerlink" title="22、admin"></a>22、admin</h4><p>注册一个账号</p>
+<h5 id="22、admin"><a href="#22、admin" class="headerlink" title="22、admin"></a>22、admin</h5><p>注册一个账号</p>
 <p>由于题目叫admin，所以注册时直接用admin了</p>
 <p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/d1074fae-9dc5-476a-a188-aac12ef08226" alt="image"></p>
 <p>显示用户名已经被注册过</p>
@@ -180,59 +176,14 @@
 <p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/b1fe4d77-4ed1-4c7b-a261-dbf716519595" alt="image"></p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;88c07276-46ea-4e23-a50d-ce722b067e0f&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="23、你传你🐎呢"><a href="#23、你传你🐎呢" class="headerlink" title="23、你传你🐎呢"></a>23、你传你🐎呢</h4><p>查看大佬的博客后，了解到，该题需要上传两个文件</p>
-<p>一、<code>.htaccess</code>文件，用来改变文件扩展名</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/546f346f-4cc2-4387-99b5-e4f679a198c6" alt="image"></p>
-<p>上传该文件，抓包，修改Content-Type:image&#x2F;png，send</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/eb0d84c7-11ba-4569-86ce-2d852e01f523" alt="image"></p>
-<p>二、木马文件，用来连接蚁剑</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/e02853bf-cf0e-4480-a249-a94d1e290c97" alt="image"></p>
-<p>改名为a.png，上传，抓包，修改Content-Type:image&#x2F;png，send</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/8647b067-6164-4385-a7a1-3d27b8eb1697" alt="image"></p>
-<p>用蚁剑连接</p>
-<p>URL：<code>http://f532922c-3101-4cac-ad67-3e8b27c936fe.node4.buuoj.cn:81/upload/535c8c0c4ab4ecda962a1a3922bee31d/a.png</code></p>
-<p>密码：<code>a</code></p>
-<p>没测试成功，试了很久没写出来，留着以后看</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="24、NiZhuanSiWei"><a href="#24、NiZhuanSiWei" class="headerlink" title="24、NiZhuanSiWei"></a>24、NiZhuanSiWei</h4><p>从题目的php代码中可以知道需要用get方式传三个参数，text，file，password</p>
-<p>有一个php文件</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2ed62ae4-cebd-49e4-9fff-62144ce580d8" alt="image"></p>
-<p>访问该文件，什么都没有</p>
-<p>有一行代码说我们要传入一个文件，内容是”welcome to the zjctf”</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7acb96ce-aecd-4d57-813d-096ae3ddf798" alt="image"></p>
-<p>要用到data协议，data协议通常是用来执行PHP代码，也可以将内容写入data协议中，然后让file_get_contents函数取读取。构造：<code>data://text/plain,welcome to the zjctf</code></p>
-<p>为了绕过一些过滤，用base64编码构造payload：<code>/?text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=</code></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/22b156d1-ff92-4112-a963-03edd63872d5" alt="image"></p>
-<p>有一个可控参数file，构造file&#x3D;useless.php，但是针对php文件我们需要进行base64编码，否则读取不到其内容，所以构造payload：<code>/?file=php://filter/read=convert.base64-encode/resource=useless.php</code></p>
-<p>完整payload：<code>/?text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=&amp;file=php://filter/read=convert.base64-encode/resource=useless.php</code></p>
-<p>得到一串base64编码</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/bd421ff2-86f8-48fc-8536-ba0c204a473a" alt="image"></p>
-<p>解码</p>
-<p>得到useless.php源码</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ff8cc374-6ccb-426b-8372-707bdb01642a" alt="image"></p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php  </span><br><span class="line"></span><br><span class="line">class Flag&#123;  //flag.php  </span><br><span class="line">    public $file;  </span><br><span class="line">    public function __tostring()&#123;  </span><br><span class="line">        if(isset($this-&gt;file))&#123;  </span><br><span class="line">            echo file_get_contents($this-&gt;file); </span><br><span class="line">            echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">        return (&quot;U R SO CLOSE !///COME ON PLZ&quot;);</span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">?&gt;  </span><br></pre></td></tr></table></figure>
-
-<p>有一个 flag.php ,并且file不为空将读取flag.php并显示。所以。构造一个序列化字符串</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php  </span><br><span class="line"></span><br><span class="line">class Flag&#123;  //flag.php  </span><br><span class="line">    public $file=flag.php;  </span><br><span class="line">    public function __tostring()&#123;  </span><br><span class="line">        if(isset($this-&gt;file))&#123;  </span><br><span class="line">            echo file_get_contents($this-&gt;file); </span><br><span class="line">            echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">        return (&quot;U R SO CLOSE !///COME ON PLZ&quot;);</span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">$a = new Flag();</span><br><span class="line">$a-&gt;file=&quot;flag.php&quot;;</span><br><span class="line">echo serialize($a);</span><br></pre></td></tr></table></figure>
-
-<p>找个在<a target="_blank" rel="noopener" href="https://c.runoob.com/compile/1">线运行PHP</a>的网站，得到</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/750e7fdf-d5d6-4c19-a5eb-19b42d5f7b33" alt="image"></p>
-<p>构造payload：<code>/?text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=&amp;file=useless.php&amp;password=O:4:&quot;Flag&quot;:1:&#123;s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;&#125;</code></p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9ebb7fdd-ca59-4728-bf1d-30e878e931e2" alt="image"></p>
-<p>查看源代码，得到flag</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/64288a23-13c1-4116-8574-dba7738b1408" alt="image"></p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;6cb4bd76-2b5f-4876-9fe0-46f02e2d0062&#125;</span><br></pre></td></tr></table></figure>
-
-
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/08/11/Buuctf%20Web%EF%BC%8821-24%EF%BC%89/" data-id="cll80vdpg000030vfe67z1lar" data-title="Buuctf Web（21-24）" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/02/23/20240223/" data-id="clsy5a9jx0000fovf5d2148pw" data-title="20240222" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/learn/" rel="tag">learn</a></li></ul>
 
     </footer>
   </div>
@@ -240,19 +191,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2023/08/12/Buuctf%20Web%EF%BC%8825-28%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Buuctf Web（25-28）
-        
-      </div>
-    </a>
   
-  
-    <a href="/2023/08/10/Buuctf%20Web%EF%BC%8817-20%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2024/02/22/20240222/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Buuctf Web（17-20）</div>
+      <div class="article-nav-title">20240222</div>
     </a>
   
 </nav>
